@@ -25,7 +25,7 @@
    #         pkg: /sdcard/A8Speaker3.apk
    # Success
    > adb install app-release.apk
-   #         pkg: /sdcard/A8Speaker3.apk
+   #         pkg: /sdcard/app-release.apk
    ```
 
 4. 强制停止 Speaker。
@@ -34,4 +34,31 @@
    > adb shell am force-stop com.meizu.speaker
    ```
 
-5. 
+5. 在首页长按「下一首」按键，进入「MeizuGravity+」。
+
+### 还原
+
+1. 下载项目中的 ./gravity/A8Speaker.apk。
+
+2. 安装此 APK 文件。
+
+   ```bash
+   > adb install A8Speaker.apk
+   #         pkg: /sdcard/A8Speaker.apk
+   # Success
+   ```
+
+3. 强制停止 Speaker。
+
+   ```bash
+   > adb shell am force-stop com.meizu.speaker
+   ```
+
+### 编译
+
+1. Clone with HTTPS/SSH or download zip.
+
+2. Open it in Android Studio and build it.
+
+- 
+
