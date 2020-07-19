@@ -20,9 +20,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //
-        //AppUtil.runRootCommand("settings put secure enabled_accessibility_services io.github.lz233.meizugravity/io.github.lz233.meizugravity.service.KeyEventService && settings put secure accessibility_enabled 1");
-        //startService(new Intent(this, KeyEventService.class));
     }
     @Override
     protected void onResume() {
@@ -44,26 +41,7 @@ public class MainActivity extends BaseActivity {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             finish();
         }else if (keyCode == KeyEvent.KEYCODE_ENTER){
-            try {
-                //执行命令
-                Process p = Runtime.getRuntime().exec("pm install -r /sdcard/A8Speaker.apk && su && cp /sdcard/A8Speaker2.apk /data/app/com.meizu.speaker-1.apk");
-                //取得命令结果的输出流
-                InputStream fis=p.getInputStream();
-                //用一个读输出流类去读
-                InputStreamReader isr=new InputStreamReader(fis);
-                //用缓冲器读行
-                BufferedReader br=new BufferedReader(isr);
-                String line=null;
-                //直到读完为止
-                while((line=br.readLine())!=null)
-                {
-                   Log.i("SHELL",line);
-                }
-                //Runtime.getRuntime().exec("pm install -r /sdcard/A8Speaker.apk && su && cp /sdcard/A8Speaker2.apk /data/app/com.meizu.speaker-1.apk");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            //AppUtil.runRootCommand("pm install -r /sdcard/A8Speaker.apk && cp /sdcard/A8Speaker2.apk /data/app/com.meizu.speaker-1.apk");
+
         }
         return false;
     }
