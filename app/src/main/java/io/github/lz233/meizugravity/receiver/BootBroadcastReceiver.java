@@ -21,28 +21,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
             //context.startService(new Intent(context, KeyEventService.class));
             Log.i("ONRECEIVER","BOOTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
             Toast.makeText(context,"boot",Toast.LENGTH_LONG).show();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Process p = Runtime.getRuntime().exec("pm install -r /sdcard/A8Speaker.apk && su && cp /sdcard/A8Speaker2.apk /data/app/com.meizu.speaker-1.apk");
-                        //取得命令结果的输出流
-                        InputStream fis=p.getInputStream();
-                        //用一个读输出流类去读
-                        InputStreamReader isr=new InputStreamReader(fis);
-                        //用缓冲器读行
-                        BufferedReader br=new BufferedReader(isr);
-                        String line=null;
-                        //直到读完为止
-                        while((line=br.readLine())!=null)
-                        {
-                            Log.i("SHELL",line);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            //Runtime.getRuntime().exec("")
             //AppUtil.runRootCommand("pm install -r /sdcard/A8Speaker.apk && cp /sdcard/A8Speaker2.apk /data/app/com.meizu.speaker-1.apk");
         }
     }
