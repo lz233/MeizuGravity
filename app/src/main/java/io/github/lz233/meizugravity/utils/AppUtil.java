@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class AppUtil {
     public static void runRootCommand(String command) {
@@ -15,7 +16,7 @@ public class AppUtil {
         DataInputStream dataInputStream = null;
         StringBuffer wifiConf = new StringBuffer();
         try {
-            process = Runtime.getRuntime().exec("su");
+            process = Runtime.getRuntime().exec("su\n");
             dataOutputStream = new DataOutputStream(process.getOutputStream());
             dataInputStream = new DataInputStream(process.getInputStream());
             dataOutputStream
@@ -23,17 +24,19 @@ public class AppUtil {
             dataOutputStream.writeBytes("exit\n");
             dataOutputStream.flush();
             InputStreamReader inputStreamReader = new InputStreamReader(
-                    dataInputStream, "UTF-8");
+                    dataInputStream, StandardCharsets.UTF_8);
             BufferedReader bufferedReader = new BufferedReader(
                     inputStreamReader);
+            String msg = "";
             String line = null;
             while ((line = bufferedReader.readLine()) != null) {
+                msg += line;
                 wifiConf.append(line);
             }
             bufferedReader.close();
             inputStreamReader.close();
             process.waitFor();
-            Log.d("shell命令执行结果：",process.exitValue()+"");
+            Log.d("shell命令执行结果：", process.exitValue() +msg);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

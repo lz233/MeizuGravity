@@ -12,15 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".service.KeyEventService"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-        </service>
 
         <activity android:name=".activity.MainActivity">
             <intent-filter>
