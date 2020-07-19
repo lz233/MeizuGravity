@@ -4,7 +4,7 @@
 
 ### 部署
 
-1. 下载项目中的 ./Gravity/A8Speaker3.apk  和 Release 中的 APK 文件。
+1. 下载项目中的 ./gravity/A8Speaker3.apk  和 Release 中的 APK 文件。
 
 2. 通过 TCP/IP 连接到 Meizu Gravity，端口号 7788。
 
