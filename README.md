@@ -1,6 +1,8 @@
-# MeizuGravity +
+![](https://www3.res.meizu.com/static/cn/accessory/gravity/images/slogan_5f0f7d7.png)
 
-<p align="center">「让这块屏幕实现它该干的事。」</p>
+
+
+## <p align="center">「让这块屏幕干它该干的事。」</p>
 
 ### 部署
 
