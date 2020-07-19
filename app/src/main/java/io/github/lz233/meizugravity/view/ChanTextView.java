@@ -15,11 +15,16 @@ public class ChanTextView extends androidx.appcompat.widget.AppCompatTextView {
     private float spacing;
     private CharSequence text;
 
+    private void setFont(Context context){
+        mTypeface = Typeface.createFromAsset(context.getAssets(), "font.otf");
+        setTypeface(mTypeface);
+    }
     public ChanTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.TAG = "ChanTextView";
         this.spacing = 0.0f;
         this.originalText = "";
+        setFont(context);
         initAttributes(context, attrs);
     }
 

@@ -21,7 +21,7 @@
 3. 安装 A8Speaker3.apk 和 Release 中的 APK 文件。
 
    ```bash
-   > adb install A8Speaker3.apk
+   > adb install -r A8Speaker3.apk
    #         pkg: /sdcard/A8Speaker3.apk
    # Success
    > adb install app-release.apk
@@ -34,7 +34,7 @@
    > adb shell am force-stop com.meizu.speaker
    ```
 
-5. 在首页长按「下一首」按键，进入「MeizuGravity+」。
+5. 在首页长按「下一首」按键，进入「Meizu Gravity +」。
 
 ### 还原
 
@@ -60,5 +60,5 @@
 
 2. Open it in Android Studio and build it.
 
-- 
+- You need to pay attention to the [license](https://github.com/lz233/MeizuGravity/blob/master/LICENSE)  of this project.
 

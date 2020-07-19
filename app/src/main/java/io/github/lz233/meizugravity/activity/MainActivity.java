@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 
 import io.github.lz233.meizugravity.R;
 import io.github.lz233.meizugravity.utils.AppUtil;
+import io.github.lz233.meizugravity.utils.ToastUtils;
 
 public class MainActivity extends BaseActivity {
     @Override
@@ -23,6 +24,7 @@ public class MainActivity extends BaseActivity {
     }
     @Override
     protected void onResume() {
+        ToastUtils.showShort(this,"test");
         editor.putBoolean("appIsOn", true);
         editor.apply();
         super.onResume();

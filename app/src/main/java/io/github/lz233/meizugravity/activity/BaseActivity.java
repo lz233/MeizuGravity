@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +21,14 @@ import io.github.lz233.meizugravity.R;
 public class BaseActivity extends AppCompatActivity {
     protected SharedPreferences sharedPreferences;
     protected SharedPreferences.Editor editor;
+
+    protected View rootView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        rootView = findViewById(android.R.id.content);;
         //全局自定义字体
         ViewPump.init(ViewPump.builder()
                 .addInterceptor(new CalligraphyInterceptor(
