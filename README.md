@@ -1,4 +1,4 @@
-![](https://www3.res.meizu.com/static/cn/accessory/gravity/images/slogan_5f0f7d7.png)
+![](https://github.com/lz233/MeizuGravity/raw/master/Gravity/banner.png)
 
 
 
