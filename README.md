@@ -26,6 +26,7 @@
    # Success
    > adb install app-release.apk
    #         pkg: /sdcard/app-release.apk
+   # Success
    ```
 
 5. 在首页长按「下一首」按键，进入「Meizu Gravity +」。

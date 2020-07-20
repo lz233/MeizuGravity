@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Meizu Gravity</string>
+    <string name="app_name">Meizu Gravity +</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="setting">Setting</string>
+    <string name="about">About</string>
+    <string name="unsupportDeviceSummary">This device is not supported. This application only supports Meizu Gravity.</string>
 </resources>

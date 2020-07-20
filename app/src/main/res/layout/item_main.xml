@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.github.lz233.meizugravity.view.ChanTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="test"
+    android:singleLine="true"
+    android:layout_marginEnd="20px"
+    android:id="@+id/mainItemTextView"
+    android:textSize="@dimen/text_26"
+    android:textStyle="bold">
+
+</io.github.lz233.meizugravity.view.ChanTextView>

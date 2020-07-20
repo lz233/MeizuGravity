@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Meizu Gravity +</string>
+    <string name="dashboard">仪表盘</string>
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
+    <string name="unsupportDeviceSummary">不支持当前设备。本应用仅支持 Meizu Gravity。</string>
+</resources>
