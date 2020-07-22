@@ -13,7 +13,7 @@
         android:animateLayoutChanges="true"
         android:orientation="vertical">
 
-        <io.github.lz233.meizugravity.view.ChanTextView
+        <moe.lz233.meizugravity.view.ChanTextView
             android:id="@+id/temperatureTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,14 +21,14 @@
             android:layout_marginTop="15px"
             android:textSize="@dimen/text_60" />
 
-        <io.github.lz233.meizugravity.view.ChanTextView
+        <moe.lz233.meizugravity.view.ChanTextView
             android:id="@+id/skyconTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="@dimen/text_18" />
 
-        <io.github.lz233.meizugravity.view.ChanTextView
+        <moe.lz233.meizugravity.view.ChanTextView
             android:id="@+id/precipitationIntensityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,21 +50,21 @@
                 android:layout_marginStart="10px"
                 android:orientation="vertical">
 
-                <io.github.lz233.meizugravity.view.ChanTextView
+                <moe.lz233.meizugravity.view.ChanTextView
                     android:id="@+id/temperatureDay0TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="@dimen/text_26" />
 
-                <io.github.lz233.meizugravity.view.ChanTextView
+                <moe.lz233.meizugravity.view.ChanTextView
                     android:id="@+id/AQIDay0TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="@dimen/text_18" />
 
-                <io.github.lz233.meizugravity.view.ChanTextView
+                <moe.lz233.meizugravity.view.ChanTextView
                     android:id="@+id/skyconDay0TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,21 +81,21 @@
                 android:layout_marginEnd="10px"
                 android:orientation="vertical">
 
-                <io.github.lz233.meizugravity.view.ChanTextView
+                <moe.lz233.meizugravity.view.ChanTextView
                     android:id="@+id/temperatureDay1TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="@dimen/text_26" />
 
-                <io.github.lz233.meizugravity.view.ChanTextView
+                <moe.lz233.meizugravity.view.ChanTextView
                     android:id="@+id/AQIDay1TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="@dimen/text_18" />
 
-                <io.github.lz233.meizugravity.view.ChanTextView
+                <moe.lz233.meizugravity.view.ChanTextView
                     android:id="@+id/skyconDay1TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

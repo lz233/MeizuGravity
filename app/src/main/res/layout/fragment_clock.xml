@@ -9,8 +9,8 @@
         android:id="@+id/clockLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
         android:layout_gravity="center"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <TextClock
@@ -20,21 +20,23 @@
             android:format12Hour="HH:mm"
             android:format24Hour="HH:mm"
             android:textSize="@dimen/text_60" />
+
         <TextClock
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/text_18"
             android:layout_marginBottom="10px"
             android:format12Hour="@string/dateFormat"
-            android:format24Hour="@string/dateFormat"/>
-        <io.github.lz233.meizugravity.view.ChanTextView
+            android:format24Hour="@string/dateFormat"
+            android:textSize="@dimen/text_18" />
+
+        <moe.lz233.meizugravity.view.ChanTextView
             android:id="@+id/hitokotoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_18"
+            android:layout_gravity="center"
             android:maxWidth="105px"
-            android:layout_gravity="center"/>
+            android:textSize="@dimen/text_18" />
     </LinearLayout>
 </FrameLayout>
