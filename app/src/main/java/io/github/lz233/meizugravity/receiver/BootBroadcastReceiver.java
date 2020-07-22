@@ -24,7 +24,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             //context.startService(new Intent(context, KeyEventService.class));
             Log.i("ONRECEIVER","BOOTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-            Toast.makeText(context,"boot",Toast.LENGTH_LONG).show();
+            //Toast.makeText(context,"boot",Toast.LENGTH_LONG).show();
             context.startService(new Intent(context, DashBoardService.class));
             //Runtime.getRuntime().exec("")
             //AppUtil.runRootCommand("pm install -r /sdcard/A8Speaker.apk && cp /sdcard/A8Speaker2.apk /data/app/com.meizu.speaker-1.apk");

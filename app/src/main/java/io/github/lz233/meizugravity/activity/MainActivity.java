@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
         mainViewPager2 = findViewById(R.id.mainViewPager2);
         //
         AppCenter.start(getApplication(), "cdd555bb-ef57-46ff-9eae-c74629c93791", Analytics.class, Crashes.class);
-        if (true){
+        if (sharedPreferences.getBoolean("isFirstRun",true)){
             ToastUtil.showLong(this,getString(R.string.firstTips));
             editor.putBoolean("isFirstRun",false);
             editor.apply();
