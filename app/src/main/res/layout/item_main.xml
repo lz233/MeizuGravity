@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:text="test"
     android:singleLine="true"
-    android:layout_marginEnd="20px"
     android:id="@+id/mainItemTextView"
     android:textSize="@dimen/text_26"
     android:textStyle="bold">

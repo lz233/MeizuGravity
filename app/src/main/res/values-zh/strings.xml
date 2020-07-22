@@ -5,4 +5,19 @@
     <string name="setting">设置</string>
     <string name="about">关于</string>
     <string name="unsupportDeviceSummary">不支持当前设备。本应用仅支持 Meizu Gravity。</string>
+    <string name="firstTips">单击「Next 键」返回\n单击「Play 键」进入相应项目\n更多信息请参阅关于页面</string>
+    <string name="aboutSummary">「让这块屏幕干它该干的事。」\n\n
+        本项目的开发离不开以下项目：\n
+        Android Open Source Project (Apache 2.0)\n
+        AndroidX (Apache 2.0)\n
+        AppCenter SDK Android (MIT)\n
+        Zxing (Apache 2.0)\n
+        Calligraphy (Apache 2.0)\n
+        ViewPump (Apache 2.0)\n
+        Commons Codec (Apache 2.0)\n
+        OKHttp (Apache 2.0)\n
+        Meizu Gravity APK (Non license)</string>
+    <string name="dateFormat">EEEE M月d日</string>
+    <string name="follower">跟随者</string>
+    <string name="following">关注</string>
 </resources>

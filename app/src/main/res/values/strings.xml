@@ -4,4 +4,19 @@
     <string name="setting">Setting</string>
     <string name="about">About</string>
     <string name="unsupportDeviceSummary">This device is not supported. This application only supports Meizu Gravity.</string>
+    <string name="firstTips">Tap "Next" to return\nTap "Play" to enter the selected item\nSee the about page for more information</string>
+    <string name="aboutSummary">「Let this screen do what it should do.」\n\n
+        The development of this project is inseparable from the following projects:\n
+        Android Open Source Project (Apache 2.0)\n
+        AndroidX (Apache 2.0)\n
+        AppCenter SDK Android (MIT)\n
+        Zxing (Apache 2.0)\n
+        Calligraphy (Apache 2.0)\n
+        ViewPump (Apache 2.0)\n
+        Commons Codec (Apache 2.0)\n
+        OKHttp (Apache 2.0)\n
+        Meizu Gravity APK (Non license)</string>
+    <string name="dateFormat">EEEE M.d</string>
+    <string name="following">following</string>
+    <string name="follower">follower</string>
 </resources>

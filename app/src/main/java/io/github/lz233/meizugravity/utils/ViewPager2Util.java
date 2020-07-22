@@ -18,12 +18,12 @@ public class ViewPager2Util {
      * @param item     下一个跳转的item
      * @param duration scroll时长
      */
-    public static void setCurrentItem(final ViewPager2 pager, int item, long duration) {
+    public static void setCurrentItem(final ViewPager2 pager, int item, long duration,int padding) {
         previousValue = 0;
         int currentItem = pager.getCurrentItem();
         int pagePxHeight = pager.getHeight();
         //减掉边距
-        int pxToDrag = (pagePxHeight-50) * (item - currentItem);
+        int pxToDrag = (pagePxHeight-padding) * (item - currentItem);
         final ValueAnimator animator = ValueAnimator.ofInt(0, pxToDrag);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

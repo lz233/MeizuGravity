@@ -3,31 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
-
+    tools:context=".activity.DashBoardActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false">
-
-        <ImageView
-            android:id="@+id/mainImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="50px"
-            android:src="@drawable/ic_dashboard" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/mainViewPager2"
+        <fragment
+            android:id="@+id/clockFragment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="70px"
+            android:layout_marginStart="20px"
+            android:name="io.github.lz233.meizugravity.fragment.ClockFragment"/>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/dashViewPager2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="20px"
-            android:layout_marginStart="160px"
-            android:layout_marginBottom="50px"
+            android:layout_marginStart="150px"
             android:clipChildren="false"/>
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

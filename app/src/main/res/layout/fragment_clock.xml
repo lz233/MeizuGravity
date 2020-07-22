@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ClockFragment">
+
+    <LinearLayout
+        android:id="@+id/clockLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:format12Hour="HH:mm"
+            android:format24Hour="HH:mm"
+            android:textSize="@dimen/text_60" />
+        <TextClock
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/text_18"
+            android:layout_marginBottom="10px"
+            android:format12Hour="@string/dateFormat"
+            android:format24Hour="@string/dateFormat"/>
+        <io.github.lz233.meizugravity.view.ChanTextView
+            android:id="@+id/hitokotoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_18"
+            android:maxWidth="105px"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</FrameLayout>
