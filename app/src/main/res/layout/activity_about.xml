@@ -38,7 +38,7 @@
                     android:layout_width="0px"
                     android:layout_height="50px" />
 
-                <io.github.lz233.meizugravity.view.ChanTextView
+                <moe.lz233.meizugravity.view.ChanTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10px"
@@ -46,7 +46,7 @@
                     android:textSize="@dimen/text_30"
                     android:textStyle="bold" />
 
-                <io.github.lz233.meizugravity.view.ChanTextView
+                <moe.lz233.meizugravity.view.ChanTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/aboutSummary"
