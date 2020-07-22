@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sunny">Sunny</string>
+    <string name="partlyCloudy">Partly cloudy</string>
+    <string name="cloudy">Cloudy</string>
+    <string name="lightHaze">Light haze</string>
+    <string name="moderateHaze">Moderate haze</string>
+    <string name="heavyHaze">Heavy haze</string>
+    <string name="lightRain">Light rain</string>
+    <string name="moderateRain">Moderate rain</string>
+    <string name="heavyRain">Heavy rain</string>
+    <string name="stormRain">Storm rain</string>
+    <string name="fog">Fog</string>
+    <string name="lightSnow">Light snow</string>
+    <string name="moderateSnow">Moderate snow</string>
+    <string name="heavySnow">Heavy snow</string>
+    <string name="stormSnow">Storm snow</string>
+    <string name="dust">Dust</string>
+    <string name="sand">Sand</string>
+    <string name="wind">Wind</string>
+
+    <string name="AQI">AQI: </string>
+    <string name="AQI1">Good</string>
+    <string name="AQI2">Moderate</string>
+    <string name="AQI3">Unhealthy for Sensitive Groups</string>
+    <string name="AQI4">Unhealthy</string>
+    <string name="AQI5">Very Unhealthy</string>
+    <string name="AQI6">Hazardous</string>
+
+    <string name="precipitationIntensity">Precipitation intensity: </string>
+</resources>

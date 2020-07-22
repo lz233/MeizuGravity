@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sunny">晴</string>
+    <string name="partlyCloudy">多云</string>
+    <string name="cloudy">阴</string>
+    <string name="lightHaze">轻度雾霾</string>
+    <string name="moderateHaze">中度雾霾</string>
+    <string name="heavyHaze">重度雾霾</string>
+    <string name="lightRain">小雨</string>
+    <string name="moderateRain">中雨</string>
+    <string name="heavyRain">大雨</string>
+    <string name="stormRain">暴雨</string>
+    <string name="fog">雾</string>
+    <string name="lightSnow">小雪</string>
+    <string name="moderateSnow">中雪</string>
+    <string name="heavySnow">大雪</string>
+    <string name="stormSnow">暴雪</string>
+    <string name="dust">浮尘</string>
+    <string name="sand">沙尘</string>
+    <string name="wind">大风</string>
+
+    <string name="AQI">AQI: </string>
+    <string name="AQI1">优</string>
+    <string name="AQI2">良</string>
+    <string name="AQI3">轻度污染</string>
+    <string name="AQI4">中度污染</string>
+    <string name="AQI5">重度污染</string>
+    <string name="AQI6">严重污染</string>
+
+    <string name="precipitationIntensity">降水强度：</string>
+</resources>

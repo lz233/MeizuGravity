@@ -21,16 +21,20 @@ import io.github.lz233.meizugravity.R;
 import io.github.lz233.meizugravity.utils.CoolapkAuthUtil;
 import io.github.lz233.meizugravity.utils.GetUtil;
 import io.github.lz233.meizugravity.utils.QRCodeUtil;
+import io.github.lz233.meizugravity.utils.SettingUtil;
 import io.github.lz233.meizugravity.view.ChanTextView;
 
 public class CoolapkFragment extends Fragment {
+    private SettingUtil settingUtil;
+
     private LinearLayout coolapkLinearLayout;
     private ImageView avatarImageView;
     private ChanTextView nameTextView;
     private ChanTextView followerTextView;
     private ChanTextView introductionTextView;
 
-    public CoolapkFragment() {
+    public CoolapkFragment(SettingUtil settingUtil) {
+        this.settingUtil = settingUtil;
     }
 
     @Override
@@ -58,7 +62,7 @@ public class CoolapkFragment extends Fragment {
                 prop.add(new String[]{"X-App-Device","EUMxAzRgsTZsd2bvdGI7UGbn92bnByOBljO4cjO1UkOBFjO3UjOwgDI7YTNxEDO0AzNzgTNwYjN0AyO0cTN3IDO5ETN5MjN2gDOgsjMhhTYxcTO1MWNzUTZjZGM"});
                 prop.add(new String[]{"X-Dark-Mode","0"});
                 prop.add(new String[]{"X-Requested-With","XMLHttpRequest"});
-                new GetUtil().sendGet("https://api.coolapk.com/v6/user/space?uid=798985", prop,new GetUtil.GetCallback() {
+                new GetUtil().sendGet("https://api.coolapk.com/v6/user/space?uid="+settingUtil.getString("coolapkUid"), prop,new GetUtil.GetCallback() {
                     @Override
                     public void onGetDone(final String result) {
                         try {

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ClockFragment">
+
+    <LinearLayout
+        android:id="@+id/weatherLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <io.github.lz233.meizugravity.view.ChanTextView
+            android:id="@+id/temperatureTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15px"
+            android:textSize="@dimen/text_60" />
+
+        <io.github.lz233.meizugravity.view.ChanTextView
+            android:id="@+id/skyconTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/text_18" />
+
+        <io.github.lz233.meizugravity.view.ChanTextView
+            android:id="@+id/precipitationIntensityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/text_18" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10px"
+                android:orientation="vertical">
+
+                <io.github.lz233.meizugravity.view.ChanTextView
+                    android:id="@+id/temperatureDay0TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_26" />
+
+                <io.github.lz233.meizugravity.view.ChanTextView
+                    android:id="@+id/AQIDay0TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_18" />
+
+                <io.github.lz233.meizugravity.view.ChanTextView
+                    android:id="@+id/skyconDay0TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_18" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="10px"
+                android:orientation="vertical">
+
+                <io.github.lz233.meizugravity.view.ChanTextView
+                    android:id="@+id/temperatureDay1TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_26" />
+
+                <io.github.lz233.meizugravity.view.ChanTextView
+                    android:id="@+id/AQIDay1TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_18" />
+
+                <io.github.lz233.meizugravity.view.ChanTextView
+                    android:id="@+id/skyconDay1TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_18" />
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>

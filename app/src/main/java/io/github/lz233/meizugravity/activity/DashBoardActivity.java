@@ -13,9 +13,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import io.github.lz233.meizugravity.R;
 import io.github.lz233.meizugravity.fragment.CoolapkFragment;
+import io.github.lz233.meizugravity.fragment.WeatherFragment;
+import io.github.lz233.meizugravity.utils.SettingUtil;
+import io.github.lz233.meizugravity.utils.ViewPager2Util;
 
 public class DashBoardActivity extends BaseActivity {
-    int itemCount = 1;
+    int itemCount = 2;
+    private SettingUtil settingUtil;
     private Thread brightThread;
     private ViewPager2 dashViewPager2;
 
@@ -26,14 +30,15 @@ public class DashBoardActivity extends BaseActivity {
         //
         dashViewPager2 = findViewById(R.id.dashViewPager2);
         //
-        setScreenBrightnessValue(0.2f);
+        settingUtil = new SettingUtil(this);
+        setScreenBrightnessValue((float) settingUtil.getDoublt("brightness"));
         //brightThread = new Thread(new Run());
         //brightThread.start();
         editor.putBoolean("isInDashBoard",true);
         editor.apply();
         dashViewPager2.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
         dashViewPager2.setUserInputEnabled(false);
-        dashViewPager2.setOffscreenPageLimit(2);
+        //dashViewPager2.setOffscreenPageLimit(2);
         dashViewPager2.setAdapter(new ScreenSlidePagerAdapter(this));
     }
     @Override
@@ -46,6 +51,18 @@ public class DashBoardActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             finish();
+        }else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+            int targetItem = dashViewPager2.getCurrentItem() - 1;
+            if (targetItem < 0) {
+                targetItem = 0;
+            }
+            ViewPager2Util.setCurrentItem(dashViewPager2, targetItem, 100,0);
+        } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+            int targetItem = dashViewPager2.getCurrentItem() + 1;
+            if (targetItem >= itemCount) {
+                targetItem = dashViewPager2.getCurrentItem();
+            }
+            ViewPager2Util.setCurrentItem(dashViewPager2, targetItem, 100,0);
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -113,7 +130,9 @@ public class DashBoardActivity extends BaseActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 default:
-                    return new CoolapkFragment();
+                    return new WeatherFragment(settingUtil);
+                case 1:
+                    return new CoolapkFragment(settingUtil);
             }
         }
 
