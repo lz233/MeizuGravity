@@ -6,7 +6,7 @@
 
 ### 部署
 
-1. 下载项目中的 ./gravity/A8Speaker4.apk  和 Release 中的 APK 文件。
+1. 下载项目中的 ./gravity/A8Speaker5.apk  和 [Release APK](https://www.coolapk.com/apk/moe.lz233.meizugravity)。
 
 2. 通过 TCP/IP 连接到 Meizu Gravity，端口号 7788。
 
@@ -18,11 +18,11 @@
    # 192.168.xx.xxx:7788     device
    ```
 
-3. 安装 A8Speaker4.apk 和 Release 中的 APK 文件。
+3. 安装 A8Speaker5.apk 和 Release APK。
 
    ```bash
-   > adb install -r A8Speaker4.apk
-   #         pkg: /sdcard/A8Speaker3.apk
+   > adb install -r A8Speaker5.apk
+   #         pkg: /sdcard/A8Speaker5.apk
    # Success
    > adb install app-release.apk
    #         pkg: /sdcard/app-release.apk
@@ -33,10 +33,12 @@
 
 ### 还原
 
-2. 卸载 Speaker。
+1. 卸载 Meizu Gravity + 和 Speaker。
 
    ```bash
    > adb uninstall com.meizu.speaker
+   # Success
+   > adb uninstall moe.lz233.meizugravity
    # Success
    ```
    
