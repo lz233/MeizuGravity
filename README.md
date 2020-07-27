@@ -31,6 +31,27 @@
 
 5. 在首页长按「下一首」按键，进入「Meizu Gravity +」。
 
+### 配置
+
+1. 新建 「settings.json」，填入下列字段。请注意在填入时去掉注释。
+
+   ```json
+   {
+   	"autoSleep": true, //是否自动开启仪表盘
+   	"overtime": 300000, //开启仪表盘的时间
+   	"brightness": 0.2, //仪表盘亮度
+   	"location": "120.9230,30.7672", //经度与纬度（用于仪表盘获取天气）
+   	"coolapkUid": "798985" //酷安用户 ID（用于仪表获取用户信息）
+   }
+   ```
+
+2. 使用 ADB 将文件推送到 /sdcard/Android/data/moe.lz233.meizugravity/files
+
+   ``` bash
+   > adb push ./settings.json /sdcard/Android/data/moe.lz233.meizugravity/files
+   # settings.json: 1 file pushed, 0 skipped. x.x MB/s (xxx bytes in x.xxxs)
+   ```
+
 ### 还原
 
 1. 卸载 Meizu Gravity + 和 Speaker。
