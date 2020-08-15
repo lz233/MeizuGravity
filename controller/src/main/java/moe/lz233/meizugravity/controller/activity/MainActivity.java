@@ -32,6 +32,7 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 
 import moe.lz233.meizugravity.controller.R;
+import moe.lz233.meizugravity.controller.utils.GetUtil;
 
 public class MainActivity extends BaseActivity {
     public static String TAG = "MeowWearDebug";
@@ -107,6 +108,17 @@ public class MainActivity extends BaseActivity {
             }
         }).start();*/
         //
+        backFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new GetUtil().sendGet("http://192.168.43.194:2333/input%20keyevent%204", new GetUtil.GetCallback() {
+                    @Override
+                    public void onGetDone(String result) {
+
+                    }
+                });
+            }
+        });
     }
 
     public static Socket connectSocket(String ip, int port) throws IOException {

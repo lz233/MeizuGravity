@@ -20,6 +20,7 @@ import com.microsoft.appcenter.crashes.Crashes;
 import java.util.ArrayList;
 
 import moe.lz233.meizugravity.R;
+import moe.lz233.meizugravity.services.CommandService;
 import moe.lz233.meizugravity.utils.ToastUtil;
 import moe.lz233.meizugravity.utils.ViewPager2Util;
 
@@ -38,6 +39,7 @@ public class MainActivity extends BaseActivity {
         mainImageView = findViewById(R.id.mainImageView);
         mainViewPager2 = findViewById(R.id.mainViewPager2);
         //
+        startService(new Intent(this, CommandService.class));
         AppCenter.start(getApplication(), "cdd555bb-ef57-46ff-9eae-c74629c93791", Analytics.class, Crashes.class);
         if (sharedPreferences.getBoolean("isFirstRun", true)) {
             ToastUtil.showLong(this, getString(R.string.firstTips));
