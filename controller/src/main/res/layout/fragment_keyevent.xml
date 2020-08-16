@@ -9,15 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Meizu Gravity"
-            android:textColor="@color/colorAccent"
-            android:textSize="35sp" />
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -25,6 +16,7 @@
             android:layout_weight="1">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/centerFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -35,6 +27,7 @@
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/upFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -46,6 +39,7 @@
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/leftFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -57,6 +51,7 @@
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/rightFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -68,6 +63,7 @@
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/downFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -83,28 +79,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_margin">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/volumeDownExtendedFloatingActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
                     android:text="DOWN"
                     android:textColor="@color/colorAccent2"
                     app:backgroundTint="@color/colorWhite"
                     app:icon="@drawable/ic_volume_down"
-                    android:layout_margin="@dimen/layout_margin"
                     app:iconTint="@color/colorAccent2" />
+
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/volumeUpExtendedFloatingActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/layout_margin"
                     android:text="UP"
                     android:textColor="@color/colorAccent2"
                     app:backgroundTint="@color/colorWhite"
                     app:icon="@drawable/ic_volume_up"
-                    android:layout_margin="@dimen/layout_margin"
                     app:iconTint="@color/colorAccent2" />
             </LinearLayout>
         </FrameLayout>
@@ -116,6 +117,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/homeFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -140,6 +142,7 @@
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/menuFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

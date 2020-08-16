@@ -1,4 +1,4 @@
-package moe.lz233.meizugravity.controller.utils;
+package moe.lz233.meizugravity.controller.util;
 
 import android.content.Context;
 import android.os.AsyncTask;

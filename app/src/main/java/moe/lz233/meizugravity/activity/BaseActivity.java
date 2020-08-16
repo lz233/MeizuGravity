@@ -38,12 +38,7 @@ public class BaseActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.unsupportDeviceSummary);
             AlertDialog dialogs = builder.create();
-            dialogs.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    finish();
-                }
-            });
+            dialogs.setOnDismissListener(dialog -> finish());
             dialogs.show();
         }
         //全局自定义字体

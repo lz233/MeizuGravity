@@ -1,129 +1,115 @@
 package moe.lz233.meizugravity.controller.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
+import android.os.Environment;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.tananaev.adblib.AdbBase64;
-import com.tananaev.adblib.AdbConnection;
-import com.tananaev.adblib.AdbCrypto;
-import com.tananaev.adblib.AdbStream;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.List;
+import java.io.OutputStream;
 
-import javax.xml.bind.DatatypeConverter;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-
+import moe.lz233.meizugravity.controller.BuildConfig;
 import moe.lz233.meizugravity.controller.R;
-import moe.lz233.meizugravity.controller.utils.GetUtil;
+import moe.lz233.meizugravity.controller.fragment.KeyEventFragment;
+import moe.lz233.meizugravity.controller.util.FileUtil;
+import okhttp3.MediaType;
 
 public class MainActivity extends BaseActivity {
-    public static String TAG = "MeowWearDebug";
-    //private Socket socket = null;
-    //private AdbCrypto crypto;
-    //private AdbConnection adb;
-    private AdbStream stream;
-    TextView tv;
-    private FloatingActionButton backFloatingActionButton;
-    private Handler mHandler = new Handler() {
-        public void handleMessage(@NonNull Message msg) {
-            Toast.makeText(MainActivity.this,(String)msg.obj,Toast.LENGTH_SHORT).show();
-        }
-    };
+    private String ip;
+    private static final int NUM_PAGES = 1;
+    private MediaType json = MediaType.parse("application/json; charset=utf-8");
 
+    private ViewPager2 viewPager2;
+    private FragmentStateAdapter fragmentStateAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //
         Toolbar toolbar = findViewById(R.id.toolbar);
-        backFloatingActionButton = findViewById(R.id.backFloatingActionButton);
+        viewPager2 = findViewById(R.id.viewPager2);
+        fragmentStateAdapter = new ScreenSlidePagerAdapter(this);
         //
         setSupportActionBar(toolbar);
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    socket = connectSocket("127.0.0.1", 5555);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (socket != null) {
+        ip = sharedPreferences.getString("ip", "");
+        if (ip.equals("")) {
+            showSettings();
+        } else {
+            /*new GetUtil().sendGet("http://" + ip + ":7766/Info", result -> {
+                if (!result.equals("")) {
                     try {
-                        crypto = AdbCrypto.setupCrypto("pub.key", "priv.key", getApplicationContext());
-                        adb = AdbConnection.create(socket, crypto);
-                        adb.connect();
-                        stream = adb.open("shell:");
+                        JSONObject jsonObject = new JSONObject(result).getJSONObject("data");
+                        nameTextView.setText(jsonObject.optString("deviceName"));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    new Thread(() -> {
-                        while (!stream.isClosed()) {
-                            try {
-                                Message message = new Message();
-                                message.obj = new String(stream.read(), StandardCharsets.US_ASCII);
-                                mHandler.sendMessage(message);
-                            } catch (InterruptedException | IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
+                }
+            });*/
+        }
+        viewPager2.setAdapter(fragmentStateAdapter);
+        viewPager2.setOffscreenPageLimit(2);
+        //
+        /*nameTextView.setOnClickListener(view -> {
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
+            builder.setTitle(R.string.name);
+            LayoutInflater inflater = getLayoutInflater();
+            final View view1 = inflater.inflate(R.layout.dialog_rename, null);
+            TextInputEditText nameTextInputEditText = view1.findViewById(R.id.nameTextInputEditText);
+            nameTextInputEditText.setText(nameTextView.getText());
+            builder.setView(view1);
+            builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                String mName = nameTextInputEditText.getText().toString();
+                if (mName.equals("")) {
+                    Toast.makeText(MainActivity.this, R.string.notAllowedToBeEmpty, Toast.LENGTH_SHORT).show();
+                } else {
                     try {
-                        stream.write("input keyevent 4\n");
-                        backFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+                        RequestBody requestBody = RequestBody.create(new JSONObject().put("deviceName",mName).toString(),json);
+                        Request request = new Request.Builder().url("http://"+ip+":7766/Rename").post(requestBody).build();
+                        OkHttpClient okHttpClient = new OkHttpClient();
+                        okHttpClient.newCall(request).enqueue(new Callback() {
                             @Override
-                            public void onClick(View view) {
-                                try {
-                                    stream.write("input keyevent 4\n");
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                nameTextView.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        nameTextView.setText(mName);
+                                    }
+                                });
+                                dialogInterface.dismiss();
                             }
                         });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-            }
-        }).start();*/
-        //
-        backFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new GetUtil().sendGet("http://192.168.43.194:2333/input%20keyevent%204", new GetUtil.GetCallback() {
-                    @Override
-                    public void onGetDone(String result) {
+            });
+            builder.setNegativeButton(R.string.cancael, (dialogInterface, i) -> dialogInterface.dismiss());
+            AlertDialog materialDialogs = builder.create();
+            materialDialogs.setCancelable(false);
+            materialDialogs.show();
+            materialDialogs.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
+            materialDialogs.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorAccent));
+        });*/
 
-                    }
-                });
-            }
-        });
-    }
-
-    public static Socket connectSocket(String ip, int port) throws IOException {
-        // Connect the socket to the remote host
-        return new Socket(ip, port);
     }
 
     @Override
@@ -138,13 +124,64 @@ public class MainActivity extends BaseActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                showSettings();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
+        ScreenSlidePagerAdapter(FragmentActivity fa) {
+            super(fa);
         }
 
-        return super.onOptionsItemSelected(item);
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            switch (position) {
+                default:
+                    return new KeyEventFragment(sharedPreferences,editor);
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return NUM_PAGES;
+        }
+    }
+    private void showSettings() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
+        builder.setTitle(R.string.action_settings);
+        LayoutInflater inflater = getLayoutInflater();
+        final View view = inflater.inflate(R.layout.dialog_settings, null);
+        TextInputEditText ipTextInputEditText = view.findViewById(R.id.ipTextInputEditText);
+        ipTextInputEditText.setText(sharedPreferences.getString("ip", ""));
+        builder.setView(view);
+        builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+            String mIp = ipTextInputEditText.getText().toString();
+            if (mIp.equals("")) {
+                Toast.makeText(this, R.string.notAllowedToBeEmpty, Toast.LENGTH_SHORT).show();
+            } else {
+                ip = mIp;
+                editor.putString("ip", mIp);
+                editor.apply();
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setNegativeButton(R.string.cancael, (dialogInterface, i) -> {
+            String mIp = ipTextInputEditText.getText().toString();
+            if (mIp.equals("")) {
+                Toast.makeText(this, R.string.notAllowedToBeEmpty, Toast.LENGTH_SHORT).show();
+            } else {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog materialDialogs = builder.create();
+        materialDialogs.setCancelable(false);
+        materialDialogs.show();
+        materialDialogs.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
+        materialDialogs.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorAccent));
     }
 }

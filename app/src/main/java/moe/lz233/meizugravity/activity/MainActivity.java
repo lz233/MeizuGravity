@@ -19,8 +19,10 @@ import com.microsoft.appcenter.crashes.Crashes;
 
 import java.util.ArrayList;
 
+import moe.lz233.meizugravity.BuildConfig;
 import moe.lz233.meizugravity.R;
 import moe.lz233.meizugravity.services.CommandService;
+import moe.lz233.meizugravity.utils.FileUtil;
 import moe.lz233.meizugravity.utils.ToastUtil;
 import moe.lz233.meizugravity.utils.ViewPager2Util;
 

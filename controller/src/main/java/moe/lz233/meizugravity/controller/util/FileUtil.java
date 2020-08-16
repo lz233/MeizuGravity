@@ -1,4 +1,4 @@
-package moe.lz233.meizugravity.utils;
+package moe.lz233.meizugravity.controller.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,6 @@ import androidx.core.content.FileProvider;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,6 +17,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+
+import moe.lz233.meizugravity.controller.BuildConfig;
 
 public class FileUtil {
 
@@ -31,7 +32,7 @@ public class FileUtil {
             File file = new File(FilePath);
             isFile = file.isFile();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return isFile;
     }
@@ -81,31 +82,28 @@ public class FileUtil {
 
     public static void copyFile(final String From, final String To, final Boolean move, Boolean isBlocking) {
         final Boolean[] isFinish = new Boolean[1];
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String Directory = To.substring(0, To.lastIndexOf("/"));
-                    if (!isDirectory(Directory)) {
-                        File file = new File(Directory);
-                        file.mkdir();
-                    }
-                    InputStream in = new FileInputStream(From);
-                    OutputStream out = new FileOutputStream(To);
-                    byte[] buff = new byte[1024];
-                    int len;
-                    while ((len = in.read(buff)) != -1) {
-                        out.write(buff, 0, len);
-                    }
-                    in.close();
-                    out.close();
-                    if (move) {
-                        deleteFile(From);
-                    }
-                    isFinish[0] = true;
-                } catch (Exception e) {
-                    e.printStackTrace();
+        new Thread(() -> {
+            try {
+                String Directory = To.substring(0, To.lastIndexOf("/"));
+                if (!isDirectory(Directory)) {
+                    File file = new File(Directory);
+                    file.mkdir();
                 }
+                InputStream in = new FileInputStream(From);
+                OutputStream out = new FileOutputStream(To);
+                byte[] buff = new byte[1024];
+                int len;
+                while ((len = in.read(buff)) != -1) {
+                    out.write(buff, 0, len);
+                }
+                in.close();
+                out.close();
+                if (move) {
+                    deleteFile(From);
+                }
+                isFinish[0] = true;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
         if (isBlocking) {
@@ -115,58 +113,45 @@ public class FileUtil {
         }
     }
 
-    public static boolean copyAssets(Context context, String assetDir, String dir) {
-        String[] files;
-        boolean ifSucceed = true;
+    /**
+     * 从assets目录中复制整个文件夹内容,考贝到 /data/data/包名/files/目录中
+     *
+     * @param activity activity 使用CopyFiles类的Activity
+     * @param filePath String  文件路径,如：/assets/aa
+     */
+    public static void copyAssetsDir2Phone(Activity activity, String filePath) {
         try {
-            files = context.getResources().getAssets().list(assetDir);
-        } catch (IOException e1) {
-            return false;
-        }
-        File mWorkingPath = new File(dir);
-        // if this directory does not exists, make one.
-        if (!mWorkingPath.exists()) {
-            if (!mWorkingPath.mkdirs()) {
-            }
-        }
-        for (int i = 0; i < files.length; i++) {
-            try {
-                String fileName = files[i];
-                // we make sure file name not contains '.' to be a folder.
-                if (!fileName.contains(".")) {
-                    if (0 == assetDir.length()) {
-                        copyAssets(context, fileName, dir + fileName + "/");
-                    } else {
-                        copyAssets(context, assetDir + "/" + fileName, dir + fileName + "/");
+            String[] fileList = activity.getAssets().list(filePath);
+            if (fileList.length > 0) {//如果是目录
+                File file = new File(activity.getFilesDir().getAbsolutePath() + File.separator + filePath);
+                file.mkdirs();//如果文件夹不存在，则递归
+                for (String fileName : fileList) {
+                    filePath = filePath + File.separator + fileName;
+
+                    copyAssetsDir2Phone(activity, filePath);
+
+                    filePath = filePath.substring(0, filePath.lastIndexOf(File.separator));
+                    Log.e("oldPath", filePath);
+                }
+            } else {//如果是文件
+                InputStream inputStream = activity.getAssets().open(filePath);
+                File file = new File(activity.getFilesDir().getAbsolutePath() + File.separator + filePath);
+                if (!file.exists() || file.length() == 0) {
+                    FileOutputStream fos = new FileOutputStream(file);
+                    int len = -1;
+                    byte[] buffer = new byte[1024];
+                    while ((len = inputStream.read(buffer)) != -1) {
+                        fos.write(buffer, 0, len);
                     }
-                    continue;
+                    fos.flush();
+                    inputStream.close();
+                    fos.close();
+                } else {
                 }
-                File outFile = new File(mWorkingPath, fileName);
-                if (outFile.exists())
-                    outFile.delete();
-                InputStream in = null;
-                if (0 != assetDir.length())
-                    in = context.getAssets().open(assetDir + "/" + fileName);
-                else
-                    in = context.getAssets().open(fileName);
-                OutputStream out = new FileOutputStream(outFile);
-                // Transfer bytes from in to out
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                in.close();
-                out.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                ifSucceed = false;
-            } catch (IOException e) {
-                e.printStackTrace();
-                ifSucceed = false;
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return ifSucceed;
     }
 
     public static String readTextFromFile(String FilePath) {
@@ -214,46 +199,7 @@ public class FileUtil {
         }
         return imageUri;
     }
-    /**
-     * 从assets目录中复制整个文件夹内容,考贝到 /data/data/包名/files/目录中
-     *
-     * @param activity activity 使用CopyFiles类的Activity
-     * @param filePath String  文件路径,如：/assets/aa
-     */
-    public static void copyAssetsDir2Phone(Activity activity, String filePath) {
-        try {
-            String[] fileList = activity.getAssets().list(filePath);
-            if (fileList.length > 0) {//如果是目录
-                File file = new File(activity.getFilesDir().getAbsolutePath() + File.separator + filePath);
-                file.mkdirs();//如果文件夹不存在，则递归
-                for (String fileName : fileList) {
-                    filePath = filePath + File.separator + fileName;
 
-                    copyAssetsDir2Phone(activity, filePath);
-
-                    filePath = filePath.substring(0, filePath.lastIndexOf(File.separator));
-                    Log.e("oldPath", filePath);
-                }
-            } else {//如果是文件
-                InputStream inputStream = activity.getAssets().open(filePath);
-                File file = new File(activity.getFilesDir().getAbsolutePath() + File.separator + filePath);
-                if (!file.exists() || file.length() == 0) {
-                    FileOutputStream fos = new FileOutputStream(file);
-                    int len = -1;
-                    byte[] buffer = new byte[1024];
-                    while ((len = inputStream.read(buffer)) != -1) {
-                        fos.write(buffer, 0, len);
-                    }
-                    fos.flush();
-                    inputStream.close();
-                    fos.close();
-                } else {
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public static String shellExec(String cmd) {
         Runtime mRuntime = Runtime.getRuntime();
         StringBuffer mRespBuff = new StringBuffer();

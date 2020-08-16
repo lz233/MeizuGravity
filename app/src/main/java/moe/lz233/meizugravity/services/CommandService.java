@@ -14,7 +14,11 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import moe.lz233.meizugravity.BuildConfig;
+import moe.lz233.meizugravity.utils.FileUtil;
 import okhttp3.Response;
+
+import static moe.lz233.meizugravity.utils.FileUtil.shellExec;
 
 public class CommandService extends Service {
     public CommandService() {
@@ -60,7 +64,9 @@ public class CommandService extends Service {
                                     Log.d("CommandService",str);
                                     //Response response = new Response.Builder().
                                     String flags = str.substring(str.indexOf("GET") + 5, str.indexOf(" HTTP"));
-                                    outputStream.write(addHeader(shellExec(flags.replace("%20"," "))).getBytes());
+                                    //FileUtil.shellExec("adb disconnect");
+                                    //FileUtil.shellExec("adb connect localhost:7788");
+                                    outputStream.write(addHeader(FileUtil.shellExec(flags.replace("%20"," "))).getBytes());
                                     Log.d("CommandService", "----------------------------------------\n" + str + "\n----------------------------------------");
                                     inputStream.close();
                                     outputStream.close();
@@ -77,28 +83,8 @@ public class CommandService extends Service {
             }).start();
         }
     }
-    public String shellExec(String cmd) {
-        Runtime mRuntime = Runtime.getRuntime();
-        StringBuffer mRespBuff = new StringBuffer();
-        try {
-            //Process中封装了返回的结果和执行错误的结果
-            Process mProcess = mRuntime.exec(cmd);
-            BufferedReader mReader = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
-            char[] buff = new char[1024];
-            int ch = 0;
-            while ((ch = mReader.read(buff)) != -1) {
-                mRespBuff.append(buff, 0, ch);
-            }
-            mReader.close();
-            System.out.print(mRespBuff.toString());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return mRespBuff.toString();
-    }
     private String addHeader(String string) {
-        String header = "HTTP/1.1 200 OK\nContent-Type: text/html; charset=UTF-8\n\n";
+        String header = "HTTP/1.1 200 OK\nContent-Type: text/plain; charset=UTF-8\n\n";
         return header + string;
     }
 }

@@ -10,9 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BaseActivity extends AppCompatActivity {
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private ViewGroup rootView;
+    protected SharedPreferences sharedPreferences;
+    protected SharedPreferences.Editor editor;
+    protected ViewGroup rootView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

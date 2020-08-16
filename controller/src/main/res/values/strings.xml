@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Gravity Controller</string>
     <string name="action_settings">Settings</string>
+    <string name="ip">IP</string>
+    <string name="port">Port</string>
+    <string name="ok">OK</string>
+    <string name="cancael">Cancel</string>
+    <string name="notAllowedToBeEmpty">Not allowed to be empty.</string>
+    <string name="name">Name</string>
 </resources>
