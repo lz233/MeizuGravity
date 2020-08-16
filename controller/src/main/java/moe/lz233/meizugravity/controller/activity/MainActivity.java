@@ -2,6 +2,7 @@ package moe.lz233.meizugravity.controller.activity;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,14 +22,21 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.Socket;
 
 import moe.lz233.meizugravity.controller.BuildConfig;
 import moe.lz233.meizugravity.controller.R;
 import moe.lz233.meizugravity.controller.fragment.KeyEventFragment;
 import moe.lz233.meizugravity.controller.util.FileUtil;
+import moe.lz233.meizugravity.controller.util.libadb.AdbConnection;
+import moe.lz233.meizugravity.controller.util.libadb.AdbCrypto;
+import moe.lz233.meizugravity.controller.util.libadb.AdbStream;
 import okhttp3.MediaType;
 
+import static moe.lz233.meizugravity.controller.fragment.BaseFragment.connectSocket;
+
 public class MainActivity extends BaseActivity {
+
     private String ip;
     private static final int NUM_PAGES = 1;
     private MediaType json = MediaType.parse("application/json; charset=utf-8");
@@ -63,52 +71,6 @@ public class MainActivity extends BaseActivity {
         viewPager2.setAdapter(fragmentStateAdapter);
         viewPager2.setOffscreenPageLimit(2);
         //
-        /*nameTextView.setOnClickListener(view -> {
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
-            builder.setTitle(R.string.name);
-            LayoutInflater inflater = getLayoutInflater();
-            final View view1 = inflater.inflate(R.layout.dialog_rename, null);
-            TextInputEditText nameTextInputEditText = view1.findViewById(R.id.nameTextInputEditText);
-            nameTextInputEditText.setText(nameTextView.getText());
-            builder.setView(view1);
-            builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                String mName = nameTextInputEditText.getText().toString();
-                if (mName.equals("")) {
-                    Toast.makeText(MainActivity.this, R.string.notAllowedToBeEmpty, Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        RequestBody requestBody = RequestBody.create(new JSONObject().put("deviceName",mName).toString(),json);
-                        Request request = new Request.Builder().url("http://"+ip+":7766/Rename").post(requestBody).build();
-                        OkHttpClient okHttpClient = new OkHttpClient();
-                        okHttpClient.newCall(request).enqueue(new Callback() {
-                            @Override
-                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                            }
-
-                            @Override
-                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                nameTextView.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        nameTextView.setText(mName);
-                                    }
-                                });
-                                dialogInterface.dismiss();
-                            }
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            builder.setNegativeButton(R.string.cancael, (dialogInterface, i) -> dialogInterface.dismiss());
-            AlertDialog materialDialogs = builder.create();
-            materialDialogs.setCancelable(false);
-            materialDialogs.show();
-            materialDialogs.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
-            materialDialogs.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorAccent));
-        });*/
 
     }
 
@@ -121,11 +83,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.actionSettings:
                 showSettings();
                 break;
         }
@@ -153,7 +112,7 @@ public class MainActivity extends BaseActivity {
     }
     private void showSettings() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
-        builder.setTitle(R.string.action_settings);
+        builder.setTitle(R.string.actionSettings);
         LayoutInflater inflater = getLayoutInflater();
         final View view = inflater.inflate(R.layout.dialog_settings, null);
         TextInputEditText ipTextInputEditText = view.findViewById(R.id.ipTextInputEditText);

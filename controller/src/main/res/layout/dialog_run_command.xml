@@ -5,12 +5,12 @@
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/nameTextInputEditText"
+        android:id="@+id/commandTextInputEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/layout_margin"
         android:layout_marginTop="@dimen/layout_margin"
         android:layout_marginEnd="@dimen/layout_margin"
         android:layout_marginBottom="@dimen/content_margin"
-        android:hint="@string/name" />
+        android:hint="@string/actionRunCommand" />
 </LinearLayout>
