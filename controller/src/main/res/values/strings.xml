@@ -7,5 +7,20 @@
     <string name="ok">OK</string>
     <string name="cancael">Cancel</string>
     <string name="notAllowedToBeEmpty">Not allowed to be empty.</string>
-    <string name="name">Name</string>
+    <string name="acoustics">Acoustics：</string>
+    <string name="acousticsType0">Standard</string>
+    <string name="acousticsType1">Dirac</string>
+    <string name="acousticsType2">Radio</string>
+    <string name="acousticsType3">Pop</string>
+    <string name="acousticsType4">Classic</string>
+    <string name="acousticsType5">Rock</string>
+    <string name="actionOpenCloudMusic">Open CloudMusic</string>
+    <string name="deviceName">Name</string>
+    <string name="deviceID">ID</string>
+    <string name="deviceVer">Device Version</string>
+    <string name="deviceVersionCode">Device Version Code</string>
+    <string name="deviceBspVer">Bsp Version</string>
+    <string name="deviceBootVer">Boot Version</string>
+    <string name="deviceKernelVer">Kernel Version</string>
+    <string name="actionDeviceInfo">Device Information</string>
 </resources>

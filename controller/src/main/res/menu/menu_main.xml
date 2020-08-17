@@ -8,4 +8,14 @@
         android:icon="@drawable/ic_settings"
         android:title="@string/actionSettings"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/actionOpenCloudMusic"
+        android:orderInCategory="100"
+        android:title="@string/actionOpenCloudMusic"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/actionDeviceInfo"
+        android:orderInCategory="100"
+        android:title="@string/actionDeviceInfo"
+        app:showAsAction="never" />
 </menu>

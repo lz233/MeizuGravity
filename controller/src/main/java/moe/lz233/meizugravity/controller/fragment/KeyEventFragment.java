@@ -1,42 +1,43 @@
 package moe.lz233.meizugravity.controller.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.warkiz.widget.IndicatorSeekBar;
+import com.warkiz.widget.OnSeekChangeListener;
+import com.warkiz.widget.SeekParams;
 
-import java.io.BufferedReader;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
 
-import moe.lz233.meizugravity.controller.BuildConfig;
 import moe.lz233.meizugravity.controller.R;
-import moe.lz233.meizugravity.controller.activity.MainActivity;
-import moe.lz233.meizugravity.controller.util.FileUtil;
-import moe.lz233.meizugravity.controller.util.GetUtil;
-import moe.lz233.meizugravity.controller.util.libadb.AdbConnection;
-import moe.lz233.meizugravity.controller.util.libadb.AdbCrypto;
-import moe.lz233.meizugravity.controller.util.libadb.AdbStream;
+import moe.lz233.meizugravity.controller.service.AdbService;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static moe.lz233.meizugravity.controller.util.UriUtil.getHostUri;
 
 public class KeyEventFragment extends BaseFragment {
-    private static AdbStream stream;
-    private static AdbConnection adb;
-    private static Socket sock = null;
-    private static AdbCrypto crypto;
+    private OkHttpClient client = new OkHttpClient();
 
     private FloatingActionButton upFloatingActionButton;
     private FloatingActionButton leftFloatingActionButton;
@@ -44,19 +45,22 @@ public class KeyEventFragment extends BaseFragment {
     private FloatingActionButton rightFloatingActionButton;
     private FloatingActionButton downFloatingActionButton;
     private ExtendedFloatingActionButton runCommandExtendedFloatingActionButton;
-    private ExtendedFloatingActionButton volumeDownExtendedFloatingActionButton;
-    private ExtendedFloatingActionButton volumeUpExtendedFloatingActionButton;
+    private IndicatorSeekBar volumeIndicatorSeekBar;
     private FloatingActionButton backFloatingActionButton;
-    private FloatingActionButton homeFloatingActionButton;
-    private FloatingActionButton menuFloatingActionButton;
-    public KeyEventFragment(SharedPreferences sharedPreferences, SharedPreferences.Editor editor){
+    private FloatingActionButton playFloatingActionButton;
+    private FloatingActionButton powerFloatingActionButton;
+
+    public KeyEventFragment() {
+    }
+
+    public KeyEventFragment(SharedPreferences sharedPreferences, SharedPreferences.Editor editor) {
         super(sharedPreferences, editor);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_keyevent,container,false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_keyevent, container, false);
         //
         upFloatingActionButton = rootView.findViewById(R.id.upFloatingActionButton);
         leftFloatingActionButton = rootView.findViewById(R.id.leftFloatingActionButton);
@@ -64,74 +68,49 @@ public class KeyEventFragment extends BaseFragment {
         rightFloatingActionButton = rootView.findViewById(R.id.rightFloatingActionButton);
         downFloatingActionButton = rootView.findViewById(R.id.downFloatingActionButton);
         runCommandExtendedFloatingActionButton = rootView.findViewById(R.id.runCommandExtendedFloatingActionButton);
-        volumeDownExtendedFloatingActionButton = rootView.findViewById(R.id.volumeDownExtendedFloatingActionButton);
-        volumeUpExtendedFloatingActionButton = rootView.findViewById(R.id.volumeUpExtendedFloatingActionButton);
+        volumeIndicatorSeekBar = rootView.findViewById(R.id.volumeIndicatorSeekBar);
         backFloatingActionButton = rootView.findViewById(R.id.backFloatingActionButton);
-        homeFloatingActionButton = rootView.findViewById(R.id.homeFloatingActionButton);
-        menuFloatingActionButton = rootView.findViewById(R.id.menuFloatingActionButton);
+        playFloatingActionButton = rootView.findViewById(R.id.playFloatingActionButton);
+        powerFloatingActionButton = rootView.findViewById(R.id.powerFloatingActionButton);
         //
-        new Thread(() -> {
-            try {
-                sock = connectSocket(sharedPreferences.getString("ip",""),7788);
-                crypto = AdbCrypto.setupCrypto("pub.key","priv.key",getContext());
-                adb = AdbConnection.create(sock,crypto);
-                adb.connect();
-                stream = adb.open("shell:");
-            } catch (Exception e) {
-                e.printStackTrace();
+        client.newCall(new Request.Builder().get().url(getHostUri(getActivity(),"7766")+"Info").build()).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
             }
-        }).start();
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string()).getJSONObject("data");
+                    volumeIndicatorSeekBar.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            volumeIndicatorSeekBar.setProgress(jsonObject.optInt("currentVolume"));
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         //
-        upFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 19\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start());
-        leftFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 21\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start());
-        centerFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 66\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start());
-        rightFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 22\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start());
-        downFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 20\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start());
+        upFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 19")));
+        leftFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 21")));
+        centerFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 66")));
+        rightFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 22")));
+        downFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 20")));
         runCommandExtendedFloatingActionButton.setOnClickListener(view -> {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
             builder.setTitle(R.string.actionRunCommand);
             final View view1 = inflater.inflate(R.layout.dialog_run_command, null);
             TextInputEditText commandTextInputEditText = view1.findViewById(R.id.commandTextInputEditText);
-            commandTextInputEditText.setText("input text ");
+            commandTextInputEditText.setText(sharedPreferences.getString("command", "input text "));
             builder.setView(view1);
             builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                new Thread(() -> {
-                    try {
-                        stream.write(commandTextInputEditText.getText().toString()+"\n");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }).start();
+                editor.putString("command", commandTextInputEditText.getText().toString());
+                editor.apply();
+                getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", commandTextInputEditText.getText().toString()));
             });
             builder.setNegativeButton(R.string.cancael, (dialogInterface, i) -> {
                 dialogInterface.dismiss();
@@ -142,41 +121,41 @@ public class KeyEventFragment extends BaseFragment {
             materialDialogs.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
             materialDialogs.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorAccent));
         });
-        volumeDownExtendedFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 25\n");
-            } catch (Exception e) {
-                e.printStackTrace();
+        volumeIndicatorSeekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
+            @Override
+            public void onSeeking(SeekParams seekParams) {
+
             }
-        }).start());
-        volumeUpExtendedFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 24\n");
-            } catch (Exception e) {
-                e.printStackTrace();
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+
             }
-        }).start());
-        backFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 4\n");
-            } catch (Exception e) {
-                e.printStackTrace();
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                try {
+                    RequestBody requestBody = RequestBody.create(new JSONObject().put("CurrentVolume",seekBar.getProgress()).toString(),json);
+                    Request request = new Request.Builder().post(requestBody).url(getHostUri(getActivity(),"7766")+"SetVolume").build();
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                        }
+
+                        @Override
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }).start());
-        homeFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 3\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start());
-        menuFloatingActionButton.setOnClickListener(view -> new Thread(() -> {
-            try {
-                stream.write("input keyevent 82\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start());
+        });
+        backFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 4")));
+        playFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 85")));
+        powerFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 26")));
         return rootView;
     }
 }

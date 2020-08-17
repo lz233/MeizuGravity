@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -22,7 +23,7 @@
                 app:backgroundTint="@color/colorWhite"
                 app:fabCustomSize="95dp"
                 app:maxImageSize="40dp"
-                app:srcCompat="@drawable/ic_play"
+                app:srcCompat="@drawable/ic_enter"
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -73,10 +74,10 @@
                 app:srcCompat="@drawable/ic_keyboard_arrow_down"
                 app:tint="@color/colorAccent2" />
         </FrameLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layout_margin">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -96,38 +97,60 @@
                     app:iconTint="@color/colorAccent2" />
             </LinearLayout>
         </FrameLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="@dimen/layout_margin"
+                android:layout_marginBottom="@dimen/layout_margin"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="6dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/layout_margin"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="@dimen/layout_margin"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="6dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
                 android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginStart="74dp"
+                android:layout_marginTop="@dimen/layout_margin"
+                android:layout_marginEnd="74dp"
+                android:layout_marginBottom="@dimen/layout_margin"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="6dp">
 
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/volumeDownExtendedFloatingActionButton"
-                    android:layout_width="wrap_content"
+                <com.warkiz.widget.IndicatorSeekBar
+                    android:id="@+id/volumeIndicatorSeekBar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/layout_margin"
-                    android:text="DOWN"
-                    android:textColor="@color/colorAccent2"
-                    app:backgroundTint="@color/colorWhite"
-                    app:icon="@drawable/ic_volume_down"
-                    app:iconTint="@color/colorAccent2" />
-
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/volumeUpExtendedFloatingActionButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/layout_margin"
-                    android:text="UP"
-                    android:textColor="@color/colorAccent2"
-                    app:backgroundTint="@color/colorWhite"
-                    app:icon="@drawable/ic_volume_up"
-                    app:iconTint="@color/colorAccent2" />
-            </LinearLayout>
+                    android:layout_gravity="center"
+                    android:thumbTint="@color/colorAccent2"
+                    app:isb_indicator_color="@color/colorAccent2"
+                    app:isb_indicator_text_color="@color/colorWhite"
+                    app:isb_max="100"
+                    app:isb_show_indicator="circular_bubble"
+                    app:isb_thumb_color="@color/colorAccent2"
+                    app:isb_track_progress_color="@color/colorAccent3" />
+            </com.google.android.material.card.MaterialCardView>
         </FrameLayout>
 
         <FrameLayout
@@ -137,16 +160,16 @@
             android:orientation="horizontal">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/homeFloatingActionButton"
+                android:id="@+id/playFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="85dp"
+                app:fabCustomSize="80dp"
                 app:maxImageSize="35dp"
-                app:srcCompat="@drawable/ic_home"
+                app:srcCompat="@drawable/ic_play"
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -156,21 +179,21 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="110dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="85dp"
+                app:fabCustomSize="80dp"
                 app:maxImageSize="35dp"
                 app:srcCompat="@drawable/ic_back"
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/menuFloatingActionButton"
+                android:id="@+id/powerFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="110dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="85dp"
+                app:fabCustomSize="80dp"
                 app:maxImageSize="35dp"
-                app:srcCompat="@drawable/ic_menu"
+                app:srcCompat="@drawable/ic_power"
                 app:tint="@color/colorAccent2" />
         </FrameLayout>
     </LinearLayout>
