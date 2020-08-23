@@ -73,27 +73,7 @@ public class KeyEventFragment extends BaseFragment {
         playFloatingActionButton = rootView.findViewById(R.id.playFloatingActionButton);
         powerFloatingActionButton = rootView.findViewById(R.id.powerFloatingActionButton);
         //
-        client.newCall(new Request.Builder().get().url(getHostUri(getActivity(),"7766")+"Info").build()).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    JSONObject jsonObject = new JSONObject(response.body().string()).getJSONObject("data");
-                    volumeIndicatorSeekBar.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            volumeIndicatorSeekBar.setProgress(jsonObject.optInt("currentVolume"));
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
         //
         upFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 19")));
         leftFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 21")));
@@ -157,5 +137,26 @@ public class KeyEventFragment extends BaseFragment {
         playFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 85")));
         powerFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 26")));
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        client.newCall(new Request.Builder().get().url(getHostUri(getActivity(),"7766")+"Info").build()).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string()).getJSONObject("data");
+                    volumeIndicatorSeekBar.post(() -> volumeIndicatorSeekBar.setProgress(jsonObject.optInt("currentVolume")));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

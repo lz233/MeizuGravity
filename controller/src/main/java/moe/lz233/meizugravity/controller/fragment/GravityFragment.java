@@ -1,10 +1,15 @@
 package moe.lz233.meizugravity.controller.fragment;
 
 import android.animation.LayoutTransition;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 
 import moe.lz233.meizugravity.controller.R;
+import moe.lz233.meizugravity.controller.service.AdbService;
 import moe.lz233.meizugravity.controller.util.DownloadUtil;
 import moe.lz233.meizugravity.controller.view.AdjustImageView;
 import okhttp3.Call;
@@ -76,98 +82,102 @@ public class GravityFragment extends BaseFragment {
         getSongInfo();
         //
         gravitySwipeRefreshLayout.setOnRefreshListener(() -> getSongInfo());
-        acousticsExtendedFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
-                builder.setTitle(R.string.acoustics);
-                builder.setItems(new String[]{getString(R.string.acousticsType0), getString(R.string.acousticsType1), getString(R.string.acousticsType2), getString(R.string.acousticsType3), getString(R.string.acousticsType4), getString(R.string.acousticsType5)}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        try {
-                            RequestBody requestBody = RequestBody.create(new JSONObject().put("EQMode", i).toString(), json);
-                            Request request = new Request.Builder().post(requestBody).url(getHostUri(getActivity(), "7766") + "SetEQMode").build();
-                            client.newCall(request).enqueue(new Callback() {
-                                @Override
-                                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        acousticsExtendedFloatingActionButton.setOnClickListener(view -> {
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+            builder.setTitle(R.string.acoustics);
+            builder.setItems(new String[]{getString(R.string.acousticsType0), getString(R.string.acousticsType1), getString(R.string.acousticsType2), getString(R.string.acousticsType3), getString(R.string.acousticsType4), getString(R.string.acousticsType5)}, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    try {
+                        RequestBody requestBody = RequestBody.create(new JSONObject().put("EQMode", i).toString(), json);
+                        Request request = new Request.Builder().post(requestBody).url(getHostUri(getActivity(), "7766") + "SetEQMode").build();
+                        client.newCall(request).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                                }
-
-                                @Override
-                                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                    acousticsExtendedFloatingActionButton.post(() -> acousticsExtendedFloatingActionButton.setText(getString(R.string.acoustics) + getEQName(i)));
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                AlertDialog materialDialogs = builder.create();
-                materialDialogs.setCancelable(true);
-                materialDialogs.show();
-            }
-        });
-        prevFloatingActionButton.setOnClickListener(view -> client.newCall(new Request.Builder().get().url(getHostUri(getActivity(), "7766") + "Prev").build()).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-            }
-        }));
-        playFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                client.newCall(new Request.Builder().get().url(getHostUri(getActivity(),"7766")+"Status").build()).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        try {
-                            String status = new JSONObject(response.body().string()).getJSONObject("data").optString("status");
-                            String cmd;
-                            switch (status){
-                                default:
-                                    cmd = "Play";
-                                    break;
-                                case "STARTED":
-                                    cmd = "Pause";
-                                    break;
                             }
-                            client.newCall(new Request.Builder().get().url(getHostUri(getActivity(),"7766")+cmd).build()).enqueue(new Callback() {
-                                @Override
-                                public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                                }
-
-                                @Override
-                                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                                }
-                            });
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                acousticsExtendedFloatingActionButton.post(() -> acousticsExtendedFloatingActionButton.setText(getString(R.string.acoustics) + getEQName(i)));
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                });
-            }
+                }
+            });
+            AlertDialog materialDialogs = builder.create();
+            materialDialogs.setCancelable(true);
+            materialDialogs.show();
         });
-        nextFloatingActionButton.setOnClickListener(view -> client.newCall(new Request.Builder().get().url(getHostUri(getActivity(), "7766") + "Next").build()).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
-            }
+        prevFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 88")));
+        prevFloatingActionButton.setOnLongClickListener(view -> {
+            client.newCall(new Request.Builder().get().url(getHostUri(getActivity(), "7766") + "Prev").build()).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    e.printStackTrace();
+                }
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-            }
-        }));
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                }
+            });
+            return true;
+        });
+        playFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 85")));
+        playFloatingActionButton.setOnLongClickListener(view -> {
+            client.newCall(new Request.Builder().get().url(getHostUri(getActivity(),"7766")+"Status").build()).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    try {
+                        String status = new JSONObject(response.body().string()).getJSONObject("data").optString("status");
+                        String cmd;
+                        switch (status){
+                            default:
+                                cmd = "Play";
+                                break;
+                            case "STARTED":
+                                cmd = "Pause";
+                                break;
+                        }
+                        client.newCall(new Request.Builder().get().url(getHostUri(getActivity(),"7766")+cmd).build()).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                            }
+                        });
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+            return true;
+        });
+        nextFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 87")));
+        nextFloatingActionButton.setOnLongClickListener(view -> {
+            client.newCall(new Request.Builder().get().url(getHostUri(getActivity(), "7766") + "Next").build()).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                }
+            });
+            return true;
+        });
         return rootView;
     }
 
@@ -193,7 +203,7 @@ public class GravityFragment extends BaseFragment {
         client.newCall(new Request.Builder().get().url(getHostUri(getActivity(), "7766") + "Status").build()).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
+                gravitySwipeRefreshLayout.post(() -> gravitySwipeRefreshLayout.setRefreshing(false));
             }
 
             @Override
@@ -229,11 +239,11 @@ public class GravityFragment extends BaseFragment {
 
                             @Override
                             public void onDownloadFailed(Exception e) {
-                                gravitySwipeRefreshLayout.setRefreshing(false);
+                                gravitySwipeRefreshLayout.post(() -> gravitySwipeRefreshLayout.setRefreshing(false));
                             }
                         });
                     } else {
-                        gravitySwipeRefreshLayout.setRefreshing(false);
+                        gravitySwipeRefreshLayout.post(() -> gravitySwipeRefreshLayout.setRefreshing(false));
                     }
                     editor.putString("trackTitle", trackJsonObject.optString("trackTitle"));
                     editor.apply();

@@ -12,7 +12,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/content_margin"
+            android:layout_marginTop="@dimen/layout_margin"
             android:layout_weight="1">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,8 +21,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="80dp"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="95dp"
+                app:maxImageSize="40dp"
                 app:srcCompat="@drawable/ic_enter"
                 app:tint="@color/colorAccent2" />
 
@@ -31,10 +31,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="85dp"
+                android:layout_marginBottom="115dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="70dp"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="85dp"
+                app:maxImageSize="40dp"
                 app:srcCompat="@drawable/ic_keyboard_arrow_up"
                 app:tint="@color/colorAccent2" />
 
@@ -43,10 +43,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="85dp"
+                android:layout_marginEnd="115dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="70dp"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="85dp"
+                app:maxImageSize="40dp"
                 app:srcCompat="@drawable/ic_keyboard_arrow_left"
                 app:tint="@color/colorAccent2" />
 
@@ -55,10 +55,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="85dp"
+                android:layout_marginStart="115dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="70dp"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="85dp"
+                app:maxImageSize="40dp"
                 app:srcCompat="@drawable/ic_keyboard_arrow_right"
                 app:tint="@color/colorAccent2" />
 
@@ -67,10 +67,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="85dp"
+                android:layout_marginTop="115dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="70dp"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="85dp"
+                app:maxImageSize="40dp"
                 app:srcCompat="@drawable/ic_keyboard_arrow_down"
                 app:tint="@color/colorAccent2" />
         </FrameLayout>
@@ -89,10 +89,7 @@
                     android:id="@+id/runCommandExtendedFloatingActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/layout_margin"
-                    android:layout_marginTop="@dimen/content_margin"
-                    android:layout_marginEnd="@dimen/layout_margin"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="@dimen/layout_margin"
                     android:text="@string/actionRunCommand"
                     android:textColor="@color/colorAccent2"
                     app:backgroundTint="@color/colorWhite"
@@ -112,8 +109,8 @@
                 android:layout_height="46dp"
                 android:layout_gravity="start"
                 android:layout_marginStart="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/layout_margin"
+                android:layout_marginBottom="@dimen/layout_margin"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="6dp" />
@@ -122,9 +119,9 @@
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_gravity="end"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/layout_margin"
                 android:layout_marginEnd="50dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/layout_margin"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="6dp" />
@@ -134,9 +131,9 @@
                 android:layout_height="46dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="73dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/layout_margin"
                 android:layout_marginEnd="73dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/layout_margin"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="6dp">
@@ -159,6 +156,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin"
             android:orientation="horizontal">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -166,11 +164,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/content_margin"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="70dp"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="80dp"
+                app:maxImageSize="35dp"
                 app:srcCompat="@drawable/ic_play"
                 app:tint="@color/colorAccent2" />
 
@@ -179,10 +177,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="90dp"
+                android:layout_marginEnd="110dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="70dp"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="80dp"
+                app:maxImageSize="35dp"
                 app:srcCompat="@drawable/ic_back"
                 app:tint="@color/colorAccent2" />
 
@@ -191,10 +189,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="90dp"
+                android:layout_marginStart="110dp"
                 app:backgroundTint="@color/colorWhite"
-                app:fabCustomSize="70dp"
-                app:maxImageSize="30dp"
+                app:fabCustomSize="80dp"
+                app:maxImageSize="35dp"
                 app:srcCompat="@drawable/ic_power"
                 app:tint="@color/colorAccent2" />
         </FrameLayout>

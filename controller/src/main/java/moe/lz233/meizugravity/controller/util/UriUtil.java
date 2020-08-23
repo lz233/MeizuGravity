@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 public class UriUtil {
     public static String getHostUri(Context context,String port) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("setting",Context.MODE_PRIVATE);
-        return "http://" + sharedPreferences.getString("ip", "") + ":" + port + "/";
+        return "http://" + sharedPreferences.getString("ip", "127.0.0.1") + ":" + port + "/";
     }
 
     public static String getCmdUri(Context context,String cmd) {

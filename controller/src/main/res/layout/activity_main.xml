@@ -20,7 +20,6 @@
             app:navigationIcon="@drawable/ic_close"
             app:contentInsetStartWithNavigation="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="Meizu Gravity"
             app:titleTextColor="@color/colorAccent"/>
 
     </com.google.android.material.appbar.AppBarLayout>
