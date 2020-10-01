@@ -2,6 +2,14 @@
     <string name="app_name">Meizu Gravity +</string>
     <string name="dashboard">Dashboard</string>
     <string name="setting">Setting</string>
+    <string name="settingTips">Send a GET request through port 2333 to modify the settings.\n
+        Example: 192.168.43.192:2333/brightness=0.2\n\n
+        The following request values are available:\n
+        [boolean]autoSleep-Adjust whether DashBoard opens automatically.\n
+        [int]overTime-Adjust the time when DashBoard is opened.\n
+        [float]brightness-Adjust the brightness of DashBoard.\n
+        [string]location-used to display the local weather.\n
+        [string]coolapkUid-used to display the specified Coolapk user information.\n</string>
     <string name="about">About</string>
     <string name="unsupportDeviceSummary">This device is not supported. This application only supports Meizu Gravity.</string>
     <string name="firstTips">Tap "Next" to return\nTap "Play" to enter the selected item\nSee the about page for more information</string>
@@ -19,4 +27,5 @@
     <string name="dateFormat">EEEE M.d</string>
     <string name="following">following</string>
     <string name="follower">follower</string>
+    <string name="noLrc">No lyrics</string>
 </resources>

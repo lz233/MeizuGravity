@@ -3,6 +3,14 @@
     <string name="app_name">Meizu Gravity +</string>
     <string name="dashboard">仪表盘</string>
     <string name="setting">设置</string>
+    <string name="settingTips">通过端口 2333 发送 GET 请求来修改设置。\n
+        例：192.168.43.192:2333/brightness=0.2\n\n
+        以下是可用的请求值：\n
+        [boolean]autoSleep-调整DashBoard是否自动打开。\n
+        [int]overTime-调整DashBoard打开的时间。\n
+        [float]brightness-调整DashBoard的亮度。\n
+        [string]location-用于显示当地的天气。\n
+        [string]coolapkUid-用于显示指定的 Coolapk 用户信息。\n</string>
     <string name="about">关于</string>
     <string name="unsupportDeviceSummary">不支持当前设备。本应用仅支持 Meizu Gravity。</string>
     <string name="firstTips">单击「Next 键」返回\n单击「Play 键」进入相应项目\n更多信息请参阅关于页面</string>
@@ -20,4 +28,5 @@
     <string name="dateFormat">EEEE M月d日</string>
     <string name="follower">跟随者</string>
     <string name="following">关注</string>
+    <string name="noLrc">暂无歌词</string>
 </resources>

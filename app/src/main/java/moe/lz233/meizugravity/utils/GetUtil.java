@@ -82,7 +82,7 @@ public class GetUtil {
                 // 设置为Post请求
                 urlConn.setRequestMethod("GET");
                 //urlConn设置请求头信息
-                urlConn.setRequestProperty("User-Agent", USER_AGENT);
+                //urlConn.setRequestProperty("User-Agent", USER_AGENT);
                 if (!(prop == null)) {
                     for (int i = 0; i < prop.size(); i++) {
                         String[] temp = prop.get(i);

@@ -14,12 +14,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import moe.lz233.meizugravity.R;
 import moe.lz233.meizugravity.fragment.CoolapkFragment;
 import moe.lz233.meizugravity.fragment.WeatherFragment;
-import moe.lz233.meizugravity.utils.SettingUtil;
 import moe.lz233.meizugravity.utils.ViewPager2Util;
 
 public class DashBoardActivity extends BaseActivity {
     int itemCount = 2;
-    private SettingUtil settingUtil;
     private Thread brightThread;
     private ViewPager2 dashViewPager2;
 
@@ -30,8 +28,7 @@ public class DashBoardActivity extends BaseActivity {
         //
         dashViewPager2 = findViewById(R.id.dashViewPager2);
         //
-        settingUtil = new SettingUtil(this);
-        setScreenBrightnessValue((float) settingUtil.getDoublt("brightness"));
+        setScreenBrightnessValue(sharedPreferences.getFloat("brightness", 0.2f));
         //brightThread = new Thread(new Run());
         //brightThread.start();
         editor.putBoolean("isInDashBoard", true);
@@ -132,9 +129,9 @@ public class DashBoardActivity extends BaseActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 default:
-                    return new WeatherFragment(settingUtil);
+                    return new WeatherFragment(sharedPreferences,editor);
                 case 1:
-                    return new CoolapkFragment(settingUtil);
+                    return new CoolapkFragment(sharedPreferences,editor);
             }
         }
 

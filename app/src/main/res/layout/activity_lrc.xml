@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LrcActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <me.wcy.lrcview.LrcView
+            android:id="@+id/lrcView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lrcAnimationDuration="200"
+            app:lrcCurrentTextColor="@color/colorAccent"
+            app:lrcLabel="@string/noLrc"
+            app:lrcNormalTextColor="#68FFFFFF"
+            app:lrcNormalTextSize="@dimen/text_18"
+            app:lrcTextSize="@dimen/text_20" />
+
+        <ImageView
+            android:id="@+id/coverImageView"
+            android:layout_width="100px"
+            android:layout_height="131.343284px"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="30px"
+            android:layout_marginTop="54.328358px"
+            android:layout_marginBottom="34.328358px"
+            android:scaleType="fitXY"
+            android:visibility="invisible"
+            tools:src="@drawable/ic_settings" />
+
+        <LinearLayout
+            android:id="@+id/detailLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="150px"
+            android:layout_marginEnd="30px"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <moe.lz233.meizugravity.view.ChanTextView
+                android:id="@+id/titleChanTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50px"
+                android:textSize="@dimen/text_30"
+                android:textStyle="bold" />
+
+            <moe.lz233.meizugravity.view.ChanTextView
+                android:id="@+id/artistChanTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50px"
+                android:textSize="@dimen/text_20" />
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

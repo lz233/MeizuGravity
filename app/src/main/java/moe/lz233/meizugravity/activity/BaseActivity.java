@@ -19,7 +19,7 @@ import moe.lz233.meizugravity.R;
 import moe.lz233.meizugravity.utils.SystemPropertyUtil;
 
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     protected SharedPreferences sharedPreferences;
     protected SharedPreferences.Editor editor;
 

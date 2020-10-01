@@ -1,3 +1,4 @@
+include ':lrcview'
 include ':controller'
 include ':app'
 rootProject.name = "Meizu Gravity"

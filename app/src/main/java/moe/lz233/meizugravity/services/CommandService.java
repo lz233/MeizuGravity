@@ -44,41 +44,38 @@ public class CommandService extends Service {
     class TCPServer {
         private static final int port = 2333;
 
-        public void listen() throws Exception {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try{
-                        ServerSocket serverSocket = new ServerSocket(port);
-                        while (true) {
-                            Socket socket = serverSocket.accept();
-                            new Thread(() -> {
-                                try {
-                                    String ip = socket.getInetAddress().getHostAddress();
-                                    InputStream inputStream = socket.getInputStream();
-                                    OutputStream outputStream = socket.getOutputStream();
-                                    //读取请求数据
-                                    byte[] bytes = new byte[inputStream.available()];
-                                    inputStream.read(bytes);
-                                    String str = new String(bytes);
-                                    Log.d("CommandService",str);
-                                    //Response response = new Response.Builder().
-                                    String flags = str.substring(str.indexOf("GET") + 5, str.indexOf(" HTTP"));
-                                    //FileUtil.shellExec("adb disconnect");
-                                    //FileUtil.shellExec("adb connect localhost:7788");
-                                    outputStream.write(addHeader(FileUtil.shellExec(flags.replace("%20"," "))).getBytes());
-                                    Log.d("CommandService", "----------------------------------------\n" + str + "\n----------------------------------------");
-                                    inputStream.close();
-                                    outputStream.close();
-                                    socket.close();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }).start();
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
+        public void listen() {
+            new Thread(() -> {
+                try{
+                    ServerSocket serverSocket = new ServerSocket(port);
+                    while (true) {
+                        Socket socket = serverSocket.accept();
+                        new Thread(() -> {
+                            try {
+                                String ip = socket.getInetAddress().getHostAddress();
+                                InputStream inputStream = socket.getInputStream();
+                                OutputStream outputStream = socket.getOutputStream();
+                                //读取请求数据
+                                byte[] bytes = new byte[inputStream.available()];
+                                inputStream.read(bytes);
+                                String str = new String(bytes);
+                                Log.d("CommandService",str);
+                                //Response response = new Response.Builder().
+                                String flags = str.substring(str.indexOf("GET") + 5, str.indexOf(" HTTP"));
+                                //FileUtil.shellExec("adb disconnect");
+                                //FileUtil.shellExec("adb connect localhost:7788");
+                                outputStream.write(addHeader(FileUtil.shellExec(flags.replace("%20"," "))).getBytes());
+                                Log.d("CommandService", "----------------------------------------\n" + str + "\n----------------------------------------");
+                                inputStream.close();
+                                outputStream.close();
+                                socket.close();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
                     }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }).start();
         }

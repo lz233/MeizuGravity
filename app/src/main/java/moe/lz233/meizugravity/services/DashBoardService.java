@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 
 import moe.lz233.meizugravity.activity.DashBoardActivity;
-import moe.lz233.meizugravity.utils.SettingUtil;
 
 public class DashBoardService extends Service {
     private SharedPreferences sharedPreferences;
@@ -17,16 +16,15 @@ public class DashBoardService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        final SettingUtil settingUtil = new SettingUtil(this);
         //sharedPreferences = getSharedPreferences("setting",MODE_PRIVATE);
-        if (settingUtil.getBoolean("autoSleep")) {
+        if (sharedPreferences.getBoolean("autoSleep",true)) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (true) {
                         try {
                             //Thread.sleep(10000);
-                            Thread.sleep(settingUtil.getInt("overtime"));
+                            Thread.sleep(sharedPreferences.getInt("overTime",300000));
                             if (!sharedPreferences.getBoolean("isInDashBoard", false)) {
                                 Intent intent = new Intent(DashBoardService.this, DashBoardActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

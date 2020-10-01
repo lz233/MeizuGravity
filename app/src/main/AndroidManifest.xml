@@ -15,13 +15,15 @@
         <service
             android:name=".services.CommandService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
         <service
             android:name=".services.DashBoardService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity android:name=".activity.DashBoardActivity" />
+        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.LrcActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>

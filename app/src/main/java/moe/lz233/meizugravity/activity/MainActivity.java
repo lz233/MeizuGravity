@@ -17,12 +17,16 @@ import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import moe.lz233.meizugravity.BuildConfig;
 import moe.lz233.meizugravity.R;
 import moe.lz233.meizugravity.services.CommandService;
 import moe.lz233.meizugravity.utils.FileUtil;
+import moe.lz233.meizugravity.utils.GetUtil;
 import moe.lz233.meizugravity.utils.ToastUtil;
 import moe.lz233.meizugravity.utils.ViewPager2Util;
 
@@ -41,13 +45,26 @@ public class MainActivity extends BaseActivity {
         mainImageView = findViewById(R.id.mainImageView);
         mainViewPager2 = findViewById(R.id.mainViewPager2);
         //
-        startService(new Intent(this, CommandService.class));
+        //startService(new Intent(this, CommandService.class));
         AppCenter.start(getApplication(), "cdd555bb-ef57-46ff-9eae-c74629c93791", Analytics.class, Crashes.class);
         if (sharedPreferences.getBoolean("isFirstRun", true)) {
             ToastUtil.showLong(this, getString(R.string.firstTips));
             editor.putBoolean("isFirstRun", false);
             editor.apply();
         }
+        new GetUtil().sendGet("http://127.0.0.1:7766/Status", null, new GetUtil.GetCallback() {
+            @Override
+            public void onGetDone(String result) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    if (!result.contains("meizu")&jsonObject.optJSONObject("data").optString("inputSource").equals("Wifi")){
+                        startActivity(new Intent().setClass(MainActivity.this, LrcActivity.class));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         mainMenuTitleList.add(getString(R.string.dashboard));
         mainMenuIconList.add(R.drawable.ic_dashboard);
         mainMenuTitleList.add(getString(R.string.setting));
@@ -99,6 +116,9 @@ public class MainActivity extends BaseActivity {
             switch (mainViewPager2.getCurrentItem()) {
                 case 0:
                     startActivity(new Intent().setClass(this, DashBoardActivity.class));
+                    break;
+                case 1:
+                    startActivity(new Intent().setClass(this, SettingsActivity.class));
                     break;
                 case 2:
                     startActivity(new Intent().setClass(this, AboutActivity.class));
