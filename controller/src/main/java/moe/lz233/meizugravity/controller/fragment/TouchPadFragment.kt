@@ -22,11 +22,11 @@ class TouchPadFragment(private val viewPager2: ViewPager2, sharedPreferences: Sh
         touchPadFrameLayout.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         touchPadView.viewPager2 = viewPager2
         runCommandExtendedFloatingActionButton.setOnClickListener { showRunCommandDialog() }
+        centerFloatingActionButton.setOnClickListener { activity?.startService(Intent(activity, AdbService::class.java).putExtra("cmd", "input keyevent 66")) }
         backFloatingActionButton.setOnClickListener { activity?.startService(Intent(activity, AdbService::class.java).putExtra("cmd", "input keyevent 4")) }
         rotateFloatingActionButton.setOnClickListener {
             touchPadView.changeSize(touchPadView.height, touchPadView.width)
         }
-        powerFloatingActionButton.setOnClickListener { activity?.startService(Intent(activity, AdbService::class.java).putExtra("cmd", "input keyevent 26")) }
         super.onViewCreated(view, savedInstanceState)
     }
 }

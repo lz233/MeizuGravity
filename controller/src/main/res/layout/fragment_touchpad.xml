@@ -60,7 +60,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/rotateFloatingActionButton"
+                android:id="@+id/centerFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -69,7 +69,7 @@
                 app:backgroundTint="@color/colorWhite"
                 app:fabCustomSize="70dp"
                 app:maxImageSize="30dp"
-                app:srcCompat="@drawable/ic_rotate"
+                app:srcCompat="@drawable/ic_enter"
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -85,7 +85,7 @@
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/powerFloatingActionButton"
+                android:id="@+id/rotateFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -93,7 +93,7 @@
                 app:backgroundTint="@color/colorWhite"
                 app:fabCustomSize="70dp"
                 app:maxImageSize="30dp"
-                app:srcCompat="@drawable/ic_power"
+                app:srcCompat="@drawable/ic_rotate"
                 app:tint="@color/colorAccent2" />
         </FrameLayout>
     </LinearLayout>

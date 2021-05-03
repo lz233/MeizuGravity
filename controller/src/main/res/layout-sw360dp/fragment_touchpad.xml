@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
                 android:layout_gravity="center"
-                android:layout_margin="40dp"
+                android:layout_margin="@dimen/layout_margin"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="10dp" />
         </FrameLayout>
@@ -61,7 +61,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/rotateFloatingActionButton"
+                android:id="@+id/centerFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -70,7 +70,7 @@
                 app:backgroundTint="@color/colorWhite"
                 app:fabCustomSize="80dp"
                 app:maxImageSize="35dp"
-                app:srcCompat="@drawable/ic_rotate"
+                app:srcCompat="@drawable/ic_enter"
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -86,7 +86,7 @@
                 app:tint="@color/colorAccent2" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/powerFloatingActionButton"
+                android:id="@+id/rotateFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -94,7 +94,7 @@
                 app:backgroundTint="@color/colorWhite"
                 app:fabCustomSize="80dp"
                 app:maxImageSize="35dp"
-                app:srcCompat="@drawable/ic_power"
+                app:srcCompat="@drawable/ic_rotate"
                 app:tint="@color/colorAccent2" />
         </FrameLayout>
     </LinearLayout>
