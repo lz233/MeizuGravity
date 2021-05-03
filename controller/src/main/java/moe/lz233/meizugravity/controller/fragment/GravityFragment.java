@@ -45,7 +45,7 @@ import okhttp3.Response;
 import static moe.lz233.meizugravity.controller.util.UriUtil.getHostUri;
 
 public class GravityFragment extends BaseFragment {
-    private OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient();
 
     private SwipeRefreshLayout gravitySwipeRefreshLayout;
     private LinearLayout gravityLinearLayout;

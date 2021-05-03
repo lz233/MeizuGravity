@@ -13,10 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.microsoft.appcenter.AppCenter;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,23 +42,19 @@ public class MainActivity extends BaseActivity {
         mainViewPager2 = findViewById(R.id.mainViewPager2);
         //
         //startService(new Intent(this, CommandService.class));
-        AppCenter.start(getApplication(), "cdd555bb-ef57-46ff-9eae-c74629c93791", Analytics.class, Crashes.class);
         if (sharedPreferences.getBoolean("isFirstRun", true)) {
             ToastUtil.showLong(this, getString(R.string.firstTips));
             editor.putBoolean("isFirstRun", false);
             editor.apply();
         }
-        new GetUtil().sendGet("http://127.0.0.1:7766/Status", null, new GetUtil.GetCallback() {
-            @Override
-            public void onGetDone(String result) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    if (!result.contains("meizu")&jsonObject.optJSONObject("data").optString("inputSource").equals("Wifi")){
-                        startActivity(new Intent().setClass(MainActivity.this, LrcActivity.class));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        new GetUtil().sendGet("http://127.0.0.1:7766/Status", null, result -> {
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                if (!result.contains("meizu")&jsonObject.optJSONObject("data").optString("inputSource").equals("Wifi")){
+                    startActivity(new Intent().setClass(MainActivity.this, LrcActivity.class));
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
         mainMenuTitleList.add(getString(R.string.dashboard));

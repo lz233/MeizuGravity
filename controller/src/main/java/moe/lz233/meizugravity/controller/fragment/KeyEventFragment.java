@@ -20,7 +20,6 @@ import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -37,7 +36,7 @@ import okhttp3.Response;
 import static moe.lz233.meizugravity.controller.util.UriUtil.getHostUri;
 
 public class KeyEventFragment extends BaseFragment {
-    private OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient();
 
     private FloatingActionButton upFloatingActionButton;
     private FloatingActionButton leftFloatingActionButton;
@@ -81,25 +80,7 @@ public class KeyEventFragment extends BaseFragment {
         rightFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 22")));
         downFloatingActionButton.setOnClickListener(view -> getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", "input keyevent 20")));
         runCommandExtendedFloatingActionButton.setOnClickListener(view -> {
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
-            builder.setTitle(R.string.actionRunCommand);
-            final View view1 = inflater.inflate(R.layout.dialog_run_command, null);
-            TextInputEditText commandTextInputEditText = view1.findViewById(R.id.commandTextInputEditText);
-            commandTextInputEditText.setText(sharedPreferences.getString("command", "input text "));
-            builder.setView(view1);
-            builder.setPositiveButton(R.string.ok, (dialogInterface, i) -> {
-                editor.putString("command", commandTextInputEditText.getText().toString());
-                editor.apply();
-                getActivity().startService(new Intent(getActivity(), AdbService.class).putExtra("cmd", commandTextInputEditText.getText().toString()));
-            });
-            builder.setNegativeButton(R.string.cancael, (dialogInterface, i) -> {
-                dialogInterface.dismiss();
-            });
-            AlertDialog materialDialogs = builder.create();
-            materialDialogs.setCancelable(true);
-            materialDialogs.show();
-            materialDialogs.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
-            materialDialogs.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorAccent));
+            showRunCommandDialog();
         });
         volumeIndicatorSeekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
             @Override
@@ -114,22 +95,10 @@ public class KeyEventFragment extends BaseFragment {
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                try {
-                    RequestBody requestBody = RequestBody.create(new JSONObject().put("CurrentVolume",seekBar.getProgress()).toString(),json);
-                    Request request = new Request.Builder().post(requestBody).url(getHostUri(getActivity(),"7766")+"SetVolume").build();
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                        }
-
-                        @Override
-                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (seekBar.getProgress() > 25) {
+                    showVolumeDialog(seekBar.getProgress());
+                } else {
+                    setVolume(seekBar.getProgress());
                 }
             }
         });
@@ -142,7 +111,43 @@ public class KeyEventFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        client.newCall(new Request.Builder().get().url(getHostUri(getActivity(),"7766")+"Info").build()).enqueue(new Callback() {
+        getVolume();
+    }
+
+    private void showVolumeDialog(int volume) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+        builder.setTitle(R.string.volumeDialogTitle);
+        builder.setMessage(R.string.volumeDialogMessage);
+        builder.setPositiveButton(R.string.confirm, (dialog, which) -> setVolume(volume));
+        builder.setNegativeButton(R.string.cancael, ((dialog, which) -> getVolume()));
+        AlertDialog materialDialogs = builder.create();
+        materialDialogs.show();
+        materialDialogs.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
+        materialDialogs.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.colorAccent));
+    }
+
+    private void setVolume(int volume) {
+        try {
+            RequestBody requestBody = RequestBody.create(new JSONObject().put("CurrentVolume", volume).toString(), json);
+            Request request = new Request.Builder().post(requestBody).url(getHostUri(getActivity(), "7766") + "SetVolume").build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getVolume() {
+        client.newCall(new Request.Builder().get().url(getHostUri(getActivity(), "7766") + "Info").build()).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 

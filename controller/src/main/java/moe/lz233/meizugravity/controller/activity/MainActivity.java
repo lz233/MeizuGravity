@@ -35,6 +35,7 @@ import moe.lz233.meizugravity.controller.BuildConfig;
 import moe.lz233.meizugravity.controller.R;
 import moe.lz233.meizugravity.controller.fragment.GravityFragment;
 import moe.lz233.meizugravity.controller.fragment.KeyEventFragment;
+import moe.lz233.meizugravity.controller.fragment.TouchPadFragment;
 import moe.lz233.meizugravity.controller.service.AdbService;
 import moe.lz233.meizugravity.controller.util.FileUtil;
 import moe.lz233.meizugravity.controller.util.libadb.AdbConnection;
@@ -47,14 +48,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static moe.lz233.meizugravity.controller.fragment.BaseFragment.connectSocket;
 import static moe.lz233.meizugravity.controller.util.UriUtil.getHostUri;
 
 public class MainActivity extends BaseActivity {
-    private OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient();
 
     private String ip;
-    private static final int NUM_PAGES = 2;
+    private static final int NUM_PAGES = 3;
     private MediaType json = MediaType.parse("application/json; charset=utf-8");
 
     private ViewPager2 viewPager2;
@@ -160,6 +160,8 @@ public class MainActivity extends BaseActivity {
                     return new GravityFragment(sharedPreferences,editor);
                 case 1:
                     return new KeyEventFragment(sharedPreferences,editor);
+                case 2:
+                    return new TouchPadFragment(viewPager2,sharedPreferences,editor);
             }
         }
 

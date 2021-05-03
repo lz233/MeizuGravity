@@ -8,6 +8,7 @@ import android.os.IBinder;
 import java.io.IOException;
 import java.net.Socket;
 
+import moe.lz233.meizugravity.controller.util.LogUtil;
 import moe.lz233.meizugravity.controller.util.libadb.AdbConnection;
 import moe.lz233.meizugravity.controller.util.libadb.AdbCrypto;
 import moe.lz233.meizugravity.controller.util.libadb.AdbStream;
@@ -45,6 +46,7 @@ public class AdbService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String cmd = intent.getStringExtra("cmd");
+        LogUtil.d(cmd);
         if (cmd != null) {
             new Thread(() -> {
                 try {

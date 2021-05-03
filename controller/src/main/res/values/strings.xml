@@ -23,4 +23,7 @@
     <string name="deviceBootVer">Boot Version</string>
     <string name="deviceKernelVer">Kernel Version</string>
     <string name="actionDeviceInfo">Device Information</string>
+    <string name="volumeDialogMessage">The volume may be too loud, confirm the adjustment?</string>
+    <string name="confirm">Confirm</string>
+    <string name="volumeDialogTitle">Volume Confirmation</string>
 </resources>

@@ -154,8 +154,8 @@ public class LrcActivity extends BaseActivity {
                 lrcView.setVisibility(View.INVISIBLE);
                 coverImageView.setVisibility(View.VISIBLE);
                 detailLinearLayout.setVisibility(View.VISIBLE);
-            }else {
-                isShowLrc=true;
+            } else {
+                isShowLrc = true;
                 coverImageView.setVisibility(View.INVISIBLE);
                 detailLinearLayout.setVisibility(View.INVISIBLE);
                 lrcView.setVisibility(View.VISIBLE);
@@ -168,30 +168,33 @@ public class LrcActivity extends BaseActivity {
         @Override
         public void run() {
             Request request = new Request.Builder().url("http://127.0.0.1:7766/Status").get().build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
+            try {
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
 
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response.body().string()).optJSONObject("data");
-                        String mTrackTitle = jsonObject.optJSONObject("playList").optJSONArray("trackList").optJSONObject(0).optString("trackTitle");
-                        if (mTrackTitle.equals(trackTitle)) {
-                            long lrcTime = jsonObject.optInt("elapsedTime") * 1000 + 1000;
-                            lrcView.updateTime(lrcTime);
-                        } else {
-                            initLrc();
-                            handler.removeCallbacks(runnable);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-                }
-            });
 
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body().string()).optJSONObject("data");
+                            String mTrackTitle = jsonObject.optJSONObject("playList").optJSONArray("trackList").optJSONObject(0).optString("trackTitle");
+                            if (mTrackTitle.equals(trackTitle)) {
+                                long lrcTime = jsonObject.optInt("elapsedTime") * 1000 + 1000;
+                                lrcView.updateTime(lrcTime);
+                            } else {
+                                initLrc();
+                                handler.removeCallbacks(runnable);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             handler.postDelayed(this, 300);
         }
     };
