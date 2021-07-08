@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity {
         new GetUtil().sendGet("http://127.0.0.1:7766/Status", null, result -> {
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                if (!result.contains("meizu")&jsonObject.optJSONObject("data").optString("inputSource").equals("Wifi")){
+                if (!jsonObject.optJSONObject("data").optJSONObject("playList").optJSONArray("trackList").optJSONObject(0).optString("cp").equals("local")){
                     startActivity(new Intent().setClass(MainActivity.this, LrcActivity.class));
                 }
             } catch (JSONException e) {

@@ -15,6 +15,7 @@ import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
 import io.github.inflationx.viewpump.ViewPump;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+import moe.lz233.meizugravity.BuildConfig;
 import moe.lz233.meizugravity.R;
 import moe.lz233.meizugravity.utils.SystemPropertyUtil;
 
@@ -34,7 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         //横屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //检测设备
-        if (!SystemPropertyUtil.getSystemProperty("ro.udisk.lable").equals("A8")) {
+        if (!(SystemPropertyUtil.getSystemProperty("ro.udisk.lable").equals("A8")| BuildConfig.DEBUG)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.unsupportDeviceSummary);
             AlertDialog dialogs = builder.create();

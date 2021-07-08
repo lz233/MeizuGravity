@@ -54,40 +54,32 @@ public class WeatherFragment extends Fragment {
         AQIDay1TextView = rootView.findViewById(R.id.AQIDay1TextView);
         //
         weatherLinearLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new GetUtil().sendGet("https://api.caiyunapp.com/v2.5/Y2FpeXVuIGFuZHJpb2QgYXBp/" + sharedPreferences.getString("location","121.549177,31.3189266") + "/weather.json", null, result -> {
-                    try {
-                        JSONObject jsonObject = new JSONObject(result).getJSONObject("result");
-                        final JSONObject realObject = jsonObject.getJSONObject("realtime");
-                        final JSONObject realAirQualityObject = realObject.getJSONObject("air_quality");
-                        final JSONObject realPrecipitationObject = realObject.getJSONObject("precipitation");
-                        JSONObject dailyObject = jsonObject.getJSONObject("daily");
-                        final JSONArray dailyTemperatureArray = dailyObject.getJSONArray("temperature");
-                        final JSONArray dailyAirQualityAQIArray = dailyObject.getJSONObject("air_quality").getJSONArray("aqi");
-                        final JSONArray dailySkyconArray = dailyObject.getJSONArray("skycon");
-                        temperatureTextView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                temperatureTextView.setText(realObject.optString("temperature").substring(0, 2) + "℃");
-                                skyconTextView.setText(getString(R.string.AQI) + realAirQualityObject.optJSONObject("aqi").optString("chn") + " (" + realAirQualityObject.optJSONObject("description").optString("chn") + ")  " + WeatherUtil.getSkycon(getContext(), realObject.optString("skycon")));
-                                precipitationIntensityTextView.setText(getString(R.string.precipitationIntensity) + realPrecipitationObject.optJSONObject("local").optDouble("intensity") * 100 + "%");
-                                temperatureDay0TextView.setText(dailyTemperatureArray.optJSONObject(0).optString("max").substring(0, 2) + "/" + dailyTemperatureArray.optJSONObject(0).optString("min").substring(0, 2));
-                                AQIDay0TextView.setText(dailyAirQualityAQIArray.optJSONObject(0).optJSONObject("avg").optString("chn") + " (" + WeatherUtil.getAQIDescription(getContext(), "chn", dailyAirQualityAQIArray.optJSONObject(0).optJSONObject("avg").optDouble("chn")) + ")");
-                                skyconDay0TextView.setText(WeatherUtil.getSkycon(getContext(), dailySkyconArray.optJSONObject(0).optString("value")));
-                                temperatureDay1TextView.setText(dailyTemperatureArray.optJSONObject(1).optString("max").substring(0, 2) + "/" + dailyTemperatureArray.optJSONObject(1).optString("min").substring(0, 2));
-                                AQIDay1TextView.setText(dailyAirQualityAQIArray.optJSONObject(1).optJSONObject("avg").optString("chn") + " (" + WeatherUtil.getAQIDescription(getContext(), "chn", dailyAirQualityAQIArray.optJSONObject(1).optJSONObject("avg").optDouble("chn")) + ")");
-                                skyconDay1TextView.setText(WeatherUtil.getSkycon(getContext(), dailySkyconArray.optJSONObject(1).optString("value")));
+        new Thread(() -> new GetUtil().sendGet("https://api.caiyunapp.com/v2.5/Y2FpeXVuIGFuZHJpb2QgYXBp/" + sharedPreferences.getString("location","121.549177,31.3189266") + "/weather.json", null, result -> {
+            try {
+                JSONObject jsonObject = new JSONObject(result).getJSONObject("result");
+                final JSONObject realObject = jsonObject.getJSONObject("realtime");
+                final JSONObject realAirQualityObject = realObject.getJSONObject("air_quality");
+                final JSONObject realPrecipitationObject = realObject.getJSONObject("precipitation");
+                JSONObject dailyObject = jsonObject.getJSONObject("daily");
+                final JSONArray dailyTemperatureArray = dailyObject.getJSONArray("temperature");
+                final JSONArray dailyAirQualityAQIArray = dailyObject.getJSONObject("air_quality").getJSONArray("aqi");
+                final JSONArray dailySkyconArray = dailyObject.getJSONArray("skycon");
+                temperatureTextView.post(() -> {
+                    temperatureTextView.setText(realObject.optString("temperature").substring(0, 2) + "℃");
+                    skyconTextView.setText(getString(R.string.AQI) + realAirQualityObject.optJSONObject("aqi").optString("chn") + " (" + realAirQualityObject.optJSONObject("description").optString("chn") + ")  " + WeatherUtil.getSkycon(getContext(), realObject.optString("skycon")));
+                    precipitationIntensityTextView.setText(getString(R.string.precipitationIntensity) + realPrecipitationObject.optJSONObject("local").optDouble("intensity") * 100 + "%");
+                    temperatureDay0TextView.setText(dailyTemperatureArray.optJSONObject(0).optString("max").substring(0, 2) + "/" + dailyTemperatureArray.optJSONObject(0).optString("min").substring(0, 2));
+                    AQIDay0TextView.setText(dailyAirQualityAQIArray.optJSONObject(0).optJSONObject("avg").optString("chn") + " (" + WeatherUtil.getAQIDescription(getContext(), "chn", dailyAirQualityAQIArray.optJSONObject(0).optJSONObject("avg").optDouble("chn")) + ")");
+                    skyconDay0TextView.setText(WeatherUtil.getSkycon(getContext(), dailySkyconArray.optJSONObject(0).optString("value")));
+                    temperatureDay1TextView.setText(dailyTemperatureArray.optJSONObject(1).optString("max").substring(0, 2) + "/" + dailyTemperatureArray.optJSONObject(1).optString("min").substring(0, 2));
+                    AQIDay1TextView.setText(dailyAirQualityAQIArray.optJSONObject(1).optJSONObject("avg").optString("chn") + " (" + WeatherUtil.getAQIDescription(getContext(), "chn", dailyAirQualityAQIArray.optJSONObject(1).optJSONObject("avg").optDouble("chn")) + ")");
+                    skyconDay1TextView.setText(WeatherUtil.getSkycon(getContext(), dailySkyconArray.optJSONObject(1).optString("value")));
 
-                            }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }).start();
+        })).start();
         return rootView;
     }
 }

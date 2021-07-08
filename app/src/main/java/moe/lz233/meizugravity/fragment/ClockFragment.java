@@ -31,26 +31,15 @@ public class ClockFragment extends Fragment {
         hitokotoTextView = rootView.findViewById(R.id.hitokotoTextView);
         //
         clockLinearLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new GetUtil().sendGet("https://v1.hitokoto.cn", null, new GetUtil.GetCallback() {
-                    @Override
-                    public void onGetDone(final String result) {
-                        hitokotoTextView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    hitokotoTextView.setText(new JSONObject(result).getString("hitokoto"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
+        new Thread(() -> new GetUtil().sendGet("https://netease-cloud-music-api-kvzk9t0k3-lz233.vercel.app/", null, result ->{})).start();
+        new Thread(() -> new GetUtil().sendGet("https://v1.hitokoto.cn", null, result ->
+                hitokotoTextView.post(() -> {
+                    try {
+                        hitokotoTextView.setText(new JSONObject(result).getString("hitokoto"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
-            }
-        }).start();
+                }))).start();
         return rootView;
     }
 }

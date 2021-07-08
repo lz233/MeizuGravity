@@ -164,7 +164,7 @@ public class LrcActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             Request request = new Request.Builder().url("http://127.0.0.1:7766/Status").get().build();
