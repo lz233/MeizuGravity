@@ -1,6 +1,6 @@
 package moe.lz233.meizugravity.cloudmusic.ui.login
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import kotlinx.coroutines.delay
@@ -11,7 +11,6 @@ import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.QRCodeUtil
-import kotlin.system.exitProcess
 
 class LoginActivity : BaseActivity() {
     private val viewBuilding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
@@ -19,6 +18,10 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
+        startLogin()
+    }
+
+    fun startLogin() {
         launch {
             val keyResponse = CloudMusicNetwork.getKey(System.currentTimeMillis())
             val qrResponse = CloudMusicNetwork.createQrCode(keyResponse.data.key, System.currentTimeMillis())
@@ -32,26 +35,25 @@ class LoginActivity : BaseActivity() {
                 when (checkResponse.code) {
                     800 -> {
                         LogUtil.toast(checkResponse.message)
-                        finish()
-                        actionStart(this@LoginActivity)
+                        startLogin()
+                        break@check
                     }
                     803 -> {
                         val musicU = checkResponse.cookie.substring(checkResponse.cookie.indexOf("MUSIC_U=") + 8)
-                        LogUtil.d(musicU.substring(0,musicU.indexOf(';')))
-                        UserDao.cookie = musicU.substring(0,musicU.indexOf(';'))
+                        LogUtil.d(musicU.substring(0, musicU.indexOf(';')))
+                        UserDao.cookie = musicU.substring(0, musicU.indexOf(';'))
                         UserDao.isLogin = true
-                        exitProcess(0)
+                        setResult(RESULT_OK, null)
+                        finish()
+                        break@check
                     }
                 }
                 delay(3000)
             }
-            LogUtil.d(CloudMusicNetwork.checkUserStatus(System.currentTimeMillis()))
         }
     }
 
     companion object {
-        fun actionStart(context: Context) {
-            context.startActivity(Intent(context, LoginActivity::class.java))
-        }
+        fun actionStart(activity: Activity) = activity.startActivityForResult(Intent(activity, LoginActivity::class.java), 1)
     }
 }

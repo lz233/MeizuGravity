@@ -11,12 +11,23 @@
         android:clipChildren="false">
 
         <ImageView
-            android:id="@+id/mainImageView"
+            android:id="@+id/avatarImageView"
+            android:layout_width="80px"
+            android:layout_height="105.0746272px"
+            android:layout_marginStart="40px"
+            android:layout_marginTop="40px"
+            android:layout_marginBottom="34.328358px"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/userNameTextview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="50px" />
+            android:layout_marginStart="20px"
+            android:layout_marginTop="160px"
+            android:maxWidth="130px"
+            android:singleLine="true"
+            android:textSize="@dimen/text_20" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mainViewPager2"
