@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 31
+    buildToolsVersion "31.0.0"
 
     defaultConfig {
         Date date = new Date()
         applicationId "moe.lz233.meizugravity"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode = date.format("yyyyMMdd").toInteger()
         versionName "0.2"
     }
@@ -17,6 +17,7 @@ android {
         release {
             minifyEnabled true
             zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -37,7 +38,7 @@ dependencies {
 
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
     implementation 'io.github.inflationx:viewpump:2.0.3'
-    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.google.zxing:core:3.4.1'
     implementation 'com.squareup.okhttp3:okhttp:3.12.13'
     implementation 'commons-codec:commons-codec:20041127.091804'
 }

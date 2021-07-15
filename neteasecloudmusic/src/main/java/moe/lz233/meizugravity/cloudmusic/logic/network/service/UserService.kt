@@ -1,6 +1,6 @@
 package moe.lz233.meizugravity.cloudmusic.logic.network.service
 
-import moe.lz233.meizugravity.cloudmusic.logic.model.AccountInfoResponse
+import moe.lz233.meizugravity.cloudmusic.logic.model.response.AccountInfoResponse
 import retrofit2.Call
 import retrofit2.http.GET
 

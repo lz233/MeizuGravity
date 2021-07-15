@@ -1,9 +1,9 @@
 package moe.lz233.meizugravity.cloudmusic.logic.network.service
 
-import moe.lz233.meizugravity.cloudmusic.logic.model.CheckQrResponse
-import moe.lz233.meizugravity.cloudmusic.logic.model.KeyResponse
-import moe.lz233.meizugravity.cloudmusic.logic.model.QrResponse
-import moe.lz233.meizugravity.cloudmusic.logic.model.UserStatusResponse
+import moe.lz233.meizugravity.cloudmusic.logic.model.response.CheckQrResponse
+import moe.lz233.meizugravity.cloudmusic.logic.model.response.KeyResponse
+import moe.lz233.meizugravity.cloudmusic.logic.model.response.QrResponse
+import moe.lz233.meizugravity.cloudmusic.logic.model.response.UserStatusResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

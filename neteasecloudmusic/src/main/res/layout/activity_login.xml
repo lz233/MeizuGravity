@@ -35,14 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10px"
-                android:text="Scan To Login"
+                android:text="扫码登录"
                 android:textSize="@dimen/text_30"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Open the mobile app and scan"
+                android:text="打开手机客户端扫一扫"
                 android:textSize="@dimen/text_20" />
 
             <View

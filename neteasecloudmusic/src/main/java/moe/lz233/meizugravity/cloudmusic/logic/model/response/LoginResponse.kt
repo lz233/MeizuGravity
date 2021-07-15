@@ -1,4 +1,4 @@
-package moe.lz233.meizugravity.cloudmusic.logic.model
+package moe.lz233.meizugravity.cloudmusic.logic.model.response
 
 import com.google.gson.annotations.SerializedName
 

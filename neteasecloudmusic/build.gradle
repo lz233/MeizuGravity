@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 31
+    buildToolsVersion "31.0.0"
 
     defaultConfig {
         applicationId "moe.lz233.meizugravity.cloudmusic"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -23,6 +23,7 @@ android {
         release {
             minifyEnabled true
             zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -52,12 +53,6 @@ android {
     }
 }
 
-/*tasks.whenTaskAdded { task ->
-    if (task.name == 'processReleaseResources') {
-        task.finalizedBy optimizeReleaseRes
-    }
-}*/
-
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -73,7 +68,7 @@ dependencies {
 
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
     implementation 'io.github.inflationx:viewpump:2.0.3'
-    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.google.zxing:core:3.4.1'
     //2.6.4
     implementation 'com.squareup.retrofit2:retrofit:2.6.4'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.4'
@@ -84,22 +79,5 @@ dependencies {
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
     implementation 'commons-codec:commons-codec:20041127.091804'
-}
-
-//https://github.com/LSPosed/LSPosed/blob/02b4ba01d83735d4a7db60ae4fc35c57ebc2d07c/app/build.gradle#L84
-def optimizeReleaseRes = task('optimizeReleaseRes').doLast {
-    def aapt2 = Paths.get(project.android.sdkDirectory.path, 'build-tools', project.android.buildToolsVersion, 'aapt2')
-    def zip = Paths.get(project.buildDir.path, 'intermediates',
-            'processed_res', 'release', 'out', "resources-release.ap_")
-    def optimized = new File("${zip}.opt")
-    def cmd = exec {
-        commandLine aapt2, 'optimize', '--collapse-resource-names',
-                '--shorten-resource-paths',
-                '-o', optimized, zip
-        ignoreExitValue false
-    }
-    if (cmd.exitValue == 0) {
-        delete(zip)
-        optimized.renameTo("$zip")
-    }
+    androidTestImplementation 'junit:junit:4.13.2'
 }

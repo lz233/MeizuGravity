@@ -21,11 +21,21 @@
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".activity.DashBoardActivity" />
-        <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.LrcActivity" />
-        <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.DashBoardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LrcActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,6 +46,7 @@
         <receiver
             android:name=".receiver.BootBroadcastReceiver"
             android:enabled="true"
+            android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
