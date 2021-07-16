@@ -5,4 +5,4 @@
     android:layout_height="match_parent"
     android:singleLine="true"
     android:text="test"
-    android:textSize="@dimen/text_26"></TextView>
+    android:textSize="@dimen/text_26" />

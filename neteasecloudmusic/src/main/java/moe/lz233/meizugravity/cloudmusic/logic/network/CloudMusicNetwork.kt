@@ -16,6 +16,7 @@ object CloudMusicNetwork {
     suspend fun checkUserStatus() = loginService.checkUserStatus().await()
 
     suspend fun getAccountInfo() = userService.getAccountInfo().await()
+    suspend fun getUserPlaylist(userId: Long) = userService.getUserPlaylist(userId).await()
 
     suspend fun getDailyRecommendation() = recommendService.getDailyRecommendation().await()
 }

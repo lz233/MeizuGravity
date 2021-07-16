@@ -9,7 +9,7 @@ import android.widget.TextView
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.logic.model.meta.Music
 
-class DailyAdapter(private val activity: Activity, songList: List<Music>) : ArrayAdapter<Music>(activity, R.layout.item_music, songList) {
+class DailyAdapter(private val activity: Activity, musicList: List<Music>) : ArrayAdapter<Music>(activity, R.layout.item_music, musicList) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView
                 ?: LayoutInflater.from(activity).inflate(R.layout.item_music, parent, false)

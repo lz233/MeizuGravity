@@ -19,12 +19,12 @@ import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.daily.DailyActivity
 import moe.lz233.meizugravity.cloudmusic.ui.login.LoginActivity
-import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
+import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
 import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 
 class MainActivity : BaseActivity() {
-    private val mainMenuList by lazy { listOf("正在播放", "每日推荐", "我喜欢的", "我的歌单", "关于") }
+    private val mainMenuList by lazy { listOf("正在播放", "每日推荐", "我的歌单", "关于") }
     private val viewBuilding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,6 @@ class MainActivity : BaseActivity() {
         if (UserDao.isLogin) {
             launch {
                 val accountInfoResponse = CloudMusicNetwork.getAccountInfo()
-                LogUtil.d(accountInfoResponse.profile.avatarUrl)
                 Glide.with(viewBuilding.avatarImageView)
                         .load(accountInfoResponse.profile.avatarUrl.adjustParam("100", "100"))
                         .circleCrop()
@@ -76,6 +75,7 @@ class MainActivity : BaseActivity() {
                 when (viewBuilding.mainViewPager2.currentItem) {
                     0 -> TODO()
                     1 -> DailyActivity.actionStart(this)
+                    2 -> PlayListActivity.actionStart(this)
                 }
             }
         }
@@ -85,10 +85,7 @@ class MainActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            1 -> if (requestCode == RESULT_OK) {
-                finish()
-                actionStart(this)
-            }
+            1 -> if (resultCode == RESULT_OK) recreate()
         }
     }
 

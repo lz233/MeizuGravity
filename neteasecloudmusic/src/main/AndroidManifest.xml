@@ -26,6 +26,9 @@
         <activity
             android:name=".ui.daily.DailyActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.playlist.PlayListActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

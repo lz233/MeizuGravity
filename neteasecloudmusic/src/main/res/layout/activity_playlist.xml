@@ -16,7 +16,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="30px"
-            android:src="@drawable/ic_favorite" />
+            android:src="@drawable/ic_playlist" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_marginBottom="20px">
 
             <ListView
-                android:id="@+id/dailyListView"
+                android:id="@+id/playlistListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:listSelector="@color/colorAccent2" />

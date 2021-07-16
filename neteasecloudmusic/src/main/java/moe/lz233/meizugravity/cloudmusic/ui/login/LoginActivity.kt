@@ -21,13 +21,12 @@ class LoginActivity : BaseActivity() {
         startLogin()
     }
 
-    fun startLogin() {
+    private fun startLogin() {
         launch {
             val keyResponse = CloudMusicNetwork.getKey(System.currentTimeMillis())
             val qrResponse = CloudMusicNetwork.createQrCode(keyResponse.data.key, System.currentTimeMillis())
             viewBuilding.qrImageView.setImageBitmap(QRCodeUtil.createQRCodeBitmap(qrResponse.data.qrUrl, 100, 100))
             LogUtil.d(keyResponse.data.key)
-            //runOnUiThread { viewBuilding.qrImageView.setImageBitmap(QRCodeUtil.createQRCodeBitmap(qrResponse.data.qrUrl,100,100)) }
             check@ while (true) {
                 val checkResponse = CloudMusicNetwork.checkQrStatus(keyResponse.data.key, System.currentTimeMillis())
                 LogUtil.d(checkResponse.code)
@@ -42,6 +41,7 @@ class LoginActivity : BaseActivity() {
                         val musicU = checkResponse.cookie.substring(checkResponse.cookie.indexOf("MUSIC_U=") + 8)
                         LogUtil.d(musicU.substring(0, musicU.indexOf(';')))
                         UserDao.cookie = musicU.substring(0, musicU.indexOf(';'))
+                        UserDao.id = CloudMusicNetwork.checkUserStatus().data.profile.userId
                         UserDao.isLogin = true
                         setResult(RESULT_OK, null)
                         finish()

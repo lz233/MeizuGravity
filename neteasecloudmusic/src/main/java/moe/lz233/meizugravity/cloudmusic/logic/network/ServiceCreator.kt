@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceCreator {
-    private val BASE_URL = App.sp.getString("baseUrl", "https://netease-cloud-music-api-binaryify-wnhm9ka04-binaryify.vercel.app/")
+    private val BASE_URL = App.sp.getString("baseUrl", "https://netease-cloud-music-api-umber-theta.vercel.app")
 
     private val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
