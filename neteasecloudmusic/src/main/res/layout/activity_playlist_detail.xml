@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.daily.DailyActivity">
+    tools:context=".ui.playlistdetail.PlaylistDetailActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,8 +19,7 @@
             android:layout_marginStart="15px"
             android:layout_marginTop="54.328358px"
             android:layout_marginBottom="34.328358px"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_playlist" />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,7 +28,7 @@
             android:layout_marginEnd="10px">
 
             <ListView
-                android:id="@+id/playlistListView"
+                android:id="@+id/musicListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:listSelector="@drawable/bgstyle"

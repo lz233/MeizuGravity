@@ -17,7 +17,8 @@
             android:layout_marginStart="50px"
             android:layout_marginTop="35px"
             android:layout_marginBottom="34.328358px"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_account" />
 
         <TextView
             android:id="@+id/userNameTextview"

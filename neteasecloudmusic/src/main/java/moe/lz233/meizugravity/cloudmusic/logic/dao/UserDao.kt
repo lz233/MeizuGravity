@@ -14,4 +14,8 @@ object UserDao {
     var cookie: String
         get() = App.sp.getString("userCookie", "")!!
         set(value) = App.editor.putString("userCookie", value).apply()
+
+    var name: String
+        get() = App.sp.getString("userName", "")!!
+        set(value) = App.editor.putString("userName", value).apply()
 }

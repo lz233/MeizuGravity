@@ -4,12 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
+import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityDailyBinding
 import moe.lz233.meizugravity.cloudmusic.logic.model.meta.Music
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.setOnItemSelectedListener
 
 class DailyActivity : BaseActivity() {
     private val musicList = mutableListOf<Music>()
@@ -25,13 +30,26 @@ class DailyActivity : BaseActivity() {
             musicList.addAll(dailyRecommendationResponse.data.songs)
             dailyAdapter.notifyDataSetChanged()
             viewBuilding.dailyListView.setOnItemClickListener { adapterView, view, position, id ->
-                val music = musicList[position]
+                val music = musicList[position - 1]
                 LogUtil.toast(music.name)
+            }
+            viewBuilding.dailyListView.setOnItemSelectedListener { selected, parent, view, position, id ->
+                if (selected) {
+                    val music = musicList[position!! - 1]
+                    Glide.with(viewBuilding.coverImageView)
+                            .load(music.cover.picUrl.adjustParam("150", "150"))
+                            .placeholder(R.drawable.ic_favorite)
+                            .into(viewBuilding.coverImageView)
+                }
             }
         }
     }
 
     private fun initView() {
+        LayoutInflater.from(this).inflate(R.layout.item_music, viewBuilding.dailyListView, false).run {
+            viewBuilding.dailyListView.addHeaderView(this, null, false)
+            viewBuilding.dailyListView.addFooterView(this, null, false)
+        }
         viewBuilding.dailyListView.adapter = dailyAdapter
     }
 
@@ -49,16 +67,6 @@ class DailyActivity : BaseActivity() {
             }
         }
         return super.onKeyDown(keyCode, event)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            1 -> if (requestCode == RESULT_OK) {
-                finish()
-                actionStart(this)
-            }
-        }
     }
 
     companion object {

@@ -4,13 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
+import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityPlaylistBinding
 import moe.lz233.meizugravity.cloudmusic.logic.dao.UserDao
 import moe.lz233.meizugravity.cloudmusic.logic.model.meta.PlayList
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
-import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
+import moe.lz233.meizugravity.cloudmusic.ui.playlistdetail.PlaylistDetailActivity
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.setOnItemSelectedListener
 
 class PlayListActivity : BaseActivity() {
     private val playLists = mutableListOf<PlayList>()
@@ -26,13 +31,26 @@ class PlayListActivity : BaseActivity() {
             playLists.addAll(userPlaylistResponse.playlists)
             playlistAdapter.notifyDataSetChanged()
             viewBuilding.playlistListView.setOnItemClickListener { adapterView, view, position, id ->
-                val playList = playLists[position]
-                LogUtil.toast(playList.name)
+                val playList = playLists[position - 1]
+                PlaylistDetailActivity.actionStart(this@PlayListActivity, playList.id)
+            }
+            viewBuilding.playlistListView.setOnItemSelectedListener { selected, parent, view, position, id ->
+                if (selected) {
+                    val playList = playLists[position!! - 1]
+                    Glide.with(viewBuilding.coverImageView)
+                            .load(playList.coverImgUrl.adjustParam("150", "150"))
+                            .placeholder(R.drawable.ic_playlist)
+                            .into(viewBuilding.coverImageView)
+                }
             }
         }
     }
 
     private fun initView() {
+        LayoutInflater.from(this).inflate(R.layout.item_playlist, viewBuilding.playlistListView, false).run {
+            viewBuilding.playlistListView.addHeaderView(this, null, false)
+            viewBuilding.playlistListView.addFooterView(this, null, false)
+        }
         viewBuilding.playlistListView.adapter = playlistAdapter
     }
 
@@ -50,16 +68,6 @@ class PlayListActivity : BaseActivity() {
             }
         }
         return super.onKeyDown(keyCode, event)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            1 -> if (requestCode == RESULT_OK) {
-                finish()
-                actionStart(this)
-            }
-        }
     }
 
     companion object {

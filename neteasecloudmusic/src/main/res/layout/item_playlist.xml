@@ -9,15 +9,17 @@
         android:id="@+id/playlistTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:text="music"
         android:textSize="@dimen/text_26" />
 
     <TextView
         android:id="@+id/playlistSummaryTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:text="artist"
         android:textSize="@dimen/text_20" />
 </LinearLayout>

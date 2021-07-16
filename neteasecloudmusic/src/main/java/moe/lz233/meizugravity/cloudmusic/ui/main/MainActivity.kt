@@ -36,9 +36,11 @@ class MainActivity : BaseActivity() {
                 val accountInfoResponse = CloudMusicNetwork.getAccountInfo()
                 Glide.with(viewBuilding.avatarImageView)
                         .load(accountInfoResponse.profile.avatarUrl.adjustParam("100", "100"))
+                        .placeholder(R.drawable.ic_account)
                         .circleCrop()
                         .into(viewBuilding.avatarImageView)
                 viewBuilding.userNameTextview.text = accountInfoResponse.profile.nickName
+                UserDao.name = accountInfoResponse.profile.nickName
             }
         } else {
             LoginActivity.actionStart(this)

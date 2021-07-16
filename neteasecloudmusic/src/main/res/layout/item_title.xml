@@ -6,7 +6,12 @@
     android:padding="5dp">
 
     <TextView
-        android:id="@+id/musicTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_26" />
+
+    <TextView
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -15,11 +20,18 @@
         android:textSize="@dimen/text_26" />
 
     <TextView
-        android:id="@+id/artistTextView"
+        android:id="@+id/summaryTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
         android:textSize="@dimen/text_20" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textSize="@dimen/text_20" />
+
 </LinearLayout>
