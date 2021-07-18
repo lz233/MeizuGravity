@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import com.zhy.mediaplayer_exo.playermanager.service.MediaForegroundService
 
@@ -17,9 +18,9 @@ object MediaPlayerService : Application.ActivityLifecycleCallbacks {
     private lateinit var mContext: Context
     private var activityCreated = 0
 
-    fun init(context: Application) {
+    fun init(context: Application, exoPlayer: SimpleExoPlayer) {
         this.mContext = context
-        MediaManager.init(context)
+        MediaManager.init(context, exoPlayer)
         context.registerActivityLifecycleCallbacks(this)
     }
 

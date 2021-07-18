@@ -8,16 +8,11 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.audio.AudioAttributes
-import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.zhy.mediaplayer_exo.playermanager.*
 import com.zhy.mediaplayer_exo.playermanager.musicbroadcast.MusicBroadcast
 import com.zhy.mediaplayer_exo.playermanager.service.MediaForegroundService
-import okhttp3.OkHttpClient
 
 
 object MediaManager : Player.EventListener {
@@ -53,20 +48,9 @@ object MediaManager : Player.EventListener {
      *
      * @param context 环境上下文
      */
-    fun init(context: Context) {
+    fun init(context: Context, exoPlayer: SimpleExoPlayer) {
         this.mContext = context
-        //设置固定码率 比特率 某些音频格式文件，在seekTo的时候无法找到对应的节点导致无法跳播，此代码可以解决这个问题
-        val extractorsFactory =
-                DefaultExtractorsFactory().setConstantBitrateSeekingEnabled(true)
-        val audioAttributes: AudioAttributes = AudioAttributes.Builder()
-                .setUsage(C.USAGE_MEDIA)
-                .setContentType(C.CONTENT_TYPE_MUSIC)
-                .build()
-        simpleExoPlayer =
-                SimpleExoPlayer.Builder(mContext, extractorsFactory)
-                        .setAudioAttributes(audioAttributes, true)
-                        .setMediaSourceFactory(DefaultMediaSourceFactory(OkHttpDataSource.Factory(OkHttpClient.Builder().build())))
-                        .build()
+        simpleExoPlayer = exoPlayer
         simpleExoPlayer.addListener(this)
         isInit = true
     }

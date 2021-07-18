@@ -16,6 +16,7 @@ import moe.lz233.meizugravity.cloudmusic.logic.dao.UserDao
 import moe.lz233.meizugravity.cloudmusic.logic.model.meta.Music
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
+import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.getSongUrl
 
@@ -39,7 +40,7 @@ class PlaylistDetailActivity : BaseActivity() {
                     .into(viewBuilding.coverImageView)
             viewBuilding.musicListView.setOnItemClickListener { adapterView, view, position, id ->
                 val music = musicList[position - 1]
-                //LogUtil.toast(music.id.getSongUrl())
+                LogUtil.d(music.id.getSongUrl())
                 MediaManager.playlist(mutableListOf(PLItem(music.id, music.name, "", music.cover.picUrl, music.id.getSongUrl())))
                 MediaManager.playOrPause()
             }
@@ -49,7 +50,6 @@ class PlaylistDetailActivity : BaseActivity() {
                 viewBuilding.musicListView.addHeaderView(this.root, null, false)
             }
         }
-
     }
 
     private fun initView() {
