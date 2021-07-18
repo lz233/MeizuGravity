@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "moe.lz233.meizugravity.cloudmusic"
         minSdkVersion 19
-        targetSdkVersion 31
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -57,6 +57,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(':lrcview')
+    implementation project(':mediaplayer')
 
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation "androidx.multidex:multidex:2.0.1"
@@ -69,7 +70,7 @@ dependencies {
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
     implementation 'io.github.inflationx:viewpump:2.0.3'
     implementation 'com.google.zxing:core:3.4.1'
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.14.1'
+    //implementation 'com.google.android.exoplayer:exoplayer-core:2.14.1'
     //2.6.4
     implementation 'com.squareup.retrofit2:retrofit:2.6.4'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.4'

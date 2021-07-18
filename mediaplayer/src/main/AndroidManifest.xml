@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zhy.mediaplayer_exo">
+
+    <application>
+        <service
+            android:name="com.zhy.mediaplayer_exo.playermanager.service.MediaForegroundService"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="${applicationId}.mediaplayer.service.action" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

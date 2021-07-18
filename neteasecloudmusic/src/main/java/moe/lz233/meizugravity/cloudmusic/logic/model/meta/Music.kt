@@ -8,3 +8,9 @@ data class Music(val id: Long,
                  @SerializedName("al") val cover: MusicCover)
 
 data class MusicCover(val id: Long, val name: String, val picUrl: String)
+
+data class MusicUrl(val id: Long,
+                    val url: String,
+                    @SerializedName("br") val bitRate: Long,
+                    val size: Long,
+                    val type: String)

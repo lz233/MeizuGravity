@@ -3,3 +3,4 @@ include ':controller'
 include ':app'
 rootProject.name = "Meizu Gravity"
 include ':neteasecloudmusic'
+include ':mediaplayer'
