@@ -34,6 +34,9 @@
         <activity
             android:name=".ui.playlistdetail.PlaylistDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.playing.PlayingActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

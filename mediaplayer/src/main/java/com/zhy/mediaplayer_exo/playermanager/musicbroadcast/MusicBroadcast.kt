@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import com.zhy.mediaplayer_exo.playermanager.MediaPlayerService
-import com.zhy.mediaplayer_exo.playermanager.common.getBitmap
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 
 class MusicBroadcast : BroadcastReceiver() {
@@ -59,9 +58,6 @@ class MusicBroadcast : BroadcastReceiver() {
                     PENDINGINTENT_LAST_MUSIC_CLICK -> MediaManager.playLast()
                     PENDINGINTENT_LAST_NEXT_MUSIC_CLICK -> MediaManager.playNext()
                     PENDINGINTENT_READY_PLAY_CLICK -> {
-                        getBitmap(context!!, MediaManager.getCurrentMediaCover()) { bitmap ->
-                            MediaManager.getSimpleExoPlayer().play()
-                        }
                         mHandler.removeCallbacks(mediaProgressRunnable)
                         mHandler.postDelayed(mediaProgressRunnable, 300)
 

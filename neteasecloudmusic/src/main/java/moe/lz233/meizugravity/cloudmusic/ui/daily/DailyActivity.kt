@@ -24,11 +24,14 @@ class DailyActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        initView()
+        LayoutInflater.from(this@DailyActivity).inflate(R.layout.item_music, viewBuilding.dailyListView, false).run {
+            viewBuilding.dailyListView.addHeaderView(this, null, false)
+            viewBuilding.dailyListView.addFooterView(this, null, false)
+        }
         launch {
             val dailyRecommendationResponse = CloudMusicNetwork.getDailyRecommendation()
             musicList.addAll(dailyRecommendationResponse.data.songs)
-            dailyAdapter.notifyDataSetChanged()
+            viewBuilding.dailyListView.adapter = dailyAdapter
             Glide.with(viewBuilding.coverImageView)
                     .load(musicList[0].cover.picUrl.adjustParam("150", "150"))
                     .into(viewBuilding.coverImageView)
@@ -47,25 +50,14 @@ class DailyActivity : BaseActivity() {
         }
     }
 
-    private fun initView() {
-        LayoutInflater.from(this).inflate(R.layout.item_music, viewBuilding.dailyListView, false).run {
-            viewBuilding.dailyListView.addHeaderView(this, null, false)
-            viewBuilding.dailyListView.addFooterView(this, null, false)
-        }
-        viewBuilding.dailyListView.adapter = dailyAdapter
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_MENU -> finish()
             KeyEvent.KEYCODE_DPAD_UP -> {
-
             }
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-
             }
             KeyEvent.KEYCODE_ENTER -> {
-
             }
         }
         return super.onKeyDown(keyCode, event)

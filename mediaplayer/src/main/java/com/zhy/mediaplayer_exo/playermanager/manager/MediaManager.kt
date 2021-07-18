@@ -2,7 +2,6 @@ package com.zhy.mediaplayer_exo.playermanager.manager
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
@@ -14,6 +13,7 @@ import com.zhy.mediaplayer_exo.playermanager.*
 import com.zhy.mediaplayer_exo.playermanager.musicbroadcast.MusicBroadcast
 import com.zhy.mediaplayer_exo.playermanager.service.MediaForegroundService
 
+typealias MediaTrackChangeListener = (playlistItem: PlaylistItem) -> Unit
 
 object MediaManager : Player.EventListener {
     private lateinit var mContext: Context
@@ -21,9 +21,6 @@ object MediaManager : Player.EventListener {
 
     //音频播放列表
     private var playlistItemList = mutableListOf<PlaylistItem>()
-
-    //音频已加载过得封面bitmap列表
-    private var playlistItemBitmap = hashMapOf<String, Bitmap>()
 
     //音频进度列表
     private val infProgressList = mutableListOf<MediaProgressListener>()
@@ -168,6 +165,13 @@ object MediaManager : Player.EventListener {
         infMediaSwitchTrackChangeListenerList.add(mediaSwitchTrackChange)
     }
 
+    fun addMediaSwitchChange(mediaTrackChangeListener: MediaTrackChangeListener) {
+        addMediaSwitchChange(object : MediaSwitchTrackChange {
+            override fun onTracksChange(playlistItem: PlaylistItem) {
+                mediaTrackChangeListener(playlistItem)
+            }
+        })
+    }
 
     /**
      * 播放下一首
@@ -230,20 +234,6 @@ object MediaManager : Player.EventListener {
      * 是否正在播放
      */
     fun isPlaying() = simpleExoPlayer.isPlaying
-
-    /**
-     * 当前音频缓存的封面bitmap
-     */
-    fun getCacheBitmap(): Bitmap? = playlistItemBitmap[currentId()]
-
-    /**
-     * 设置当前id的bitmap
-     */
-    fun setCacheBitmap(bitmap: Bitmap) {
-        currentId()?.let {
-            playlistItemBitmap[it] = bitmap
-        }
-    }
 
     /**
      * 获取当前播放id

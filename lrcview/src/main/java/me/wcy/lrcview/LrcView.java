@@ -21,7 +21,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.text.Layout;
@@ -54,7 +53,6 @@ public class LrcView extends View {
     private TextPaint mLrcPaint = new TextPaint();
     private TextPaint mTimePaint = new TextPaint();
     private Paint.FontMetrics mTimeFontMetrics;
-    private Drawable mPlayDrawable;
     private float mDividerHeight;
     private long mAnimationDuration;
     private int mNormalTextColor;
@@ -145,8 +143,6 @@ public class LrcView extends View {
         mLrcPadding = ta.getDimension(R.styleable.LrcView_lrcPadding, 0);
         mTimelineColor = ta.getColor(R.styleable.LrcView_lrcTimelineColor, getResources().getColor(R.color.lrc_timeline_color));
         float timelineHeight = ta.getDimension(R.styleable.LrcView_lrcTimelineHeight, getResources().getDimension(R.dimen.lrc_timeline_height));
-        mPlayDrawable = ta.getDrawable(R.styleable.LrcView_lrcPlayDrawable);
-        mPlayDrawable = (mPlayDrawable == null) ? getResources().getDrawable(R.drawable.lrc_play) : mPlayDrawable;
         mTimeTextColor = ta.getColor(R.styleable.LrcView_lrcTimeTextColor, getResources().getColor(R.color.lrc_time_text_color));
         float timeTextSize = ta.getDimension(R.styleable.LrcView_lrcTimeTextSize, getResources().getDimension(R.dimen.lrc_time_text_size));
         mTextGravity = ta.getInteger(R.styleable.LrcView_lrcTextGravity, LrcEntry.GRAVITY_CENTER);
@@ -159,7 +155,7 @@ public class LrcView extends View {
         mLrcPaint.setTextSize(mCurrentTextSize);
         mLrcPaint.setTextAlign(Paint.Align.LEFT);
         //设置为 gravity 的字体
-        mLrcPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(),"font.otf"));
+        mLrcPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "font.otf"));
         mTimePaint.setAntiAlias(true);
         mTimePaint.setTextSize(timeTextSize);
         mTimePaint.setTextAlign(Paint.Align.CENTER);
@@ -440,7 +436,6 @@ public class LrcView extends View {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         if (changed) {
-            initPlayDrawable();
             initEntryList();
             if (hasLrc()) {
                 smoothScrollTo(mCurrentLine, 0L);
@@ -467,7 +462,6 @@ public class LrcView extends View {
         int centerLine = getCenterLine();
 
         if (isShowTimeline) {
-            mPlayDrawable.draw(canvas);
 
             mTimePaint.setColor(mTimelineColor);
             canvas.drawLine(mTimeTextWidth, centerY, getWidth() - mTimeTextWidth, centerY, mTimePaint);
@@ -574,7 +568,7 @@ public class LrcView extends View {
             if (!hasLrc()) {
                 return super.onSingleTapConfirmed(e);
             }
-            if (mOnPlayClickListener != null && isShowTimeline && mPlayDrawable.getBounds().contains((int) e.getX(), (int) e.getY())) {
+            if (mOnPlayClickListener != null && isShowTimeline) {
                 int centerLine = getCenterLine();
                 long centerLineTime = mLrcEntryList.get(centerLine).getTime();
                 // onPlayClick 消费了才更新 UI
@@ -633,14 +627,6 @@ public class LrcView extends View {
 
         initEntryList();
         invalidate();
-    }
-
-    private void initPlayDrawable() {
-        int l = (mTimeTextWidth - mDrawableWidth) / 2;
-        int t = getHeight() / 2 - mDrawableWidth / 2;
-        int r = l + mDrawableWidth;
-        int b = t + mDrawableWidth;
-        mPlayDrawable.setBounds(l, t, r, b);
     }
 
     private void initEntryList() {

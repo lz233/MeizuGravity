@@ -25,11 +25,14 @@ class PlayListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        initView()
+        LayoutInflater.from(this@PlayListActivity).inflate(R.layout.item_playlist, viewBuilding.playlistListView, false).run {
+            viewBuilding.playlistListView.addHeaderView(this, null, false)
+            viewBuilding.playlistListView.addFooterView(this, null, false)
+        }
         launch {
             val userPlaylistResponse = CloudMusicNetwork.getUserPlaylist(UserDao.id)
             playLists.addAll(userPlaylistResponse.playlists)
-            playlistAdapter.notifyDataSetChanged()
+            viewBuilding.playlistListView.adapter = playlistAdapter
             Glide.with(viewBuilding.coverImageView)
                     .load(playLists[0].coverImgUrl.adjustParam("150", "150"))
                     .into(viewBuilding.coverImageView)
@@ -48,25 +51,14 @@ class PlayListActivity : BaseActivity() {
         }
     }
 
-    private fun initView() {
-        LayoutInflater.from(this).inflate(R.layout.item_playlist, viewBuilding.playlistListView, false).run {
-            viewBuilding.playlistListView.addHeaderView(this, null, false)
-            viewBuilding.playlistListView.addFooterView(this, null, false)
-        }
-        viewBuilding.playlistListView.adapter = playlistAdapter
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_MENU -> finish()
             KeyEvent.KEYCODE_DPAD_UP -> {
-
             }
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-
             }
             KeyEvent.KEYCODE_ENTER -> {
-
             }
         }
         return super.onKeyDown(keyCode, event)

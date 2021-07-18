@@ -19,6 +19,7 @@ import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.daily.DailyActivity
 import moe.lz233.meizugravity.cloudmusic.ui.login.LoginActivity
+import moe.lz233.meizugravity.cloudmusic.ui.playing.PlayingActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
 import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
@@ -30,9 +31,16 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        initView()
-        if (UserDao.isLogin) {
-            launch {
+        viewBuilding.mainViewPager2.orientation = ViewPager2.ORIENTATION_VERTICAL
+        viewBuilding.mainViewPager2.isUserInputEnabled = false
+        viewBuilding.mainViewPager2.offscreenPageLimit = 3
+        viewBuilding.mainViewPager2.adapter = ViewPagerAdapter()
+        (viewBuilding.mainViewPager2.getChildAt(0) as RecyclerView).apply {
+            setPadding(0, 25, 0, 25)
+            clipToPadding = false
+        }
+        when (UserDao.isLogin) {
+            true -> launch {
                 val accountInfoResponse = CloudMusicNetwork.getAccountInfo()
                 Glide.with(viewBuilding.avatarImageView)
                         .load(accountInfoResponse.profile.avatarUrl.adjustParam("100", "100"))
@@ -42,19 +50,7 @@ class MainActivity : BaseActivity() {
                 viewBuilding.userNameTextview.text = accountInfoResponse.profile.nickName
                 UserDao.name = accountInfoResponse.profile.nickName
             }
-        } else {
-            LoginActivity.actionStart(this)
-        }
-    }
-
-    private fun initView() {
-        viewBuilding.mainViewPager2.orientation = ViewPager2.ORIENTATION_VERTICAL
-        viewBuilding.mainViewPager2.isUserInputEnabled = false
-        viewBuilding.mainViewPager2.offscreenPageLimit = 3
-        viewBuilding.mainViewPager2.adapter = ViewPagerAdapter()
-        (viewBuilding.mainViewPager2.getChildAt(0) as RecyclerView).apply {
-            setPadding(0, 25, 0, 25)
-            clipToPadding = false
+            false -> LoginActivity.actionStart(this)
         }
     }
 
@@ -75,7 +71,7 @@ class MainActivity : BaseActivity() {
             }
             KeyEvent.KEYCODE_ENTER -> {
                 when (viewBuilding.mainViewPager2.currentItem) {
-                    0 -> TODO()
+                    0 -> PlayingActivity.actionStart(this)
                     1 -> DailyActivity.actionStart(this)
                     2 -> PlayListActivity.actionStart(this)
                 }
