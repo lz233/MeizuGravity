@@ -36,7 +36,6 @@ class PlaylistDetailActivity : BaseActivity() {
             musicAdapter.notifyDataSetChanged()
             Glide.with(viewBuilding.coverImageView)
                     .load(playlistDetailResponse.playlist.coverImgUrl.adjustParam("150", "150"))
-                    .placeholder(R.drawable.ic_image)
                     .into(viewBuilding.coverImageView)
             viewBuilding.musicListView.setOnItemClickListener { adapterView, view, position, id ->
                 val music = musicList[position - 1]

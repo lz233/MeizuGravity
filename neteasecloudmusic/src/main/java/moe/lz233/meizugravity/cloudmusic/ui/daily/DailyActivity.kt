@@ -29,6 +29,9 @@ class DailyActivity : BaseActivity() {
             val dailyRecommendationResponse = CloudMusicNetwork.getDailyRecommendation()
             musicList.addAll(dailyRecommendationResponse.data.songs)
             dailyAdapter.notifyDataSetChanged()
+            Glide.with(viewBuilding.coverImageView)
+                    .load(musicList[0].cover.picUrl.adjustParam("150", "150"))
+                    .into(viewBuilding.coverImageView)
             viewBuilding.dailyListView.setOnItemClickListener { adapterView, view, position, id ->
                 val music = musicList[position - 1]
                 LogUtil.toast(music.name)
@@ -38,7 +41,6 @@ class DailyActivity : BaseActivity() {
                     val music = musicList[position!! - 1]
                     Glide.with(viewBuilding.coverImageView)
                             .load(music.cover.picUrl.adjustParam("150", "150"))
-                            .placeholder(R.drawable.ic_favorite)
                             .into(viewBuilding.coverImageView)
                 }
             }

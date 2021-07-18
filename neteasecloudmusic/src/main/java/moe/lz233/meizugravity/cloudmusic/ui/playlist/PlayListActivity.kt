@@ -30,6 +30,9 @@ class PlayListActivity : BaseActivity() {
             val userPlaylistResponse = CloudMusicNetwork.getUserPlaylist(UserDao.id)
             playLists.addAll(userPlaylistResponse.playlists)
             playlistAdapter.notifyDataSetChanged()
+            Glide.with(viewBuilding.coverImageView)
+                    .load(playLists[0].coverImgUrl.adjustParam("150", "150"))
+                    .into(viewBuilding.coverImageView)
             viewBuilding.playlistListView.setOnItemClickListener { adapterView, view, position, id ->
                 val playList = playLists[position - 1]
                 PlaylistDetailActivity.actionStart(this@PlayListActivity, playList.id)
@@ -39,7 +42,6 @@ class PlayListActivity : BaseActivity() {
                     val playList = playLists[position!! - 1]
                     Glide.with(viewBuilding.coverImageView)
                             .load(playList.coverImgUrl.adjustParam("150", "150"))
-                            .placeholder(R.drawable.ic_playlist)
                             .into(viewBuilding.coverImageView)
                 }
             }
