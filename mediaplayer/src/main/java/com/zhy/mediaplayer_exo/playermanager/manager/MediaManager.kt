@@ -287,7 +287,10 @@ object MediaManager : Player.EventListener {
      * 获取当前音频艺术家名称
      */
     fun getCurrentMediaArtistName(): String {
-        return playlistItemList[simpleExoPlayer.currentWindowIndex].artistName ?: ""
+        if (playlistItemList.isNotEmpty())
+            return playlistItemList[simpleExoPlayer.currentWindowIndex].artistName ?: ""
+        else
+            return "未知"
     }
 
     /**
@@ -301,7 +304,10 @@ object MediaManager : Player.EventListener {
      * 获取当前音频专辑名称
      */
     fun getCurrentMediaAlbumName(): String {
-        return playlistItemList[simpleExoPlayer.currentWindowIndex].albumName ?: ""
+        if (playlistItemList.isNotEmpty())
+            return playlistItemList[simpleExoPlayer.currentWindowIndex].albumName ?: ""
+        else
+            return "未知"
     }
 
     /**

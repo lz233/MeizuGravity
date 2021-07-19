@@ -9,6 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
         android:animateLayoutChanges="true">
 
         <ImageView
@@ -36,12 +37,12 @@
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mainViewPager2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="160px"
-            android:layout_marginTop="70px"
+            android:layout_marginStart="120px"
+            android:layout_marginTop="80px"
             android:layout_marginEnd="20px"
-            android:layout_marginBottom="50px"
+            android:layout_marginBottom="40px"
             android:clipChildren="false"
             android:visibility="gone" />
     </RelativeLayout>

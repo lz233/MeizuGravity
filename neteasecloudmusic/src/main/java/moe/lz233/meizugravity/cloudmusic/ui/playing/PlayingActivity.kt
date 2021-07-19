@@ -65,7 +65,7 @@ class PlayingActivity : BaseActivity() {
             setPadding(0, 25, 0, 25)
             clipToPadding = false
         }
-        if (MediaManager.isPlaying()) onMediaChange()
+        onMediaChange()
         handler.post(runnable)
         MediaManager.addMediaSwitchChange(mediaTrackChangeListener)
     }
@@ -169,10 +169,10 @@ class PlayingActivity : BaseActivity() {
     inner class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val textView: TextView = itemView.findViewById(R.id.mainItemTextView)
+            val textView: TextView = itemView.findViewById(R.id.playingItemTextView)
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false))
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_playing, parent, false))
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.textView.text = when (position) {
