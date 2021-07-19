@@ -13,8 +13,6 @@ import com.zhy.mediaplayer_exo.playermanager.*
 import com.zhy.mediaplayer_exo.playermanager.musicbroadcast.MusicBroadcast
 import com.zhy.mediaplayer_exo.playermanager.service.MediaForegroundService
 
-typealias MediaTrackChangeListener = (playlistItem: PlaylistItem) -> Unit
-
 object MediaManager : Player.EventListener {
     private lateinit var mContext: Context
     private lateinit var simpleExoPlayer: SimpleExoPlayer
@@ -165,14 +163,6 @@ object MediaManager : Player.EventListener {
         infMediaSwitchTrackChangeListenerList.add(mediaSwitchTrackChange)
     }
 
-    fun addMediaSwitchChange(mediaTrackChangeListener: MediaTrackChangeListener) {
-        addMediaSwitchChange(object : MediaSwitchTrackChange {
-            override fun onTracksChange(playlistItem: PlaylistItem) {
-                mediaTrackChangeListener(playlistItem)
-            }
-        })
-    }
-
     /**
      * 播放下一首
      */
@@ -248,7 +238,12 @@ object MediaManager : Player.EventListener {
     /**
      * 获取播放总进度
      */
-    fun getCurrentDuration() = simpleExoPlayer.duration
+    fun getDuration() = simpleExoPlayer.duration
+
+    /**
+     * 获取当前播放进度
+     */
+    fun getCurrentPosition() = simpleExoPlayer.currentPosition
 
     /**
      * 获取当前音频标题
@@ -270,6 +265,11 @@ object MediaManager : Player.EventListener {
     fun getCurrentMediaCover(): String {
         return playlistItemList[simpleExoPlayer.currentWindowIndex].coverUrl ?: ""
     }
+
+    /**
+     * 获取当前音频
+     */
+    fun getCurrentMedia() = playlistItemList[simpleExoPlayer.currentWindowIndex]
 
     /**
      * 获取当前播放模式

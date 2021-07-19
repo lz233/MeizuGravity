@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.playlistdetail.PlaylistDetailActivity">
 
     <RelativeLayout
@@ -19,6 +20,19 @@
             android:layout_marginTop="54.328358px"
             android:layout_marginBottom="34.328358px"
             android:scaleType="fitXY" />
+
+        <me.wcy.lrcview.LrcView
+            android:id="@+id/lrcView"
+            app:lrcAnimationDuration="200"
+            app:lrcCurrentTextColor="@color/colorAccent"
+            app:lrcLabel="暂无歌词"
+            app:lrcNormalTextColor="#68FFFFFF"
+            app:lrcNormalTextSize="@dimen/text_18"
+            app:lrcTextSize="@dimen/text_20"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="110px"
+            android:layout_marginEnd="10px" />
 
         <LinearLayout
             android:layout_width="match_parent"

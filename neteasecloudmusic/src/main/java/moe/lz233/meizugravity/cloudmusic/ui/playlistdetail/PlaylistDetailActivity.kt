@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import com.bumptech.glide.Glide
-import com.zhy.mediaplayer_exo.playermanager.PLItem
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
+import com.zhy.mediaplayer_exo.playermanager.meta.PlayListItem
 import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityPlaylistDetailBinding
@@ -41,7 +41,7 @@ class PlaylistDetailActivity : BaseActivity() {
             viewBuilding.musicListView.setOnItemClickListener { adapterView, view, position, id ->
                 val music = musicList[position - 1]
                 LogUtil.d(music.id.getSongUrl())
-                MediaManager.playlist(mutableListOf(PLItem(music.id, music.name, "", music.cover.picUrl, music.id.getSongUrl())))
+                MediaManager.playlist(mutableListOf(PlayListItem(music.id, music.name, "", music.cover.picUrl, music.id.getSongUrl())))
                 MediaManager.playOrPause()
             }
             titleBuilding.run {

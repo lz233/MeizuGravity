@@ -23,4 +23,5 @@ object CloudMusicNetwork {
     suspend fun getPlaylistDetail(playlistId: Long) = playlistService.getPlaylistDetail(playlistId).await()
 
     suspend fun getSongUrl(musicId: Long) = songService.getSongUrl(musicId).await()
+    suspend fun getSongLyric(musicId: Long) = songService.getSongLyric(musicId).await()
 }
