@@ -18,7 +18,7 @@ object MediaManager : Player.EventListener {
     private lateinit var simpleExoPlayer: SimpleExoPlayer
 
     //音频播放列表
-    private var playlistItemList = mutableListOf<PlaylistItem>()
+    var playlistItemList = mutableListOf<PlaylistItem>()
 
     //音频进度列表
     private val infProgressList = mutableListOf<MediaProgressListener>()
@@ -266,7 +266,10 @@ object MediaManager : Player.EventListener {
      * 获取当前音频名称
      */
     fun getCurrentMediaName(): String {
-        return playlistItemList[simpleExoPlayer.currentWindowIndex].name ?: ""
+        if (playlistItemList.isNotEmpty())
+            return playlistItemList[simpleExoPlayer.currentWindowIndex].name ?: ""
+        else
+            return "未知音频"
     }
 
     /**

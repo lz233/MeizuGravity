@@ -65,7 +65,7 @@ class PlayingActivity : BaseActivity() {
             setPadding(0, 25, 0, 25)
             clipToPadding = false
         }
-        onMediaChange()
+        if (MediaManager.playlistItemList.isNotEmpty()) onMediaChange()
         handler.post(runnable)
         MediaManager.addMediaSwitchChange(mediaTrackChangeListener)
     }
@@ -78,6 +78,14 @@ class PlayingActivity : BaseActivity() {
         launch {
             viewBuilding.lrcView.loadLrc("")
             val songLyricResponse = CloudMusicNetwork.getSongLyric(MediaManager.currentId()!!.toLong())
+            songLyricResponse.uncollected?.let {
+                viewBuilding.lrcView.loadLrc("[00:00.000] ${MediaManager.getCurrentMediaName()}\n[00:00.000] 貌似没歌词")
+                return@launch
+            }
+            songLyricResponse.noLyric?.let {
+                viewBuilding.lrcView.loadLrc("[00:00.000] ${MediaManager.getCurrentMediaName()}\n[00:00.000] 似乎是个纯音乐")
+                return@launch
+            }
             if (songLyricResponse.translatedLyric.lyric == "")
                 viewBuilding.lrcView.loadLrc(songLyricResponse.lyric.lyric)
             else
@@ -117,15 +125,17 @@ class PlayingActivity : BaseActivity() {
                     hideMenu()
                     handler.removeCallbacks(runnable2)
                     when (viewBuilding.mainViewPager2.currentItem) {
-                        0 -> MediaManager.playOrPause()
-                        1 -> MediaManager.playLast()
-                        2 -> MediaManager.playNext()
-                        3 -> when (MediaManager.getCurrentPlayMode()) {
+                        0 -> {
+                        }
+                        1 -> MediaManager.playOrPause()
+                        2 -> MediaManager.playLast()
+                        3 -> MediaManager.playNext()
+                        4 -> when (MediaManager.getCurrentPlayMode()) {
                             MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP)
                             MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_LIST_LOOP)
                         }
-                        4 -> LogUtil.toast(MediaManager.getCurrentMediaArtistName())
-                        5 -> LogUtil.toast(MediaManager.getCurrentMediaAlbumName())
+                        5 -> LogUtil.toast(MediaManager.getCurrentMediaArtistName())
+                        6 -> LogUtil.toast(MediaManager.getCurrentMediaAlbumName())
                     }
                 } else {
                     showMenu()
@@ -176,16 +186,17 @@ class PlayingActivity : BaseActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.textView.text = when (position) {
-                0 -> if (MediaManager.isPlaying()) "暂停" else "播放"
-                1 -> "上一首"
-                2 -> "下一首"
-                3 -> when (MediaManager.getCurrentPlayMode()) {
+                0 -> MediaManager.getCurrentMediaName()
+                1 -> if (MediaManager.isPlaying()) "暂停" else "播放"
+                2 -> "上一首"
+                3 -> "下一首"
+                4 -> when (MediaManager.getCurrentPlayMode()) {
                     MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> "列表循环"
                     MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> "单曲循环"
                     else -> "未知"
                 }
-                4 -> "歌手：${MediaManager.getCurrentMediaArtistName()}"
-                5 -> "专辑：${MediaManager.getCurrentMediaAlbumName()}"
+                5 -> "歌手：${MediaManager.getCurrentMediaArtistName()}"
+                6 -> "专辑：${MediaManager.getCurrentMediaAlbumName()}"
                 else -> "not completed"
             }
         }
