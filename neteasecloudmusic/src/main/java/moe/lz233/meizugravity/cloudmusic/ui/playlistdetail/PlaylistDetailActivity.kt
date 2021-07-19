@@ -7,7 +7,6 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import com.bumptech.glide.Glide
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
-import com.zhy.mediaplayer_exo.playermanager.meta.PlayListItem
 import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityPlaylistDetailBinding
@@ -18,7 +17,7 @@ import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
-import moe.lz233.meizugravity.cloudmusic.utils.ktx.getSongUrl
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.toPlayListItem
 
 class PlaylistDetailActivity : BaseActivity() {
     private val musicList = mutableListOf<Music>()
@@ -40,9 +39,9 @@ class PlaylistDetailActivity : BaseActivity() {
                     .into(viewBuilding.coverImageView)
             viewBuilding.musicListView.setOnItemClickListener { adapterView, view, position, id ->
                 val music = musicList[position - 1]
-                LogUtil.d(music.id.getSongUrl())
-                MediaManager.playlist(mutableListOf(PlayListItem(music.id, music.name, "", music.cover.picUrl, music.id.getSongUrl())))
-                MediaManager.playOrPause()
+                LogUtil.d(music.name)
+                MediaManager.playlist(musicList.toPlayListItem(), position - 1)
+                MediaManager.play()
             }
             titleBuilding.run {
                 titleTextView.text = playlistDetailResponse.playlist.name.replace(UserDao.name, "我")

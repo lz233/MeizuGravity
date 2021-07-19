@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import com.bumptech.glide.Glide
+import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityDailyBinding
@@ -15,6 +16,7 @@ import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.setOnItemSelectedListener
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.toPlayListItem
 
 class DailyActivity : BaseActivity() {
     private val musicList = mutableListOf<Music>()
@@ -37,7 +39,9 @@ class DailyActivity : BaseActivity() {
                     .into(viewBuilding.coverImageView)
             viewBuilding.dailyListView.setOnItemClickListener { adapterView, view, position, id ->
                 val music = musicList[position - 1]
-                LogUtil.toast(music.name)
+                LogUtil.d(music.name)
+                MediaManager.playlist(musicList.toPlayListItem(), position - 1)
+                MediaManager.play()
             }
             viewBuilding.dailyListView.setOnItemSelectedListener { selected, parent, view, position, id ->
                 if (selected) {

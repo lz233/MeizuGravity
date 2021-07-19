@@ -36,7 +36,7 @@ object MediaManager : Player.EventListener {
     var isInit = false
 
     //当前播放模式
-    private var currentPlayMode = MediaPlayerExoPlayMode.MEDIA_LIST_ORDER_PLAY
+    private var currentPlayMode = MediaPlayerExoPlayMode.MEDIA_LIST_LOOP
 
     /**
      * media管理者初始化
@@ -94,6 +94,7 @@ object MediaManager : Player.EventListener {
                     Player.REPEAT_MODE_ALL
             MediaPlayerExoPlayMode.MEDIA_LIST_ORDER_PLAY -> simpleExoPlayer.repeatMode =
                     Player.REPEAT_MODE_OFF
+            MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM -> simpleExoPlayer.shuffleModeEnabled = true
         }
     }
 
@@ -187,6 +188,22 @@ object MediaManager : Player.EventListener {
             simpleExoPlayer.previous()
         }
         return f
+    }
+
+    /**
+     * 播放
+     */
+    fun play() {
+        checkRestartService()
+        simpleExoPlayer.play()
+    }
+
+    /**
+     * 暂停
+     */
+    fun pause() {
+        checkRestartService()
+        simpleExoPlayer.pause()
     }
 
     /**

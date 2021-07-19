@@ -15,10 +15,12 @@ import moe.lz233.meizugravity.cloudmusic.databinding.ActivityPlayingBinding
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.AudioManager
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 
 class PlayingActivity : BaseActivity() {
     private val viewBuilding by lazy { ActivityPlayingBinding.inflate(layoutInflater) }
+    private val isShowMenu = false
     private val isPlaying = MediaManager.isPlaying()
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
@@ -49,6 +51,7 @@ class PlayingActivity : BaseActivity() {
                 .load(playlistItem.coverUrl?.adjustParam("150", "150"))
                 .into(viewBuilding.coverImageView)
         launch {
+            viewBuilding.lrcView.loadLrc("")
             val songLyricResponse = CloudMusicNetwork.getSongLyric(MediaManager.currentId()!!.toLong())
             if (songLyricResponse.translatedLyric.lyric == "")
                 viewBuilding.lrcView.loadLrc(songLyricResponse.lyric.lyric)
@@ -61,8 +64,12 @@ class PlayingActivity : BaseActivity() {
         when (keyCode) {
             KeyEvent.KEYCODE_MENU -> finish()
             KeyEvent.KEYCODE_DPAD_UP -> {
+                AudioManager.adjustStreamVolume(AudioManager.VOLUME_UP)
+                LogUtil.toast("音量：${AudioManager.currentVolume}/${AudioManager.maxVolume}")
             }
             KeyEvent.KEYCODE_DPAD_DOWN -> {
+                AudioManager.adjustStreamVolume(AudioManager.VOLUME_DOWN)
+                LogUtil.toast("音量：${AudioManager.currentVolume}/${AudioManager.maxVolume}")
             }
             KeyEvent.KEYCODE_ENTER -> {
             }
