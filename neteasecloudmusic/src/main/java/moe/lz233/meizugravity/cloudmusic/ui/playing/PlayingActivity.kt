@@ -6,29 +6,45 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.zhy.mediaplayer_exo.playermanager.MediaPlayerExoPlayMode
 import com.zhy.mediaplayer_exo.playermanager.MediaSwitchTrackChange
 import com.zhy.mediaplayer_exo.playermanager.PlaylistItem
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import kotlinx.coroutines.launch
+import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityPlayingBinding
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
+import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.AudioManager
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 
 class PlayingActivity : BaseActivity() {
+    private val count = 7
     private val viewBuilding by lazy { ActivityPlayingBinding.inflate(layoutInflater) }
-    private val isShowMenu = false
-    private val isPlaying = MediaManager.isPlaying()
+    private var isShowMenu = false
     private val handler = Handler(Looper.getMainLooper())
+    private val adapter = ViewPagerAdapter()
     private val runnable = object : Runnable {
         override fun run() {
-            LogUtil.d(MediaManager.getDuration())
-            LogUtil.d(MediaManager.getCurrentPosition())
             viewBuilding.lrcView.updateTime(MediaManager.getCurrentPosition())
             handler.postDelayed(this, 400)
+        }
+    }
+
+    private val runnable2 = object : Runnable {
+        override fun run() {
+            runOnUiThread {
+                hideMenu()
+            }
         }
     }
 
@@ -41,12 +57,21 @@ class PlayingActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        if (isPlaying) onMediaChange()
+        viewBuilding.mainViewPager2.orientation = ViewPager2.ORIENTATION_VERTICAL
+        viewBuilding.mainViewPager2.isUserInputEnabled = false
+        viewBuilding.mainViewPager2.offscreenPageLimit = 3
+        viewBuilding.mainViewPager2.adapter = adapter
+        (viewBuilding.mainViewPager2.getChildAt(0) as RecyclerView).apply {
+            setPadding(0, 25, 0, 25)
+            clipToPadding = false
+        }
+        if (MediaManager.isPlaying()) onMediaChange()
         handler.post(runnable)
         MediaManager.addMediaSwitchChange(mediaTrackChangeListener)
     }
 
     private fun onMediaChange(playlistItem: PlaylistItem = MediaManager.getCurrentMedia()) {
+        adapter.notifyDataSetChanged()
         Glide.with(viewBuilding.coverImageView)
                 .load(playlistItem.coverUrl?.adjustParam("150", "150"))
                 .into(viewBuilding.coverImageView)
@@ -64,26 +89,107 @@ class PlayingActivity : BaseActivity() {
         when (keyCode) {
             KeyEvent.KEYCODE_MENU -> finish()
             KeyEvent.KEYCODE_DPAD_UP -> {
-                AudioManager.adjustStreamVolume(AudioManager.VOLUME_UP)
-                LogUtil.toast("音量：${AudioManager.currentVolume}/${AudioManager.maxVolume}")
+                if (isShowMenu) {
+                    reCreateCallback()
+                    if (viewBuilding.mainViewPager2.currentItem == 0)
+                        ViewPager2Util.setCurrentItem(viewBuilding.mainViewPager2, 0, 100, 50)
+                    else
+                        ViewPager2Util.setCurrentItem(viewBuilding.mainViewPager2, viewBuilding.mainViewPager2.currentItem - 1, 100, 50)
+                } else {
+                    AudioManager.adjustStreamVolume(AudioManager.VOLUME_UP)
+                    LogUtil.toast("音量：${AudioManager.currentVolume}/${AudioManager.maxVolume}")
+                }
             }
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-                AudioManager.adjustStreamVolume(AudioManager.VOLUME_DOWN)
-                LogUtil.toast("音量：${AudioManager.currentVolume}/${AudioManager.maxVolume}")
+                if (isShowMenu) {
+                    reCreateCallback()
+                    if (viewBuilding.mainViewPager2.currentItem == count - 1)
+                        ViewPager2Util.setCurrentItem(viewBuilding.mainViewPager2, count - 1, 100, 50)
+                    else
+                        ViewPager2Util.setCurrentItem(viewBuilding.mainViewPager2, viewBuilding.mainViewPager2.currentItem + 1, 100, 50)
+                } else {
+                    AudioManager.adjustStreamVolume(AudioManager.VOLUME_DOWN)
+                    LogUtil.toast("音量：${AudioManager.currentVolume}/${AudioManager.maxVolume}")
+                }
             }
             KeyEvent.KEYCODE_ENTER -> {
+                if (isShowMenu) {
+                    hideMenu()
+                    handler.removeCallbacks(runnable2)
+                    when (viewBuilding.mainViewPager2.currentItem) {
+                        0 -> MediaManager.playOrPause()
+                        1 -> MediaManager.playLast()
+                        2 -> MediaManager.playNext()
+                        3 -> when (MediaManager.getCurrentPlayMode()) {
+                            MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP)
+                            MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_LIST_LOOP)
+                        }
+                        4 -> LogUtil.toast(MediaManager.getCurrentMediaArtistName())
+                        5 -> LogUtil.toast(MediaManager.getCurrentMediaAlbumName())
+                    }
+                } else {
+                    showMenu()
+                    reCreateCallback()
+                }
             }
         }
         return super.onKeyDown(keyCode, event)
     }
 
+    private fun showMenu() {
+        adapter.notifyDataSetChanged()
+        viewBuilding.lrcView.visibility = View.GONE
+        viewBuilding.mainViewPager2.visibility = View.VISIBLE
+        viewBuilding.mainViewPager2.setCurrentItem(0, false)
+        isShowMenu = true
+    }
+
+    private fun hideMenu() {
+        viewBuilding.mainViewPager2.visibility = View.GONE
+        viewBuilding.lrcView.visibility = View.VISIBLE
+        isShowMenu = false
+    }
+
+    private fun reCreateCallback() {
+        handler.removeCallbacks(runnable2)
+        handler.postDelayed(runnable2, 3000)
+    }
+
     override fun onDestroy() {
         handler.removeCallbacks(runnable)
+        handler.removeCallbacks(runnable2)
         MediaManager.removeMediaSwitchChange(mediaTrackChangeListener)
         super.onDestroy()
     }
 
     companion object {
         fun actionStart(context: Context) = context.startActivity(Intent(context, PlayingActivity::class.java))
+    }
+
+    inner class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
+
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val textView: TextView = itemView.findViewById(R.id.mainItemTextView)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false))
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.textView.text = when (position) {
+                0 -> if (MediaManager.isPlaying()) "暂停" else "播放"
+                1 -> "上一首"
+                2 -> "下一首"
+                3 -> when (MediaManager.getCurrentPlayMode()) {
+                    MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> "列表循环"
+                    MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> "单曲循环"
+                    else -> "未知"
+                }
+                4 -> "歌手：${MediaManager.getCurrentMediaArtistName()}"
+                5 -> "专辑：${MediaManager.getCurrentMediaAlbumName()}"
+                else -> "not completed"
+            }
+        }
+
+        override fun getItemCount() = count
     }
 }

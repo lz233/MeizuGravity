@@ -263,17 +263,10 @@ object MediaManager : Player.EventListener {
     fun getCurrentPosition() = simpleExoPlayer.currentPosition
 
     /**
-     * 获取当前音频标题
+     * 获取当前音频名称
      */
-    fun getCurrentMediaTitle(): String {
-        return playlistItemList[simpleExoPlayer.currentWindowIndex].title ?: ""
-    }
-
-    /**
-     * 获取当前音频详情
-     */
-    fun getCurrentMediaDesc(): String {
-        return playlistItemList[simpleExoPlayer.currentWindowIndex].intro ?: ""
+    fun getCurrentMediaName(): String {
+        return playlistItemList[simpleExoPlayer.currentWindowIndex].name ?: ""
     }
 
     /**
@@ -281,6 +274,34 @@ object MediaManager : Player.EventListener {
      */
     fun getCurrentMediaCover(): String {
         return playlistItemList[simpleExoPlayer.currentWindowIndex].coverUrl ?: ""
+    }
+
+    /**
+     * 获取当前音频艺术家ID
+     */
+    fun getCurrentMediaArtistId(): List<Long> {
+        return playlistItemList[simpleExoPlayer.currentWindowIndex].artistId ?: listOf()
+    }
+
+    /**
+     * 获取当前音频艺术家名称
+     */
+    fun getCurrentMediaArtistName(): String {
+        return playlistItemList[simpleExoPlayer.currentWindowIndex].artistName ?: ""
+    }
+
+    /**
+     * 获取当前音频专辑ID
+     */
+    fun getCurrentMediaAlbumId(): Long {
+        return playlistItemList[simpleExoPlayer.currentWindowIndex].albumId ?: 0
+    }
+
+    /**
+     * 获取当前音频专辑名称
+     */
+    fun getCurrentMediaAlbumName(): String {
+        return playlistItemList[simpleExoPlayer.currentWindowIndex].albumName ?: ""
     }
 
     /**

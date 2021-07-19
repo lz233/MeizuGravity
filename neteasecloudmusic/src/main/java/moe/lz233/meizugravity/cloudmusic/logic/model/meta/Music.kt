@@ -5,9 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class Music(val id: Long,
                  val name: String,
                  @SerializedName("ar") val artists: List<Artist>,
-                 @SerializedName("al") val cover: MusicCover)
-
-data class MusicCover(val id: Long, val name: String, val picUrl: String)
+                 @SerializedName("al") val album: Album)
 
 data class MusicUrl(val id: Long,
                     val url: String,

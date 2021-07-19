@@ -35,7 +35,7 @@ class DailyActivity : BaseActivity() {
             musicList.addAll(dailyRecommendationResponse.data.songs)
             viewBuilding.dailyListView.adapter = dailyAdapter
             Glide.with(viewBuilding.coverImageView)
-                    .load(musicList[0].cover.picUrl.adjustParam("150", "150"))
+                    .load(musicList[0].album.picUrl.adjustParam("150", "150"))
                     .into(viewBuilding.coverImageView)
             viewBuilding.dailyListView.setOnItemClickListener { adapterView, view, position, id ->
                 val music = musicList[position - 1]
@@ -47,7 +47,7 @@ class DailyActivity : BaseActivity() {
                 if (selected) {
                     val music = musicList[position!! - 1]
                     Glide.with(viewBuilding.coverImageView)
-                            .load(music.cover.picUrl.adjustParam("150", "150"))
+                            .load(music.album.picUrl.adjustParam("150", "150"))
                             .into(viewBuilding.coverImageView)
                 }
             }
