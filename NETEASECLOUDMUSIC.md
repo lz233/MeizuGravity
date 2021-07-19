@@ -13,8 +13,8 @@ Netease Cloud Music  For Gravity 是一个专门为 Gravity 适配的网易云�
 
 ## 截图
 
-![](gravity/cloudmusic-1.png)
+![](https://raw.githubusercontent.com/lz233/MeizuGravity/master/Gravity/cloudmusic-1.png)
 
-![](gravity/cloudmusic-2.png)
+![](https://raw.githubusercontent.com/lz233/MeizuGravity/master/Gravity/cloudmusic-2.png)
 
-![](gravity/cloudmusic-3.png)
+![](https://raw.githubusercontent.com/lz233/MeizuGravity/master/Gravity/cloudmusic-3.png)
