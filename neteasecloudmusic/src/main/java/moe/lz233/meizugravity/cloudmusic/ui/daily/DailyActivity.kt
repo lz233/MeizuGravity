@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import com.bumptech.glide.Glide
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import kotlinx.coroutines.launch
@@ -33,6 +34,7 @@ class DailyActivity : BaseActivity() {
         launch {
             val dailyRecommendationResponse = CloudMusicNetwork.getDailyRecommendation()
             musicList.addAll(dailyRecommendationResponse.data.songs)
+            viewBuilding.progressBar.visibility = View.GONE
             viewBuilding.dailyListView.adapter = dailyAdapter
             Glide.with(viewBuilding.coverImageView)
                     .load(musicList[0].album.picUrl.adjustParam("150", "150"))

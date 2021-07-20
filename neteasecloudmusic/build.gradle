@@ -10,10 +10,11 @@ android {
     buildToolsVersion "31.0.0"
 
     defaultConfig {
+        Date date = new Date()
         applicationId "moe.lz233.meizugravity.cloudmusic"
         minSdkVersion 19
         targetSdkVersion 31
-        versionCode 1
+        versionCode = date.format("yyyyMMdd").toInteger()
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

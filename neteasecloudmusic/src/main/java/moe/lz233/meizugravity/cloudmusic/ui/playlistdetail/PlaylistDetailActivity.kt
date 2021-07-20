@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import com.bumptech.glide.Glide
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import kotlinx.coroutines.launch
@@ -32,6 +33,7 @@ class PlaylistDetailActivity : BaseActivity() {
         launch {
             val playlistDetailResponse = CloudMusicNetwork.getPlaylistDetail(intent.getLongExtra("playlistId", 415524508))
             musicList.addAll(playlistDetailResponse.playlist.tracks)
+            viewBuilding.progressBar.visibility = View.GONE
             viewBuilding.musicListView.adapter = musicAdapter
             //musicAdapter.notifyDataSetChanged()
             Glide.with(viewBuilding.coverImageView)

@@ -17,6 +17,7 @@ import moe.lz233.meizugravity.cloudmusic.databinding.ActivityMainBinding
 import moe.lz233.meizugravity.cloudmusic.logic.dao.UserDao
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
+import moe.lz233.meizugravity.cloudmusic.ui.about.AboutActivity
 import moe.lz233.meizugravity.cloudmusic.ui.daily.DailyActivity
 import moe.lz233.meizugravity.cloudmusic.ui.login.LoginActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playing.PlayingActivity
@@ -74,6 +75,7 @@ class MainActivity : BaseActivity() {
                     0 -> PlayingActivity.actionStart(this)
                     1 -> DailyActivity.actionStart(this)
                     2 -> PlayListActivity.actionStart(this)
+                    3 -> AboutActivity.actionStart(this)
                 }
             }
         }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.R
@@ -32,6 +33,7 @@ class PlayListActivity : BaseActivity() {
         launch {
             val userPlaylistResponse = CloudMusicNetwork.getUserPlaylist(UserDao.id)
             playLists.addAll(userPlaylistResponse.playlists)
+            viewBuilding.progressBar.visibility = View.GONE
             viewBuilding.playlistListView.adapter = playlistAdapter
             Glide.with(viewBuilding.coverImageView)
                     .load(playLists[0].coverImgUrl.adjustParam("150", "150"))
