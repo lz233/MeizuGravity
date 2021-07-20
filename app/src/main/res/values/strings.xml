@@ -28,4 +28,5 @@
     <string name="following">following</string>
     <string name="follower">follower</string>
     <string name="noLrc">No lyrics</string>
+    <string name="apps">Apps</string>
 </resources>

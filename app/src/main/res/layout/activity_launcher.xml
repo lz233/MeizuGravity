@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.LauncherActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,23 +11,20 @@
         android:clipChildren="false">
 
         <ImageView
-            android:id="@+id/mainImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="40px"
-            android:src="@drawable/ic_dashboard" />
+            android:src="@drawable/ic_apps" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/mainViewPager2"
+        <ListView
+            android:id="@+id/launcherListView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="160px"
-            android:layout_marginTop="70px"
-            android:layout_marginEnd="20px"
-            android:layout_marginBottom="50px"
-            android:clipChildren="false" />
+            android:layout_marginStart="150px"
+            android:listSelector="@drawable/bgstyle"
+            android:scrollbars="none" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

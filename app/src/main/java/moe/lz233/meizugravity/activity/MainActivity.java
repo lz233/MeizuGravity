@@ -18,10 +18,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import moe.lz233.meizugravity.BuildConfig;
 import moe.lz233.meizugravity.R;
-import moe.lz233.meizugravity.services.CommandService;
-import moe.lz233.meizugravity.utils.FileUtil;
 import moe.lz233.meizugravity.utils.GetUtil;
 import moe.lz233.meizugravity.utils.ToastUtil;
 import moe.lz233.meizugravity.utils.ViewPager2Util;
@@ -50,7 +47,7 @@ public class MainActivity extends BaseActivity {
         new GetUtil().sendGet("http://127.0.0.1:7766/Status", null, result -> {
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                if (!jsonObject.optJSONObject("data").optJSONObject("playList").optJSONArray("trackList").optJSONObject(0).optString("cp").equals("local")){
+                if (!jsonObject.optJSONObject("data").optJSONObject("playList").optJSONArray("trackList").optJSONObject(0).optString("cp").equals("local")) {
                     startActivity(new Intent().setClass(MainActivity.this, LrcActivity.class));
                 }
             } catch (JSONException e) {
@@ -59,6 +56,8 @@ public class MainActivity extends BaseActivity {
         });
         mainMenuTitleList.add(getString(R.string.dashboard));
         mainMenuIconList.add(R.drawable.ic_dashboard);
+        mainMenuTitleList.add(getString(R.string.apps));
+        mainMenuIconList.add(R.drawable.ic_apps);
         mainMenuTitleList.add(getString(R.string.setting));
         mainMenuIconList.add(R.drawable.ic_settings);
         mainMenuTitleList.add(getString(R.string.about));
@@ -107,12 +106,15 @@ public class MainActivity extends BaseActivity {
         } else if (keyCode == KeyEvent.KEYCODE_ENTER) {
             switch (mainViewPager2.getCurrentItem()) {
                 case 0:
-                    startActivity(new Intent().setClass(this, DashBoardActivity.class));
+                    AboutActivity.Companion.actionStart(this);
                     break;
                 case 1:
-                    startActivity(new Intent().setClass(this, SettingsActivity.class));
+                    LauncherActivity.Companion.actionStart(this);
                     break;
                 case 2:
+                    startActivity(new Intent().setClass(this, SettingsActivity.class));
+                    break;
+                case 3:
                     startActivity(new Intent().setClass(this, AboutActivity.class));
                     break;
             }

@@ -1,33 +1,27 @@
-package moe.lz233.meizugravity.cloudmusic.ui.about
+package moe.lz233.meizugravity.activity
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import moe.lz233.meizugravity.cloudmusic.BuildConfig
-import moe.lz233.meizugravity.cloudmusic.databinding.ActivityAboutBinding
-import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
-import moe.lz233.meizugravity.cloudmusic.utils.QRCodeUtil
+import moe.lz233.meizugravity.BuildConfig
+import moe.lz233.meizugravity.databinding.ActivityAboutBinding
+import moe.lz233.meizugravity.utils.QRCodeUtil
 
 class AboutActivity : BaseActivity() {
+
     private val viewBuilding by lazy { ActivityAboutBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        viewBuilding.aboutImageView.setImageBitmap(QRCodeUtil.createQRCodeBitmap("https://github.com/lz233/MeizuGravity/blob/master/NETEASECLOUDMUSIC.md", 100, 100))
+        viewBuilding.aboutImageView.setImageBitmap(QRCodeUtil.createQRCodeBitmap("https://github.com/lz233/MeizuGravity", 100, 100))
         viewBuilding.versionTextView.text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_MENU -> finish()
-            KeyEvent.KEYCODE_DPAD_UP -> {
-            }
-            KeyEvent.KEYCODE_DPAD_DOWN -> {
-            }
-            KeyEvent.KEYCODE_ENTER -> {
-            }
         }
         return super.onKeyDown(keyCode, event)
     }

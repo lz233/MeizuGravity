@@ -1,4 +1,7 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
 
 android {
     compileSdkVersion 31
@@ -10,7 +13,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 31
         versionCode = date.format("yyyyMMdd").toInteger()
-        versionName "0.2"
+        versionName "0.3"
     }
 
     buildTypes {
@@ -24,6 +27,19 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    packagingOptions {
+        exclude 'META-INF/**'
+        exclude 'kotlin/**'
+        exclude 'okhttp3/**'
+        exclude 'org/**'
+        exclude '**.properties'
+        exclude '**.bin'
+        exclude 'lib/arm64-v8a/**'
+        exclude 'lib/x86_64/**'
     }
 }
 

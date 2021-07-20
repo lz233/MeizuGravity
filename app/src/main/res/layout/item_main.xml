@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:singleLine="true"
     android:text="test"
-    android:textSize="@dimen/text_26"
-    android:textStyle="bold">
+    android:textSize="@dimen/text_26">
 
 </moe.lz233.meizugravity.view.ChanTextView>
