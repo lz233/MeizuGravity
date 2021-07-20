@@ -1,16 +1,23 @@
 package moe.lz233.meizugravity.cloudmusic.ui.login
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import moe.lz233.meizugravity.cloudmusic.App
+import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityLoginBinding
+import moe.lz233.meizugravity.cloudmusic.logic.dao.BaseDao
 import moe.lz233.meizugravity.cloudmusic.logic.dao.UserDao
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.QRCodeUtil
+
 
 class LoginActivity : BaseActivity() {
     private val viewBuilding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
@@ -18,7 +25,11 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        startLogin()
+        if (App.sp.getString("baseUrl", "") == "") {
+            showSettings()
+        } else {
+            startLogin()
+        }
     }
 
     private fun startLogin() {
@@ -50,6 +61,22 @@ class LoginActivity : BaseActivity() {
                 }
                 delay(3000)
             }
+        }
+    }
+
+    private fun showSettings() {
+        val builder = AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_DARK).apply {
+            setTitle("服务器地址")
+            val view = layoutInflater.inflate(R.layout.dialog_server, null)
+            val serverEditText = view.findViewById<EditText>(R.id.serverEditText)
+            setView(view)
+            setPositiveButton("确认") { dialogInterface: DialogInterface, i: Int ->
+                BaseDao.baseurl = serverEditText.editableText.toString()
+                recreate()
+            }
+        }
+        builder.show().apply {
+            setCancelable(false)
         }
     }
 
