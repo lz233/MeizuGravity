@@ -88,13 +88,22 @@ object MediaManager : Player.EventListener {
     fun switchPlayMode(@MediaPlayerExoPlayMode mode: Int) {
         currentPlayMode = mode
         when (mode) {
-            MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> simpleExoPlayer.repeatMode =
-                    Player.REPEAT_MODE_ONE
-            MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> simpleExoPlayer.repeatMode =
-                    Player.REPEAT_MODE_ALL
-            MediaPlayerExoPlayMode.MEDIA_LIST_ORDER_PLAY -> simpleExoPlayer.repeatMode =
-                    Player.REPEAT_MODE_OFF
-            MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM -> simpleExoPlayer.shuffleModeEnabled = true
+            MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> {
+                simpleExoPlayer.shuffleModeEnabled = false
+                simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ONE
+            }
+            MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> {
+                simpleExoPlayer.shuffleModeEnabled = false
+                simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ALL
+            }
+            MediaPlayerExoPlayMode.MEDIA_LIST_ORDER_PLAY -> {
+                simpleExoPlayer.shuffleModeEnabled = false
+                simpleExoPlayer.repeatMode = Player.REPEAT_MODE_OFF
+            }
+            MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM -> {
+                simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ALL
+                simpleExoPlayer.shuffleModeEnabled = true
+            }
         }
     }
 

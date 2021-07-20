@@ -132,7 +132,8 @@ class PlayingActivity : BaseActivity() {
                         3 -> MediaManager.playNext()
                         4 -> when (MediaManager.getCurrentPlayMode()) {
                             MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP)
-                            MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_LIST_LOOP)
+                            MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM)
+                            MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_LIST_LOOP)
                         }
                         5 -> LogUtil.toast(MediaManager.getCurrentMediaArtistName())
                         6 -> LogUtil.toast(MediaManager.getCurrentMediaAlbumName())
@@ -193,6 +194,7 @@ class PlayingActivity : BaseActivity() {
                 4 -> when (MediaManager.getCurrentPlayMode()) {
                     MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> "列表循环"
                     MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> "单曲循环"
+                    MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM -> "列表随机"
                     else -> "未知"
                 }
                 5 -> "歌手：${MediaManager.getCurrentMediaArtistName()}"
