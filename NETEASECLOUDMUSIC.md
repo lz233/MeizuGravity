@@ -9,7 +9,9 @@ Netease Cloud Music  For Gravity 是一个专门为 Gravity 适配的网易云�
 
 ## 部署
 
-部署方法参见 [Meizu Gravity +](GRAVITY_PLUS.md)，此处不再赘述。
+安装方法参见 [Meizu Gravity +](GRAVITY_PLUS.md)，此处不再赘述。
+
+服务器地址：Fork [NeteaseCloudMusicApi](https://github.com/lz233/NeteaseCloudMusicApi) （不要 fork 原版）并按照 Readme 中的[「Vercel 部署」](https://github.com/lz233/NeteaseCloudMusicApi#vercel-%E9%83%A8%E7%BD%B2)节操作。完成后，转到 Settings->Domains 复制**网址**并通过 Adb（adb shell input text xxx）填入 Dialog 内。
 
 ## 截图
 
