@@ -14,9 +14,11 @@ import moe.lz233.meizugravity.cloudmusic.databinding.ActivityDailyBinding
 import moe.lz233.meizugravity.cloudmusic.logic.model.meta.Music
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
+import moe.lz233.meizugravity.cloudmusic.ui.musicmenu.MusicMenuActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.setOnItemSelectedListener
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.toArtistName
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.toPlayListItem
 
 class DailyActivity : BaseActivity() {
@@ -53,6 +55,11 @@ class DailyActivity : BaseActivity() {
                         .load(music.album.picUrl.adjustParam("150", "150"))
                         .into(viewBuilding.coverImageView)
             }
+        }
+        viewBuilding.dailyListView.setOnItemLongClickListener { adapterView, view, position, id ->
+            val music = musicList[position - 1]
+            MusicMenuActivity.actionStart(this, music.album.picUrl, intent.getLongExtra("playlistId", 0), music.id, music.artists.toArtistName(), music.album.name)
+            true
         }
     }
 
