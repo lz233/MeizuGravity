@@ -17,6 +17,11 @@ object CloudMusicNetwork {
 
     suspend fun getAccountInfo() = userService.getAccountInfo().await()
     suspend fun getUserPlaylist(userId: Long) = userService.getUserPlaylist(userId).await()
+    suspend fun checkIn(platformCode: Int = 0) = userService.checkIn(platformCode).await()
+    suspend fun yunbeiCheckIn() = userService.yunbeiCheckIn().await()
+    suspend fun musicianCheckIn() = userService.musicianCheckIn().await()
+    suspend fun getMusicianTasks() = userService.getMusicianTasks().await()
+    suspend fun obtainMusicianTask(userMissionId: Long, period: Int) = userService.obtainMusicianTask(userMissionId, period).await()
 
     suspend fun getDailyRecommendation() = recommendService.getDailyRecommendation().await()
 

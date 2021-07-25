@@ -49,10 +49,11 @@ class LoginActivity : BaseActivity() {
                     }
                     803 -> {
                         val musicU = checkResponse.cookie.substring(checkResponse.cookie.indexOf("MUSIC_U=") + 8)
-                        LogUtil.d(musicU.substring(0, musicU.indexOf(';')))
+                        val userStatusResponse = CloudMusicNetwork.checkUserStatus()
                         UserDao.cookie = musicU.substring(0, musicU.indexOf(';'))
-                        UserDao.id = CloudMusicNetwork.checkUserStatus().data.profile.userId
+                        UserDao.id = userStatusResponse.data.profile.userId
                         UserDao.isLogin = true
+                        UserDao.type = userStatusResponse.data.profile.userType
                         setResult(RESULT_OK, null)
                         finish()
                         break@check

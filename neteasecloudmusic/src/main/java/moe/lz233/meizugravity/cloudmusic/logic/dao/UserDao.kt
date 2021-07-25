@@ -18,4 +18,8 @@ object UserDao {
     var name: String
         get() = App.sp.getString("userName", "")!!
         set(value) = App.editor.putString("userName", value).apply()
+
+    var type: Int
+        get() = App.sp.getInt("userType", 0)
+        set(value) = App.editor.putInt("userType", value).apply()
 }

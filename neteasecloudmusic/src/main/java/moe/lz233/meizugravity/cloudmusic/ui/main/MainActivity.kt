@@ -22,11 +22,12 @@ import moe.lz233.meizugravity.cloudmusic.ui.daily.DailyActivity
 import moe.lz233.meizugravity.cloudmusic.ui.login.LoginActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playing.PlayingActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
+import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 
 class MainActivity : BaseActivity() {
-    private val mainMenuList by lazy { listOf("正在播放", "每日推荐", "我的歌单", "关于") }
+    private val mainMenuList by lazy { listOf("正在播放", "每日签到", "每日推荐", "我的歌单", "关于") }
     private val viewBuilding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +51,7 @@ class MainActivity : BaseActivity() {
                         .into(viewBuilding.avatarImageView)
                 viewBuilding.userNameTextview.text = accountInfoResponse.profile.nickName
                 UserDao.name = accountInfoResponse.profile.nickName
+                UserDao.type = accountInfoResponse.profile.userType
             }
             false -> LoginActivity.actionStart(this)
         }
@@ -73,13 +75,52 @@ class MainActivity : BaseActivity() {
             KeyEvent.KEYCODE_ENTER -> {
                 when (viewBuilding.mainViewPager2.currentItem) {
                     0 -> PlayingActivity.actionStart(this)
-                    1 -> DailyActivity.actionStart(this)
-                    2 -> PlayListActivity.actionStart(this)
-                    3 -> AboutActivity.actionStart(this)
+                    1 -> checkIn()
+                    2 -> DailyActivity.actionStart(this)
+                    3 -> PlayListActivity.actionStart(this)
+                    4 -> AboutActivity.actionStart(this)
                 }
             }
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    private fun checkIn() {
+        launch {
+            try {
+                val androidCheckInResponse = CloudMusicNetwork.checkIn(0)
+                if (androidCheckInResponse.code == 200) LogUtil.toast("Android 端签到，获得 ${androidCheckInResponse.point} 经验")
+                else LogUtil.toast(androidCheckInResponse.message!!)
+            } catch (throwable: Throwable) {
+                LogUtil.toast("Android 端重复签到")
+            }
+            try {
+                val webCheckInResponse = CloudMusicNetwork.checkIn(1)
+                if (webCheckInResponse.code == 200) LogUtil.toast("Web 端签到，获得 ${webCheckInResponse.point} 经验")
+                else LogUtil.toast(webCheckInResponse.message!!)
+            } catch (throwable: Throwable) {
+                LogUtil.toast("Web 端重复签到")
+            }
+            try {
+                val yunbeiCheckInResponse = CloudMusicNetwork.yunbeiCheckIn()
+                if (yunbeiCheckInResponse.code == 200) LogUtil.toast("云贝签到，获得 ${yunbeiCheckInResponse.point} 经验")
+                else LogUtil.toast(yunbeiCheckInResponse.message!!)
+            } catch (throwable: Throwable) {
+                LogUtil.toast("云贝重复签到")
+            }
+            if (UserDao.type == 4) {
+                if (CloudMusicNetwork.musicianCheckIn().code != 200) return@launch
+                val musicianTasksResponse = CloudMusicNetwork.getMusicianTasks()
+                musicianTasksResponse.data.tasks.forEach {
+                    it.status?.let { status ->
+                        if ((status == 20) and (it.userMissionId != null)) {
+                            val obtainTasksResponse = CloudMusicNetwork.obtainMusicianTask(it.userMissionId!!, it.period)
+                            if (obtainTasksResponse.code == 200) LogUtil.toast("完成音乐人任务：${it.name}\n获得 ${it.rewardWorth} 云豆")
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
