@@ -39,19 +39,19 @@ class DailyActivity : BaseActivity() {
             Glide.with(viewBuilding.coverImageView)
                     .load(musicList[0].album.picUrl.adjustParam("150", "150"))
                     .into(viewBuilding.coverImageView)
-            viewBuilding.dailyListView.setOnItemClickListener { adapterView, view, position, id ->
-                val music = musicList[position - 1]
-                LogUtil.d(music.name)
-                MediaManager.playlist(musicList.toPlayListItem(), position - 1)
-                MediaManager.play()
-            }
-            viewBuilding.dailyListView.setOnItemSelectedListener { selected, parent, view, position, id ->
-                if (selected) {
-                    val music = musicList[position!! - 1]
-                    Glide.with(viewBuilding.coverImageView)
-                            .load(music.album.picUrl.adjustParam("150", "150"))
-                            .into(viewBuilding.coverImageView)
-                }
+        }
+        viewBuilding.dailyListView.setOnItemClickListener { adapterView, view, position, id ->
+            val music = musicList[position - 1]
+            LogUtil.d(music.name)
+            MediaManager.playlist(musicList.toPlayListItem(), position - 1)
+            MediaManager.play()
+        }
+        viewBuilding.dailyListView.setOnItemSelectedListener { selected, parent, view, position, id ->
+            if (selected) {
+                val music = musicList[position!! - 1]
+                Glide.with(viewBuilding.coverImageView)
+                        .load(music.album.picUrl.adjustParam("150", "150"))
+                        .into(viewBuilding.coverImageView)
             }
         }
     }

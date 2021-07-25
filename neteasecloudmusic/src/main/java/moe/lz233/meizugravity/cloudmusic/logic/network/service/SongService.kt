@@ -1,5 +1,6 @@
 package moe.lz233.meizugravity.cloudmusic.logic.network.service
 
+import moe.lz233.meizugravity.cloudmusic.logic.model.response.SongLikeResponse
 import moe.lz233.meizugravity.cloudmusic.logic.model.response.SongLyricResponse
 import moe.lz233.meizugravity.cloudmusic.logic.model.response.SongUrlResponse
 import retrofit2.Call
@@ -15,4 +16,7 @@ interface SongService {
 
     @GET("/lyric")
     fun getSongLyric(@Query("id") musicId: Long): Call<SongLyricResponse>
+
+    @GET("/like")
+    fun likeMusic(@Query("id") musicId: Long): Call<SongLikeResponse>
 }

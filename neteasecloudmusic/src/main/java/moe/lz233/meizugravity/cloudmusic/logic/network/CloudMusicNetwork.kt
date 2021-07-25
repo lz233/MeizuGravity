@@ -21,7 +21,10 @@ object CloudMusicNetwork {
     suspend fun getDailyRecommendation() = recommendService.getDailyRecommendation().await()
 
     suspend fun getPlaylistDetail(playlistId: Long) = playlistService.getPlaylistDetail(playlistId).await()
+    suspend fun Long.addMusicToPlaylist(playlistId: Long) = playlistService.modifyPlayListTracks("add", playlistId, this).await()
+    suspend fun Long.removeMusicFromPlaylist(playlistId: Long) = playlistService.modifyPlayListTracks("del", playlistId, this).await()
 
     suspend fun getSongUrl(musicId: Long) = songService.getSongUrl(musicId).await()
     suspend fun getSongLyric(musicId: Long) = songService.getSongLyric(musicId).await()
+    suspend fun Long.like() = songService.likeMusic(this).await()
 }

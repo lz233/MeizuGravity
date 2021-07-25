@@ -13,8 +13,10 @@ import moe.lz233.meizugravity.cloudmusic.databinding.ActivityPlaylistBinding
 import moe.lz233.meizugravity.cloudmusic.logic.dao.UserDao
 import moe.lz233.meizugravity.cloudmusic.logic.model.meta.PlayList
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
+import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork.addMusicToPlaylist
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlistdetail.PlaylistDetailActivity
+import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.setOnItemSelectedListener
 
@@ -38,17 +40,25 @@ class PlayListActivity : BaseActivity() {
             Glide.with(viewBuilding.coverImageView)
                     .load(playLists[0].coverImgUrl.adjustParam("150", "150"))
                     .into(viewBuilding.coverImageView)
-            viewBuilding.playlistListView.setOnItemClickListener { adapterView, view, position, id ->
-                val playList = playLists[position - 1]
-                PlaylistDetailActivity.actionStart(this@PlayListActivity, playList.id)
-            }
-            viewBuilding.playlistListView.setOnItemSelectedListener { selected, parent, view, position, id ->
-                if (selected) {
-                    val playList = playLists[position!! - 1]
-                    Glide.with(viewBuilding.coverImageView)
-                            .load(playList.coverImgUrl.adjustParam("150", "150"))
-                            .into(viewBuilding.coverImageView)
+        }
+        viewBuilding.playlistListView.setOnItemClickListener { adapterView, view, position, id ->
+            val playList = playLists[position - 1]
+            if (intent.hasExtra("musicId"))
+                launch {
+                    val modifyPlayListTracksResponse = intent.getLongExtra("musicId", 0).addMusicToPlaylist(playList.id)
+                    if (modifyPlayListTracksResponse.data.code == 200) LogUtil.toast("操作成功")
+                    else LogUtil.toast(modifyPlayListTracksResponse.data.message)
+                    finish()
                 }
+            else
+                PlaylistDetailActivity.actionStart(this@PlayListActivity, playList.id)
+        }
+        viewBuilding.playlistListView.setOnItemSelectedListener { selected, parent, view, position, id ->
+            if (selected) {
+                val playList = playLists[position!! - 1]
+                Glide.with(viewBuilding.coverImageView)
+                        .load(playList.coverImgUrl.adjustParam("150", "150"))
+                        .into(viewBuilding.coverImageView)
             }
         }
     }
@@ -68,5 +78,6 @@ class PlayListActivity : BaseActivity() {
 
     companion object {
         fun actionStart(context: Context) = context.startActivity(Intent(context, PlayListActivity::class.java))
+        fun actionStartForAddMusicToPlayList(context: Context, musicId: Long) = context.startActivity(Intent(context, PlayListActivity::class.java).apply { putExtra("musicId", musicId) })
     }
 }

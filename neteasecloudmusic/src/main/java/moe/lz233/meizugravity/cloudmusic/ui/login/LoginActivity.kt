@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.widget.EditText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import moe.lz233.meizugravity.cloudmusic.App
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityLoginBinding
 import moe.lz233.meizugravity.cloudmusic.logic.dao.BaseDao
@@ -25,7 +24,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        if (App.sp.getString("baseUrl", "") == "") {
+        if (BaseDao.baseurl == "") {
             showSettings()
         } else {
             startLogin()

@@ -12,3 +12,5 @@ data class SongLyricResponse(val code: Int,
                              @SerializedName("tlyric") val translatedLyric: LyricData) {
     data class LyricData(val version: Int, val lyric: String)
 }
+
+data class SongLikeResponse(val code: Int, val playListId: Long)

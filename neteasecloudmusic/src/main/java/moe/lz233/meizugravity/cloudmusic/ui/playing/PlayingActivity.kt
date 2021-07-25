@@ -21,14 +21,16 @@ import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityPlayingBinding
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
+import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork.like
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
+import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.AudioManager
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 
 class PlayingActivity : BaseActivity() {
-    private val count = 7
+    private val count = 9
     private val viewBuilding by lazy { ActivityPlayingBinding.inflate(layoutInflater) }
     private var isShowMenu = false
     private val handler = Handler(Looper.getMainLooper())
@@ -40,11 +42,9 @@ class PlayingActivity : BaseActivity() {
         }
     }
 
-    private val runnable2 = object : Runnable {
-        override fun run() {
-            runOnUiThread {
-                hideMenu()
-            }
+    private val runnable2 = Runnable {
+        runOnUiThread {
+            hideMenu()
         }
     }
 
@@ -128,15 +128,20 @@ class PlayingActivity : BaseActivity() {
                         0 -> {
                         }
                         1 -> MediaManager.playOrPause()
-                        2 -> MediaManager.playLast()
-                        3 -> MediaManager.playNext()
-                        4 -> when (MediaManager.getCurrentPlayMode()) {
+                        2 -> launch {
+                            val likeResponse = MediaManager.currentId()!!.toLong().like()
+                            if (likeResponse.code == 200) LogUtil.toast("操作成功")
+                        }
+                        3 -> PlayListActivity.actionStartForAddMusicToPlayList(this, MediaManager.currentId()!!.toLong())
+                        4 -> MediaManager.playLast()
+                        5 -> MediaManager.playNext()
+                        6 -> when (MediaManager.getCurrentPlayMode()) {
                             MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP)
                             MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM)
                             MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_LIST_LOOP)
                         }
-                        5 -> LogUtil.toast(MediaManager.getCurrentMediaArtistName())
-                        6 -> LogUtil.toast(MediaManager.getCurrentMediaAlbumName())
+                        7 -> LogUtil.toast(MediaManager.getCurrentMediaArtistName())
+                        8 -> LogUtil.toast(MediaManager.getCurrentMediaAlbumName())
                     }
                 } else {
                     showMenu()
@@ -151,7 +156,7 @@ class PlayingActivity : BaseActivity() {
         adapter.notifyDataSetChanged()
         viewBuilding.lrcView.visibility = View.GONE
         viewBuilding.mainViewPager2.visibility = View.VISIBLE
-        viewBuilding.mainViewPager2.setCurrentItem(0, false)
+        viewBuilding.mainViewPager2.setCurrentItem(1, false)
         isShowMenu = true
     }
 
@@ -189,16 +194,18 @@ class PlayingActivity : BaseActivity() {
             holder.textView.text = when (position) {
                 0 -> MediaManager.getCurrentMediaName()
                 1 -> if (MediaManager.isPlaying()) "暂停" else "播放"
-                2 -> "上一首"
-                3 -> "下一首"
-                4 -> when (MediaManager.getCurrentPlayMode()) {
+                2 -> "喜欢"
+                3 -> "收藏到歌单"
+                4 -> "上一首"
+                5 -> "下一首"
+                6 -> when (MediaManager.getCurrentPlayMode()) {
                     MediaPlayerExoPlayMode.MEDIA_LIST_LOOP -> "列表循环"
                     MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> "单曲循环"
                     MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM -> "列表随机"
                     else -> "未知"
                 }
-                5 -> "歌手：${MediaManager.getCurrentMediaArtistName()}"
-                6 -> "专辑：${MediaManager.getCurrentMediaAlbumName()}"
+                7 -> "歌手：${MediaManager.getCurrentMediaArtistName()}"
+                8 -> "专辑：${MediaManager.getCurrentMediaAlbumName()}"
                 else -> "not completed"
             }
         }

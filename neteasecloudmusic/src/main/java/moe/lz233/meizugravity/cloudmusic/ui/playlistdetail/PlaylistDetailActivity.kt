@@ -39,17 +39,17 @@ class PlaylistDetailActivity : BaseActivity() {
             Glide.with(viewBuilding.coverImageView)
                     .load(playlistDetailResponse.playlist.coverImgUrl.adjustParam("150", "150"))
                     .into(viewBuilding.coverImageView)
-            viewBuilding.musicListView.setOnItemClickListener { adapterView, view, position, id ->
-                val music = musicList[position - 1]
-                LogUtil.d(music.name)
-                MediaManager.playlist(musicList.toPlayListItem(), position - 1)
-                MediaManager.play()
-            }
             titleBuilding.run {
                 titleTextView.text = playlistDetailResponse.playlist.name.replace(UserDao.name, "我")
                 summaryTextView.text = "${playlistDetailResponse.playlist.trackCount}首"
                 viewBuilding.musicListView.addHeaderView(this.root, null, false)
             }
+        }
+        viewBuilding.musicListView.setOnItemClickListener { adapterView, view, position, id ->
+            val music = musicList[position - 1]
+            LogUtil.d(music.name)
+            MediaManager.playlist(musicList.toPlayListItem(), position - 1)
+            MediaManager.play()
         }
     }
 
