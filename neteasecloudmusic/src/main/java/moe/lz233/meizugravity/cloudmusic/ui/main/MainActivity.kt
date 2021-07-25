@@ -103,7 +103,7 @@ class MainActivity : BaseActivity() {
             }
             try {
                 val yunbeiCheckInResponse = CloudMusicNetwork.yunbeiCheckIn()
-                if (yunbeiCheckInResponse.code == 200) LogUtil.toast("云贝签到，获得 ${yunbeiCheckInResponse.point} 经验")
+                if (yunbeiCheckInResponse.code == 200) LogUtil.toast("云贝签到，获得 ${yunbeiCheckInResponse.point} 云贝")
                 else LogUtil.toast(yunbeiCheckInResponse.message!!)
             } catch (throwable: Throwable) {
                 LogUtil.toast("云贝重复签到")
