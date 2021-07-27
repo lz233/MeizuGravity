@@ -43,15 +43,21 @@ class MainActivity : BaseActivity() {
         }
         when (UserDao.isLogin) {
             true -> launch {
-                val accountInfoResponse = CloudMusicNetwork.getAccountInfo()
-                Glide.with(viewBuilding.avatarImageView)
-                        .load(accountInfoResponse.profile.avatarUrl.adjustParam("100", "100"))
-                        .placeholder(R.drawable.ic_account)
-                        .circleCrop()
-                        .into(viewBuilding.avatarImageView)
-                viewBuilding.userNameTextview.text = accountInfoResponse.profile.nickName
-                UserDao.name = accountInfoResponse.profile.nickName
-                UserDao.type = accountInfoResponse.profile.userType
+                try {
+                    val accountInfoResponse = CloudMusicNetwork.getAccountInfo()
+                    Glide.with(viewBuilding.avatarImageView)
+                            .load(accountInfoResponse.profile.avatarUrl.adjustParam("100", "100"))
+                            .placeholder(R.drawable.ic_account)
+                            .circleCrop()
+                            .into(viewBuilding.avatarImageView)
+                    viewBuilding.userNameTextview.text = accountInfoResponse.profile.nickName
+                    UserDao.name = accountInfoResponse.profile.nickName
+                    UserDao.type = accountInfoResponse.profile.userType
+                } catch (throwable: Throwable) {
+                    LogUtil.e(throwable)
+                    UserDao.isLogin = false
+                    LoginActivity.actionStart(this@MainActivity)
+                }
             }
             false -> LoginActivity.actionStart(this)
         }
