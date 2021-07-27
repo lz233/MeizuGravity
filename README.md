@@ -9,3 +9,5 @@
 [Meizu Gravity Controller](CONTROLLER.md)
 
 [Netease Cloud Music  For Gravity](NETEASECLOUDMUSIC.md)
+
+为了及时获得更新，请在右上角 watch 这个项目。
