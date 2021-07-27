@@ -13,6 +13,8 @@ object CloudMusicNetwork {
     suspend fun getKey(timeStamp: Long) = loginService.getKey(timeStamp).await()
     suspend fun createQrCode(key: String, timeStamp: Long) = loginService.createQrCode(key, timeStamp).await()
     suspend fun checkQrStatus(key: String, timeStamp: Long) = loginService.checkQrStatus(key, timeStamp).await()
+
+    @Deprecated("netease deprecated this api", ReplaceWith("CloudMusicNetwork.getAccountInfo()"))
     suspend fun checkUserStatus() = loginService.checkUserStatus().await()
 
     suspend fun getAccountInfo() = userService.getAccountInfo().await()

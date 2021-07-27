@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.multidex.MultiDexApplication
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.zhy.mediaplayer_exo.playermanager.MediaPlayerService
 import moe.lz233.meizugravity.cloudmusic.logic.network.RequestInterceptor
@@ -31,7 +32,7 @@ class App : MultiDexApplication() {
                 .setUsage(C.USAGE_MEDIA)
                 .setContentType(C.CONTENT_TYPE_MUSIC)
                 .build()*/
-        MediaPlayerService.init(this, SimpleExoPlayer.Builder(this)
+        MediaPlayerService.init(this, SimpleExoPlayer.Builder(this, DefaultExtractorsFactory())
                 //.setAudioAttributes(audioAttributes, true)
                 .setMediaSourceFactory(DefaultMediaSourceFactory(OkHttpDataSource.Factory(OkHttpClient.Builder()
                         .addInterceptor(RequestInterceptor()).build())))
