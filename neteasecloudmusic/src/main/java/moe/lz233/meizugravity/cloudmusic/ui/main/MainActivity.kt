@@ -56,6 +56,7 @@ class MainActivity : BaseActivity() {
                 } catch (throwable: Throwable) {
                     LogUtil.e(throwable)
                     UserDao.isLogin = false
+                    LogUtil.toast("登录过期")
                     LoginActivity.actionStart(this@MainActivity)
                 }
             }
