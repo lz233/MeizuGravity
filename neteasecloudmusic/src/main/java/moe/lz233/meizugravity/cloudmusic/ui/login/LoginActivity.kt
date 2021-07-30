@@ -25,7 +25,7 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
         if (BaseDao.baseurl == "") {
-            showSettings()
+            showDialog()
         } else {
             startLogin()
         }
@@ -64,7 +64,7 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    private fun showSettings() {
+    private fun showDialog() {
         val builder = AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_DARK).apply {
             setTitle("服务器地址")
             val view = layoutInflater.inflate(R.layout.dialog_server, null)

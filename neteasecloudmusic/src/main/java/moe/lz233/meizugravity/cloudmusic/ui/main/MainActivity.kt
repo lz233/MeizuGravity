@@ -1,5 +1,6 @@
 package moe.lz233.meizugravity.cloudmusic.ui.main
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -55,9 +57,7 @@ class MainActivity : BaseActivity() {
                     UserDao.type = accountInfoResponse.profile.userType
                 } catch (throwable: Throwable) {
                     LogUtil.e(throwable)
-                    UserDao.isLogin = false
-                    LogUtil.toast("登录过期")
-                    LoginActivity.actionStart(this@MainActivity)
+                    showDialog()
                 }
             }
             false -> LoginActivity.actionStart(this)
@@ -127,6 +127,23 @@ class MainActivity : BaseActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_DARK).apply {
+            val view = layoutInflater.inflate(R.layout.dialog_logout, null)
+            view.findViewById<Button>(R.id.retryButton).setOnClickListener {
+                recreate()
+            }
+            view.findViewById<Button>(R.id.logoutButton).setOnClickListener {
+                UserDao.isLogin = false
+                LoginActivity.actionStart(this@MainActivity)
+            }
+            setView(view)
+        }
+        builder.show().apply {
+            setCancelable(false)
         }
     }
 
