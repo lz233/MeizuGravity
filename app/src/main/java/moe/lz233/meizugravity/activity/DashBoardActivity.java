@@ -81,12 +81,7 @@ public class DashBoardActivity extends BaseActivity {
         final Window localWindow = getWindow();
         final WindowManager.LayoutParams localLayoutParams = localWindow.getAttributes();
         localLayoutParams.screenBrightness = brightnessValue;
-        dashViewPager2.post(new Runnable() {
-            @Override
-            public void run() {
-                localWindow.setAttributes(localLayoutParams);
-            }
-        });
+        dashViewPager2.post(() -> localWindow.setAttributes(localLayoutParams));
     }
 
     private class Run implements Runnable {

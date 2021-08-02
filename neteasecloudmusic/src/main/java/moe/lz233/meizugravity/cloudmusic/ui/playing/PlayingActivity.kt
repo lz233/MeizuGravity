@@ -127,7 +127,16 @@ class PlayingActivity : BaseActivity() {
                     when (viewBuilding.mainViewPager2.currentItem) {
                         0 -> {
                         }
-                        1 -> MediaManager.playOrPause()
+                        1 -> when (MediaManager.isPlaying()) {
+                            true -> {
+                                MediaManager.pause()
+                                setScreenBrightnessValue(0.1f)
+                            }
+                            false -> {
+                                MediaManager.play()
+                                setScreenBrightnessValue(1.0f)
+                            }
+                        }
                         2 -> launch {
                             val likeResponse = MediaManager.currentId()!!.toLong().like()
                             if (likeResponse.code == 200) LogUtil.toast("操作成功")
@@ -169,6 +178,10 @@ class PlayingActivity : BaseActivity() {
     private fun reCreateCallback() {
         handler.removeCallbacks(runnable2)
         handler.postDelayed(runnable2, 3000)
+    }
+
+    private fun setScreenBrightnessValue(brightnessValue: Float) {
+        window.attributes = window.attributes.apply { screenBrightness = brightnessValue }
     }
 
     override fun onDestroy() {
