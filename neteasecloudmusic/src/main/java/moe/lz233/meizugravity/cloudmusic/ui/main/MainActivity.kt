@@ -43,7 +43,6 @@ class MainActivity : BaseActivity() {
             setPadding(0, 25, 0, 25)
             clipToPadding = false
         }
-        showDialog()
         when (UserDao.isLogin) {
             true -> launch {
                 try {
