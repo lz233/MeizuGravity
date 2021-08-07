@@ -43,6 +43,7 @@ class MainActivity : BaseActivity() {
             setPadding(0, 25, 0, 25)
             clipToPadding = false
         }
+        showDialog()
         when (UserDao.isLogin) {
             true -> launch {
                 try {
@@ -131,8 +132,15 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showDialog() {
+        val view = layoutInflater.inflate(R.layout.dialog_logout, null)
         val builder = AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_DARK).apply {
-            val view = layoutInflater.inflate(R.layout.dialog_logout, null)
+            setView(view)
+        }
+        builder.show().apply {
+            setCancelable(false)
+            view.findViewById<Button>(R.id.cancelButton).setOnClickListener {
+                this.dismiss()
+            }
             view.findViewById<Button>(R.id.retryButton).setOnClickListener {
                 recreate()
             }
@@ -140,10 +148,6 @@ class MainActivity : BaseActivity() {
                 UserDao.isLogin = false
                 LoginActivity.actionStart(this@MainActivity)
             }
-            setView(view)
-        }
-        builder.show().apply {
-            setCancelable(false)
         }
     }
 

@@ -59,15 +59,19 @@
                     android:textSize="@dimen/text_20" />
 
                 <Button
+                    android:id="@+id/soundQualityButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_marginTop="10px"
+                    android:background="@drawable/button_background"
+                    android:text="音质选择"
                     android:textSize="@dimen/text_20" />
 
                 <Button
                     android:id="@+id/logoutButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
                     android:background="@drawable/button_background"
                     android:text="退出登录"
                     android:textSize="@dimen/text_20" />
