@@ -11,23 +11,14 @@
         android:layout_height="match_parent"
         android:clipChildren="false">
 
-        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:indeterminate="true"
-            app:mpb_progressStyle="horizontal" />
-
         <ImageView
             android:id="@+id/coverImageView"
             android:layout_width="100px"
             android:layout_height="131.343284px"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="54.328358px"
-            android:layout_marginBottom="34.328358px"
+            android:layout_marginTop="49.328358px"
+            android:layout_marginBottom="39.328358px"
             android:scaleType="fitXY" />
 
         <LinearLayout
@@ -42,6 +33,15 @@
                 android:listSelector="@drawable/bgstyle"
                 android:overScrollMode="never" />
         </LinearLayout>
+
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:indeterminate="true"
+            app:mpb_progressStyle="horizontal" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

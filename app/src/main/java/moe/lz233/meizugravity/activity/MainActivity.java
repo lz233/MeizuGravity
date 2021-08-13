@@ -106,7 +106,7 @@ public class MainActivity extends BaseActivity {
         } else if (keyCode == KeyEvent.KEYCODE_ENTER) {
             switch (mainViewPager2.getCurrentItem()) {
                 case 0:
-                    AboutActivity.Companion.actionStart(this);
+                    startActivity(new Intent().setClass(this, DashBoardActivity.class));
                     break;
                 case 1:
                     LauncherActivity.Companion.actionStart(this);
@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity {
                     startActivity(new Intent().setClass(this, SettingsActivity.class));
                     break;
                 case 3:
-                    startActivity(new Intent().setClass(this, AboutActivity.class));
+                    AboutActivity.Companion.actionStart(this);
                     break;
             }
         }

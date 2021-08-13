@@ -39,8 +39,8 @@ class MusicBroadcast : BroadcastReceiver() {
                 "com.simplemusic.musicbroadcast.action.close.play..service.click"
     }
 
-    val mediaProgressRunnable = MediaProgressRunnable()
-    val mHandler = Handler(Looper.myLooper()!!)
+    private val mediaProgressRunnable = MediaProgressRunnable()
+    val mHandler = Handler(Looper.getMainLooper())
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.let {
             if (it.action == ACTION_MUSIC_BROADCASET_UPDATE) {
@@ -73,7 +73,7 @@ class MusicBroadcast : BroadcastReceiver() {
     inner class MediaProgressRunnable : Runnable {
         override fun run() {
             MediaManager.invokeProgressListenerList(MediaManager.getSimpleExoPlayer().currentPosition)
-            mHandler.postDelayed(this, 200)
+            mHandler.postDelayed(this, 300)
         }
     }
 }

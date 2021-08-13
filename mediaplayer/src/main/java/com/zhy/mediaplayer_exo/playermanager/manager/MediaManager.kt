@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
@@ -58,7 +56,6 @@ object MediaManager : Player.EventListener {
     @JvmOverloads
     fun playlist(mutableList: MutableList<PlaylistItem>, playIndex: Int = 0) {
         checkRestartService()
-        updateNotificationContent()
         if (playIndex >= mutableList.size || playIndex < 0) throw IllegalArgumentException("播放索引不正确，找不到任何音频项目")
         playlistItemList = mutableList
         val mediaItemList = mutableListOf<MediaItem>()
@@ -178,7 +175,6 @@ object MediaManager : Player.EventListener {
      */
     fun playNext(): Boolean {
         checkRestartService()
-        updateNotificationContent()
         val f = simpleExoPlayer.hasNext()
         if (f) {
             simpleExoPlayer.next()
@@ -191,7 +187,6 @@ object MediaManager : Player.EventListener {
      */
     fun playLast(): Boolean {
         checkRestartService()
-        updateNotificationContent()
         val f = simpleExoPlayer.hasPrevious()
         if (simpleExoPlayer.hasPrevious()) {
             simpleExoPlayer.previous()
@@ -370,7 +365,6 @@ object MediaManager : Player.EventListener {
         infMediaPlayerStateListenerList.map {
             if (isPlaying) {
                 it.onMediaPlayState(Player.STATE_READY)
-                updateNotificationContent()
             } else {
                 it.onMediaPlayState(Player.STATE_ENDED)
             }
@@ -430,23 +424,5 @@ object MediaManager : Player.EventListener {
             it.onMediaError()
         }
     }
-
-    override fun onPositionDiscontinuity(reason: Int) {
-        super.onPositionDiscontinuity(reason)
-    }
-
-    private fun updateNotificationContent() {
-        Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            if (MediaForegroundService.startService > 1) {
-                mContext.sendBroadcast(Intent(MusicBroadcast.ACTION_MUSIC_BROADCASET_UPDATE).apply {
-                    putExtra(
-                            MusicBroadcast.EXTRA_ACTION,
-                            MusicBroadcast.PENDINGINTENT_READY_PLAY_CLICK
-                    )
-                })
-            }
-        }, 300)
-    }
-
 
 }

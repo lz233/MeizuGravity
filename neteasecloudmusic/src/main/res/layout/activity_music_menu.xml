@@ -16,8 +16,8 @@
             android:layout_height="131.343284px"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="54.328358px"
-            android:layout_marginBottom="34.328358px"
+            android:layout_marginTop="49.328358px"
+            android:layout_marginBottom="39.328358px"
             android:scaleType="fitXY" />
 
         <androidx.viewpager2.widget.ViewPager2

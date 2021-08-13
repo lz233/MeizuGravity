@@ -1,7 +1,6 @@
 package com.zhy.mediaplayer_exo.playermanager.service
 
 import android.app.ActivityManager
-import android.app.Notification
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
@@ -57,12 +56,8 @@ class MediaForegroundService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.apply {
-
-            getParcelableExtra<Notification>(EXTRA_NOTIFICATION_DATA)?.apply {
-                println("MediaForegroundService onStartCommand")
-                startService++
-                registerReceiver(musicBroadcast, IntentFilter(MusicBroadcast.ACTION_MUSIC_BROADCASET_UPDATE))
-            }
+            startService++
+            registerReceiver(musicBroadcast, IntentFilter(MusicBroadcast.ACTION_MUSIC_BROADCASET_UPDATE))
         }
 
         return START_STICKY

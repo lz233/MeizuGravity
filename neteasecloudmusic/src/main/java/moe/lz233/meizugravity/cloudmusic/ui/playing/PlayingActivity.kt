@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.zhy.mediaplayer_exo.playermanager.MediaPlayerExoPlayMode
+import com.zhy.mediaplayer_exo.playermanager.MediaProgressListener
 import com.zhy.mediaplayer_exo.playermanager.MediaSwitchTrackChange
 import com.zhy.mediaplayer_exo.playermanager.PlaylistItem
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
@@ -35,12 +36,6 @@ class PlayingActivity : BaseActivity() {
     private var isShowMenu = false
     private val handler = Handler(Looper.getMainLooper())
     private val adapter = ViewPagerAdapter()
-    private val runnable = object : Runnable {
-        override fun run() {
-            viewBuilding.lrcView.updateTime(MediaManager.getCurrentPosition())
-            handler.postDelayed(this, 400)
-        }
-    }
 
     private val runnable2 = Runnable {
         runOnUiThread {
@@ -51,6 +46,14 @@ class PlayingActivity : BaseActivity() {
     private val mediaTrackChangeListener = object : MediaSwitchTrackChange {
         override fun onTracksChange(playlistItem: PlaylistItem) {
             onMediaChange(playlistItem)
+        }
+    }
+
+    private val mediaProgressListener = object : MediaProgressListener {
+        override fun onProgressChange(position: Long, duration: Long) {
+            viewBuilding.lrcView.updateTime(position)
+            viewBuilding.progressBar.max = MediaManager.getDuration().toInt()
+            viewBuilding.progressBar.progress = position.toInt()
         }
     }
 
@@ -66,8 +69,8 @@ class PlayingActivity : BaseActivity() {
             clipToPadding = false
         }
         if (MediaManager.playlistItemList.isNotEmpty()) onMediaChange()
-        handler.post(runnable)
         MediaManager.addMediaSwitchChange(mediaTrackChangeListener)
+        MediaManager.addProgressListener(mediaProgressListener)
     }
 
     private fun onMediaChange(playlistItem: PlaylistItem = MediaManager.getCurrentMedia()) {
@@ -185,9 +188,9 @@ class PlayingActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        handler.removeCallbacks(runnable)
         handler.removeCallbacks(runnable2)
         MediaManager.removeMediaSwitchChange(mediaTrackChangeListener)
+        MediaManager.removeProgressListener(mediaProgressListener)
         super.onDestroy()
     }
 

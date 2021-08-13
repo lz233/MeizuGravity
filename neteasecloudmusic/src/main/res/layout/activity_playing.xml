@@ -18,8 +18,8 @@
             android:layout_height="131.343284px"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="54.328358px"
-            android:layout_marginBottom="34.328358px"
+            android:layout_marginTop="49.328358px"
+            android:layout_marginBottom="39.328358px"
             android:scaleType="fitXY" />
 
         <me.wcy.lrcview.LrcView
@@ -40,11 +40,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="120px"
-            android:layout_marginTop="70px"
+            android:layout_marginTop="65px"
             android:layout_marginEnd="20px"
-            android:layout_marginBottom="50px"
+            android:layout_marginBottom="55px"
             android:clipChildren="false"
             android:visibility="gone" />
+
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="-6px"
+            app:mpb_progressBackgroundTint="@android:color/transparent"
+            app:mpb_progressStyle="horizontal" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
