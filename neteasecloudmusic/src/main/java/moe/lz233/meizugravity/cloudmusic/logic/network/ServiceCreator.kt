@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.net.URL
 
 object ServiceCreator {
-    val BASE_HOST by lazy { URL(BaseDao.baseurl).host }
+    val BASE_HOST: String by lazy { URL(BaseDao.baseurl).host }
 
     private val baseOkHttpClient = OkHttpClient.Builder().build()
 
@@ -19,7 +19,7 @@ object ServiceCreator {
             .url(HttpUrl.get("https://dns.alidns.com/dns-query"))
             .build()
 
-    val okHttpClient = baseOkHttpClient.newBuilder()
+    val okHttpClient: OkHttpClient = baseOkHttpClient.newBuilder()
             .addInterceptor(RequestInterceptor())
             .dns(dns)
             .build()
