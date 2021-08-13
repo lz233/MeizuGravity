@@ -8,8 +8,7 @@ import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.zhy.mediaplayer_exo.playermanager.MediaPlayerService
-import moe.lz233.meizugravity.cloudmusic.logic.network.RequestInterceptor
-import okhttp3.OkHttpClient
+import moe.lz233.meizugravity.cloudmusic.logic.network.ServiceCreator
 import org.conscrypt.Conscrypt
 import java.security.Security
 
@@ -34,8 +33,7 @@ class App : MultiDexApplication() {
                 .build()*/
         MediaPlayerService.init(this, SimpleExoPlayer.Builder(this, DefaultExtractorsFactory())
                 //.setAudioAttributes(audioAttributes, true)
-                .setMediaSourceFactory(DefaultMediaSourceFactory(OkHttpDataSource.Factory(OkHttpClient.Builder()
-                        .addInterceptor(RequestInterceptor()).build())))
+                .setMediaSourceFactory(DefaultMediaSourceFactory(OkHttpDataSource.Factory(ServiceCreator.okHttpClient)))
                 .build())
     }
 }

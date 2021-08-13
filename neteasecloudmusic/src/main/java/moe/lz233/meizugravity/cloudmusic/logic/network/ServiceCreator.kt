@@ -11,22 +11,23 @@ import java.net.URL
 object ServiceCreator {
     val BASE_HOST by lazy { URL(BaseDao.baseurl).host }
 
-    private val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(RequestInterceptor())
-            .build()
+    private val baseOkHttpClient = OkHttpClient.Builder().build()
 
     private val dns = DnsOverHttps.Builder()
-            .client(okHttpClient)
+            .client(baseOkHttpClient)
             //.url(HttpUrl.get("https://doh.pub/dns-query"))
             .url(HttpUrl.get("https://dns.alidns.com/dns-query"))
+            .build()
+
+    val okHttpClient = baseOkHttpClient.newBuilder()
+            .addInterceptor(RequestInterceptor())
+            .dns(dns)
             .build()
 
     private val retrofit = Retrofit.Builder()
             .baseUrl(BaseDao.baseurl)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient.newBuilder()
-                    .dns(dns)
-                    .build())
+            .client(okHttpClient)
             .build()
 
     fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)
