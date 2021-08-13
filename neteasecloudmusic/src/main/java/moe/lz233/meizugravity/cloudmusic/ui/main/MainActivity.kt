@@ -138,9 +138,10 @@ class MainActivity : BaseActivity() {
         builder.show().apply {
             setCancelable(false)
             view.findViewById<Button>(R.id.cancelButton).setOnClickListener {
-                this.dismiss()
+                dismiss()
             }
             view.findViewById<Button>(R.id.retryButton).setOnClickListener {
+                dismiss()
                 recreate()
             }
             view.findViewById<Button>(R.id.logoutButton).setOnClickListener {
