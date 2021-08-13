@@ -17,7 +17,8 @@ object ServiceCreator {
 
     private val dns = DnsOverHttps.Builder()
             .client(okHttpClient)
-            .url(HttpUrl.get("https://doh.pub/dns-query"))
+            //.url(HttpUrl.get("https://doh.pub/dns-query"))
+            .url(HttpUrl.get("https://dns.alidns.com/dns-query"))
             .build()
 
     private val retrofit = Retrofit.Builder()
