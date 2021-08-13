@@ -40,12 +40,10 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
-    //api 'com.google.android.exoplayer:exoplayer:2.14.1'
+    //2.14.2
     api 'com.google.android.exoplayer:exoplayer-core:2.14.2'
     //implementation 'com.google.android.exoplayer:exoplayer-dash:2.14.1'
     //implementation 'com.google.android.exoplayer:exoplayer-ui:2.14.1'
     api 'com.google.android.exoplayer:extension-okhttp:2.14.2'
-    //api "com.github.harmonicinc-com:extension-flac:2.13.8"
-    //api "com.github.PaulWoitaschek.ExoPlayer-Extensions:extension-flac:2.14.0"
     compileOnly 'org.checkerframework:checker-qual:3.16.0'
 }
