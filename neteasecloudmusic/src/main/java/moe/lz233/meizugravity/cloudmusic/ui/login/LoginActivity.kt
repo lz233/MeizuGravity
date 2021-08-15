@@ -24,7 +24,7 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        if (BaseDao.baseurl == "") {
+        if (BaseDao.baseUrl == "") {
             showDialog()
         } else {
             startLogin()
@@ -72,7 +72,7 @@ class LoginActivity : BaseActivity() {
             val serverEditText = view.findViewById<EditText>(R.id.serverEditText)
             setView(view)
             setPositiveButton("确认") { dialogInterface: DialogInterface, i: Int ->
-                BaseDao.baseurl = serverEditText.editableText.toString()
+                BaseDao.baseUrl = serverEditText.editableText.toString()
                 recreate()
             }
         }

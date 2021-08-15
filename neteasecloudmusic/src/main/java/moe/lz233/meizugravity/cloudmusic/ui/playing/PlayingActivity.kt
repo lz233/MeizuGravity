@@ -25,9 +25,9 @@ import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork.like
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
+import moe.lz233.meizugravity.cloudmusic.utils.AudioManager
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
-import moe.lz233.meizugravity.cloudmusic.utils.ktx.AudioManager
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 
 class PlayingActivity : BaseActivity() {

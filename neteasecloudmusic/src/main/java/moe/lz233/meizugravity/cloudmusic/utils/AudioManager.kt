@@ -1,4 +1,4 @@
-package moe.lz233.meizugravity.cloudmusic.utils.ktx
+package moe.lz233.meizugravity.cloudmusic.utils
 
 import android.content.Context
 import android.media.AudioManager
@@ -8,7 +8,7 @@ object AudioManager {
     const val VOLUME_UP = AudioManager.ADJUST_RAISE
     const val VOLUME_DOWN = AudioManager.ADJUST_LOWER
 
-    val audioManager by lazy { App.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager }
+    private val audioManager by lazy { App.context.getSystemService(Context.AUDIO_SERVICE) as AudioManager }
     val maxVolume
         get() = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
     val currentVolume
