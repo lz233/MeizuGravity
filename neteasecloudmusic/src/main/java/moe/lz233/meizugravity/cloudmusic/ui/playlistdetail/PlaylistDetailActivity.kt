@@ -43,7 +43,7 @@ class PlaylistDetailActivity : BaseActivity() {
                     .into(viewBuilding.coverImageView)
             titleBuilding.run {
                 titleTextView.text = playlistDetailResponse.playlist.name.replace(UserDao.name, "我")
-                summaryTextView.text = "${playlistDetailResponse.playlist.trackCount}首"
+                summaryTextView.text = playlistDetailResponse.playlist.creator.nickName
                 viewBuilding.musicListView.addHeaderView(this.root, null, false)
             }
         }

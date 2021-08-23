@@ -7,6 +7,7 @@ import okhttp3.dnsoverhttps.DnsOverHttps
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.URL
+import java.util.concurrent.TimeUnit
 
 object ServiceCreator {
     val BASE_HOST: String by lazy { URL(BaseDao.baseUrl).host }
@@ -22,6 +23,8 @@ object ServiceCreator {
     val okHttpClient: OkHttpClient = baseOkHttpClient.newBuilder()
             .addInterceptor(RequestInterceptor())
             .dns(dns)
+            .retryOnConnectionFailure(true)
+            .callTimeout(20, TimeUnit.SECONDS)
             .build()
 
 

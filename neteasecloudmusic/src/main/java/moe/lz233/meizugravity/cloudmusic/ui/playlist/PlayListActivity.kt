@@ -34,7 +34,16 @@ class PlayListActivity : BaseActivity() {
         }
         launch {
             val userPlaylistResponse = CloudMusicNetwork.getUserPlaylist(UserDao.id)
-            playLists.addAll(userPlaylistResponse.playlists)
+            var pinnedPlaylistIndex = 0
+            userPlaylistResponse.playlists.forEach {
+                if (it.creator.userId == UserDao.id)
+                    playLists.add(pinnedPlaylistIndex++, it)
+                else
+                    if ((it.specialType == 100) && it.name.contains("雷达"))
+                        playLists.add(pinnedPlaylistIndex++, it)
+                    else
+                        playLists.add(it)
+            }
             viewBuilding.progressBar.visibility = View.GONE
             viewBuilding.playlistListView.adapter = playlistAdapter
             Glide.with(viewBuilding.coverImageView)
