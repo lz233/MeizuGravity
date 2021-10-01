@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityMainBinding
@@ -26,7 +25,6 @@ import moe.lz233.meizugravity.cloudmusic.ui.playing.PlayingActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
-import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 
 class MainActivity : BaseActivity() {
     private val mainMenuList by lazy { listOf("正在播放", "每日签到", "每日推荐", "我的歌单", "关于") }
@@ -44,7 +42,7 @@ class MainActivity : BaseActivity() {
             clipToPadding = false
         }
         when (UserDao.isLogin) {
-            true -> launch {
+            /*true -> launch {
                 try {
                     val accountInfoResponse = CloudMusicNetwork.getAccountInfo()
                     Glide.with(viewBuilding.avatarImageView)
@@ -59,7 +57,7 @@ class MainActivity : BaseActivity() {
                     LogUtil.e(throwable)
                     showDialog()
                 }
-            }
+            }*/
             false -> LoginActivity.actionStart(this)
         }
     }

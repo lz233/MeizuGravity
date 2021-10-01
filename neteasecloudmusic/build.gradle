@@ -82,6 +82,7 @@ dependencies {
     //fuck 4.4 https://stackoverflow.com/a/59346159/40013
     implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
+    implementation 'commons-codec:commons-codec:20041127.091804'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
     androidTestImplementation 'junit:junit:4.13.2'
 }

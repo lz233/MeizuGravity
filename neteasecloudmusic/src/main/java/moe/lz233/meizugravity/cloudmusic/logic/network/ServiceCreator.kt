@@ -22,15 +22,20 @@ object ServiceCreator {
 
     val okHttpClient: OkHttpClient = baseOkHttpClient.newBuilder()
             .addInterceptor(RequestInterceptor())
-            .dns(dns)
+            //.dns(dns)
             .retryOnConnectionFailure(true)
             .callTimeout(20, TimeUnit.SECONDS)
             .build()
 
 
     private val retrofit by lazy {
-        Retrofit.Builder()
+        /*Retrofit.Builder()
                 .baseUrl(BaseDao.baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build()*/
+        Retrofit.Builder()
+                .baseUrl("https://music.163.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()

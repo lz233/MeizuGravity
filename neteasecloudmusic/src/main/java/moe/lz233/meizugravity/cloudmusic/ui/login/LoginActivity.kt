@@ -24,21 +24,20 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        if (BaseDao.baseUrl == "") {
-            showDialog()
-        } else {
-            startLogin()
-        }
+        //if (BaseDao.baseUrl == "") {
+        //    showDialog()
+        //} else {
+        startLogin()
+        //}
     }
 
     private fun startLogin() {
         launch {
-            val keyResponse = CloudMusicNetwork.getKey(System.currentTimeMillis())
-            val qrResponse = CloudMusicNetwork.createQrCode(keyResponse.data.key, System.currentTimeMillis())
-            viewBuilding.qrImageView.setImageBitmap(QRCodeUtil.createQRCodeBitmap(qrResponse.data.qrUrl, 100, 100))
-            LogUtil.d(keyResponse.data.key)
+            val keyResponse = CloudMusicNetwork.getKey(3)
+            viewBuilding.qrImageView.setImageBitmap(QRCodeUtil.createQRCodeBitmap("https://music.163.com/login?codekey=${keyResponse.key}", 100, 100))
+            LogUtil.d(keyResponse.key)
             check@ while (true) {
-                val checkResponse = CloudMusicNetwork.checkQrStatus(keyResponse.data.key, System.currentTimeMillis())
+                val checkResponse = CloudMusicNetwork.checkQrStatus(keyResponse.key, 3)
                 LogUtil.d(checkResponse.code)
                 LogUtil.d(checkResponse.cookie)
                 when (checkResponse.code) {

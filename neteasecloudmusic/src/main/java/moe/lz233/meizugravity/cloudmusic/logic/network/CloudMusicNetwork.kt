@@ -10,9 +10,8 @@ object CloudMusicNetwork {
     private val playlistService = ServiceCreator.create(PlaylistService::class.java)
     private val songService = ServiceCreator.create(SongService::class.java)
 
-    suspend fun getKey(timeStamp: Long) = loginService.getKey(timeStamp).await()
-    suspend fun createQrCode(key: String, timeStamp: Long) = loginService.createQrCode(key, timeStamp).await()
-    suspend fun checkQrStatus(key: String, timeStamp: Long) = loginService.checkQrStatus(key, timeStamp).await()
+    suspend fun getKey(type: Int) = loginService.getKey(type).await()
+    suspend fun checkQrStatus(key: String, type: Int) = loginService.checkQrStatus(key, type).await()
 
     @Deprecated("netease deprecated this api", ReplaceWith("CloudMusicNetwork.getAccountInfo()"))
     suspend fun checkUserStatus() = loginService.checkUserStatus().await()
