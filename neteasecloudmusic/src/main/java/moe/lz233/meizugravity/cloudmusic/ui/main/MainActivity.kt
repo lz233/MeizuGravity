@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityMainBinding
@@ -25,6 +26,7 @@ import moe.lz233.meizugravity.cloudmusic.ui.playing.PlayingActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 
 class MainActivity : BaseActivity() {
     private val mainMenuList by lazy { listOf("正在播放", "每日签到", "每日推荐", "我的歌单", "关于") }
@@ -42,7 +44,7 @@ class MainActivity : BaseActivity() {
             clipToPadding = false
         }
         when (UserDao.isLogin) {
-            /*true -> launch {
+            true -> launch {
                 try {
                     val accountInfoResponse = CloudMusicNetwork.getAccountInfo()
                     Glide.with(viewBuilding.avatarImageView)
@@ -57,7 +59,7 @@ class MainActivity : BaseActivity() {
                     LogUtil.e(throwable)
                     showDialog()
                 }
-            }*/
+            }
             false -> LoginActivity.actionStart(this)
         }
     }
@@ -105,13 +107,6 @@ class MainActivity : BaseActivity() {
                 else LogUtil.toast(webCheckInResponse.message!!)
             } catch (throwable: Throwable) {
                 LogUtil.toast("Web 端重复签到")
-            }
-            try {
-                val yunbeiCheckInResponse = CloudMusicNetwork.yunbeiCheckIn()
-                if (yunbeiCheckInResponse.code == 200) LogUtil.toast("云贝签到，获得 ${yunbeiCheckInResponse.point} 云贝")
-                else LogUtil.toast(yunbeiCheckInResponse.message!!)
-            } catch (throwable: Throwable) {
-                LogUtil.toast("云贝重复签到")
             }
             if (UserDao.type == 4) {
                 if (CloudMusicNetwork.musicianCheckIn().code != 200) return@launch

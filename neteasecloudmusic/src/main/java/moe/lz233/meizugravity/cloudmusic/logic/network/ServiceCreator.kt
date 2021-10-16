@@ -1,41 +1,30 @@
 package moe.lz233.meizugravity.cloudmusic.logic.network
 
-import moe.lz233.meizugravity.cloudmusic.logic.dao.BaseDao
-import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
-import okhttp3.dnsoverhttps.DnsOverHttps
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.URL
 import java.util.concurrent.TimeUnit
 
 object ServiceCreator {
-    val BASE_HOST: String by lazy { URL(BaseDao.baseUrl).host }
+    val BASE_HOST = "music.163.com"
+    val BASE_URL = "https://$BASE_HOST"
 
-    private val baseOkHttpClient = OkHttpClient.Builder().build()
-
-    private val dns = DnsOverHttps.Builder()
-            .client(baseOkHttpClient)
-            //.url(HttpUrl.get("https://doh.pub/dns-query"))
-            .url(HttpUrl.get("https://dns.alidns.com/dns-query"))
+    private val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(RequestInterceptor())
+            .retryOnConnectionFailure(true)
+            .callTimeout(20, TimeUnit.SECONDS)
             .build()
 
-    val okHttpClient: OkHttpClient = baseOkHttpClient.newBuilder()
-            .addInterceptor(RequestInterceptor())
-            //.dns(dns)
+    val exoPlayerOkHttpClient: OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(ExoPlayerInterceptor())
             .retryOnConnectionFailure(true)
             .callTimeout(20, TimeUnit.SECONDS)
             .build()
 
 
     private val retrofit by lazy {
-        /*Retrofit.Builder()
-                .baseUrl(BaseDao.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build()*/
         Retrofit.Builder()
-                .baseUrl("https://music.163.com")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()

@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface RecommendService {
-    @GET("/recommend/songs")
+    @GET("/eapi/v3/discovery/recommend/songs")
     fun getDailyRecommendation(): Call<DailyRecommendationResponse>
 }

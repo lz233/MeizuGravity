@@ -13,13 +13,9 @@ object CloudMusicNetwork {
     suspend fun getKey(type: Int) = loginService.getKey(type).await()
     suspend fun checkQrStatus(key: String, type: Int) = loginService.checkQrStatus(key, type).await()
 
-    @Deprecated("netease deprecated this api", ReplaceWith("CloudMusicNetwork.getAccountInfo()"))
-    suspend fun checkUserStatus() = loginService.checkUserStatus().await()
-
     suspend fun getAccountInfo() = userService.getAccountInfo().await()
     suspend fun getUserPlaylist(userId: Long) = userService.getUserPlaylist(userId).await()
     suspend fun checkIn(platformCode: Int = 0) = userService.checkIn(platformCode).await()
-    suspend fun yunbeiCheckIn() = userService.yunbeiCheckIn().await()
     suspend fun musicianCheckIn() = userService.musicianCheckIn().await()
     suspend fun getMusicianTasks() = userService.getMusicianTasks().await()
     suspend fun obtainMusicianTask(userMissionId: Long, period: Int) = userService.obtainMusicianTask(userMissionId, period).await()
@@ -27,8 +23,8 @@ object CloudMusicNetwork {
     suspend fun getDailyRecommendation() = recommendService.getDailyRecommendation().await()
 
     suspend fun getPlaylistDetail(playlistId: Long) = playlistService.getPlaylistDetail(playlistId).await()
-    suspend fun Long.addMusicToPlaylist(playlistId: Long) = playlistService.modifyPlayListTracks("add", playlistId, this).await()
-    suspend fun Long.removeMusicFromPlaylist(playlistId: Long) = playlistService.modifyPlayListTracks("del", playlistId, this).await()
+    suspend fun Long.addMusicToPlaylist(playlistId: Long) = playlistService.modifyPlayListTracks("add", playlistId, "[$this]").await()
+    suspend fun Long.removeMusicFromPlaylist(playlistId: Long) = playlistService.modifyPlayListTracks("del", playlistId, "[$this]").await()
 
     suspend fun getSongUrl(musicId: Long) = songService.getSongUrl(musicId).await()
     suspend fun getSongLyric(musicId: Long) = songService.getSongLyric(musicId).await()

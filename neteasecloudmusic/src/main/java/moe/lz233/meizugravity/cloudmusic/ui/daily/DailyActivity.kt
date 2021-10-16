@@ -15,7 +15,6 @@ import moe.lz233.meizugravity.cloudmusic.logic.model.meta.Music
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.musicmenu.MusicMenuActivity
-import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.setOnItemSelectedListener
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.toArtistName
@@ -44,7 +43,6 @@ class DailyActivity : BaseActivity() {
         }
         viewBuilding.dailyListView.setOnItemClickListener { adapterView, view, position, id ->
             val music = musicList[position - 1]
-            LogUtil.d(music.name)
             MediaManager.playlist(musicList.toPlayListItem(), position - 1)
             MediaManager.play()
         }

@@ -55,8 +55,8 @@ class PlayListActivity : BaseActivity() {
             if (intent.hasExtra("musicId"))
                 launch {
                     val modifyPlayListTracksResponse = intent.getLongExtra("musicId", 0).addMusicToPlaylist(playList.id)
-                    if (modifyPlayListTracksResponse.data.code == 200) LogUtil.toast("操作成功")
-                    else LogUtil.toast(modifyPlayListTracksResponse.data.message)
+                    if (modifyPlayListTracksResponse.code == 200) LogUtil.toast("操作成功")
+                    else LogUtil.toast(modifyPlayListTracksResponse.message!!)
                     finish()
                 }
             else

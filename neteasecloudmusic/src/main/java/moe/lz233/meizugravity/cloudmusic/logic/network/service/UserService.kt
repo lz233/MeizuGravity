@@ -6,24 +6,21 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface UserService {
-    @GET("/user/account")
+    @GET("/eapi/nuser/account/get")
     fun getAccountInfo(): Call<AccountInfoResponse>
 
-    @GET("/user/playlist")
-    fun getUserPlaylist(@Query("uid") userId: Long): Call<UserPlaylistResponse>
+    @GET("/eapi/user/playlist")
+    fun getUserPlaylist(@Query("uid") userId: Long, @Query("limit") limit: Int = 30, @Query("offset") offset: Int = 0): Call<UserPlaylistResponse>
 
-    @GET("/daily_signin")
+    @GET("/eapi/point/dailyTask")
     fun checkIn(@Query("type") platformCode: Int): Call<CheckInResponse>
 
-    @GET("/yunbei/sign")
-    fun yunbeiCheckIn(): Call<YunbeiCheckInResponse>
-
-    @GET("/musician/sign")
+    @GET("/eapi/creator/user/access")
     fun musicianCheckIn(): Call<MusicianCheckInResponse>
 
-    @GET("/musician/tasks")
+    @GET("/eapi/nmusician/workbench/mission/cycle/list")
     fun getMusicianTasks(): Call<MusicianTasksResponse>
 
-    @GET("/musician/cloudbean/obtain")
-    fun obtainMusicianTask(@Query("id") userMissionId: Long, @Query("period") period: Int): Call<MusicianObtainTasksResponse>
+    @GET("/eapi/nmusician/workbench/mission/reward/obtain/new")
+    fun obtainMusicianTask(@Query("userMissionId") userMissionId: Long, @Query("period") period: Int): Call<MusicianObtainTasksResponse>
 }

@@ -69,8 +69,9 @@ class MusicMenuActivity : BaseActivity() {
                     3 -> launch {
                         val modifyPlayListTracksResponse = intent.getLongExtra("musicId", 0)
                                 .removeMusicFromPlaylist(intent.getLongExtra("playlistId", 0))
-                        if (modifyPlayListTracksResponse.data.code == 200) LogUtil.toast("操作成功")
-                        else LogUtil.toast(modifyPlayListTracksResponse.data.message)
+                        LogUtil.d(modifyPlayListTracksResponse)
+                        if (modifyPlayListTracksResponse.code == 200) LogUtil.toast("操作成功")
+                        else LogUtil.toast(modifyPlayListTracksResponse.message!!)
                         finish()
                     }
                 }

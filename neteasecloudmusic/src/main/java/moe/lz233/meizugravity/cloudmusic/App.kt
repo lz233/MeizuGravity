@@ -33,7 +33,7 @@ class App : MultiDexApplication() {
                 .build()*/
         MediaPlayerService.init(this, SimpleExoPlayer.Builder(this, DefaultExtractorsFactory())
                 //.setAudioAttributes(audioAttributes, true)
-                .setMediaSourceFactory(DefaultMediaSourceFactory(OkHttpDataSource.Factory(ServiceCreator.okHttpClient)))
+                .setMediaSourceFactory(DefaultMediaSourceFactory(OkHttpDataSource.Factory(ServiceCreator.exoPlayerOkHttpClient)))
                 .build())
     }
 }
