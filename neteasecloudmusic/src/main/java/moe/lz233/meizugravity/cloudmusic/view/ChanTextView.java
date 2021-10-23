@@ -7,16 +7,15 @@ import android.text.SpannableString;
 import android.text.style.ScaleXSpan;
 import android.util.AttributeSet;
 
+// Decompile from A8Speaker by jadx
+
 public class ChanTextView extends androidx.appcompat.widget.AppCompatTextView {
     private static Typeface mTypeface = null;
-    private String TAG;
     private CharSequence originalText;
     private float spacing;
-    private CharSequence text;
 
     public ChanTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        this.TAG = "ChanTextView";
         this.spacing = 0.0f;
         this.originalText = "";
         setFont(context);
@@ -75,10 +74,4 @@ public class ChanTextView extends androidx.appcompat.widget.AppCompatTextView {
         setHorizontalFadingEdgeEnabled(false);
     }
 
-    public class Spacing {
-        public static final float NORMAL = 0.0f;
-
-        public Spacing() {
-        }
-    }
 }

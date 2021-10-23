@@ -4,7 +4,6 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import moe.lz233.meizugravity.cloudmusic.App
-import moe.lz233.meizugravity.cloudmusic.BuildConfig
 import android.util.Log as ALog
 
 object LogUtil {
@@ -32,8 +31,8 @@ object LogUtil {
                 }
             }
         } else {
-            f("MEIZUGRAVITYCLOUDMUSIC", str)
-            toast(str,force = false)
+            f("CLOUDMUSIC", str)
+            toast(str, force = false)
         }
     }
 

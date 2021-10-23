@@ -3,6 +3,7 @@
     <dimen name="text_80">80px</dimen>
     <dimen name="text_60">60px</dimen>
     <dimen name="text_30">30px</dimen>
+    <dimen name="text_50">50px</dimen>
     <dimen name="text_26">26px</dimen>
     <dimen name="text_21">21px</dimen>
     <dimen name="text_20">20px</dimen>

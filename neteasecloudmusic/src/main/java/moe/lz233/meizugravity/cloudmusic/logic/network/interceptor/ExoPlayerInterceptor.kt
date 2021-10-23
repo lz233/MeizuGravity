@@ -1,4 +1,4 @@
-package moe.lz233.meizugravity.cloudmusic.logic.network
+package moe.lz233.meizugravity.cloudmusic.logic.network.interceptor
 
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.processEapi
@@ -15,9 +15,9 @@ class ExoPlayerInterceptor : Interceptor {
                     .getJSONArray("data")
                     .getJSONObject(0)
                     .getString("url")
-            LogUtil.d(url.substring(0, url.indexOf("?authSecret=")))
+            LogUtil.d("music url: $url")
             chain.proceed(chain.request().newBuilder()
-                    .url(url.substring(0, url.indexOf("?authSecret=")))
+                    .url(url)
                     .get()
                     .build())
         } else {

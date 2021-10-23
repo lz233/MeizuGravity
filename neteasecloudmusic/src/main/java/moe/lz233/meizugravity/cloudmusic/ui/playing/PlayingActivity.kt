@@ -69,6 +69,7 @@ class PlayingActivity : BaseActivity() {
             clipToPadding = false
         }
         if (MediaManager.playlistItemList.isNotEmpty()) onMediaChange()
+        refreshTextClock()
         MediaManager.addMediaSwitchChange(mediaTrackChangeListener)
         MediaManager.addProgressListener(mediaProgressListener)
     }
@@ -130,15 +131,18 @@ class PlayingActivity : BaseActivity() {
                     when (viewBuilding.mainViewPager2.currentItem) {
                         0 -> {
                         }
-                        1 -> when (MediaManager.isPlaying()) {
-                            true -> {
-                                MediaManager.pause()
-                                setScreenBrightnessValue(0.1f)
+                        1 -> {
+                            when (MediaManager.isPlaying()) {
+                                true -> {
+                                    MediaManager.pause()
+                                    setScreenBrightnessValue(0.1f)
+                                }
+                                false -> {
+                                    MediaManager.play()
+                                    setScreenBrightnessValue(1.0f)
+                                }
                             }
-                            false -> {
-                                MediaManager.play()
-                                setScreenBrightnessValue(1.0f)
-                            }
+                            refreshTextClock()
                         }
                         2 -> launch {
                             val likeResponse = MediaManager.currentId()!!.toLong().like()
@@ -162,6 +166,16 @@ class PlayingActivity : BaseActivity() {
             }
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    private fun refreshTextClock() = if (MediaManager.isPlaying()) {
+        viewBuilding.timeTextClock.visibility = View.GONE
+        viewBuilding.dateTextClock.visibility = View.GONE
+        viewBuilding.coverImageView.visibility = View.VISIBLE
+    } else {
+        viewBuilding.timeTextClock.visibility = View.VISIBLE
+        viewBuilding.dateTextClock.visibility = View.VISIBLE
+        viewBuilding.coverImageView.visibility = View.GONE
     }
 
     private fun showMenu() {

@@ -25,7 +25,7 @@ fun Interceptor.Chain.processEapi(): Response {
     val params = "$path-$nobodyKnowThis-$json-$nobodyKnowThis-$nobodyUseMD5"
     LogUtil.d(params)
     return this.proceed(Request.Builder()
-            .addHeader("Cookie", "MUSIC_U=${UserDao.cookie}")
+            .addHeader("Cookie", "MUSIC_U=${UserDao.cookie}; appver=6.5.0; versioncode=164; buildver=${System.currentTimeMillis()}; os=android")
             .url(url)
             .post(FormBody.Builder()
                     .add("params", AESUtil.encrypt(params))

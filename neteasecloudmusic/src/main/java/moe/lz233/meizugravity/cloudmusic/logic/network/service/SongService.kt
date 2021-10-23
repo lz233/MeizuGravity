@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface SongService {
     @GET("/eapi/song/enhance/player/url")
-    fun getSongUrl(@Query("id") musicId: Long, @Query("br") bitRate: Long = BaseDao.soundQuality): Call<SongUrlResponse>
+    fun getSongUrl(@Query("id") musicId: Long, @Query("br") bitRate: Int = BaseDao.soundQuality): Call<SongUrlResponse>
 
     @GET("/eapi/song/lyric")
     fun getSongLyric(@Query("id") musicId: Long, @Query("lv") lv: Int = -1, @Query("kv") kv: Int = -1, @Query("tv") tv: Int = -1): Call<SongLyricResponse>

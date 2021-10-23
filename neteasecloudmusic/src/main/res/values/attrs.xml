@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <declare-styleable name="ChanSwitch">
+        <attr name="key" format="string" />
+        <attr name="valueIsBoolean" format="boolean" />
+        <attr name="valueString" format="string" />
+        <attr name="valueInteger" format="string" />
+        <attr name="valueDefault" format="integer" />
+        <attr name="valueDefaultBoolean" format="boolean" />
+        <attr name="baseText" format="string" />
+        <attr name="optionText" format="string" />
+    </declare-styleable>
+</resources>

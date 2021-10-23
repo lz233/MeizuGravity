@@ -1,4 +1,4 @@
-package moe.lz233.meizugravity.cloudmusic.logic.network
+package moe.lz233.meizugravity.cloudmusic.logic.network.interceptor
 
 import moe.lz233.meizugravity.cloudmusic.logic.dao.UserDao
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.processEapi

@@ -12,6 +12,32 @@
         android:animateLayoutChanges="true"
         android:clipChildren="false">
 
+        <TextClock
+            android:id="@+id/timeTextClock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40px"
+            android:layout_marginStart="10px"
+            android:format12Hour="HH:mm"
+            android:format24Hour="HH:mm"
+            android:gravity="center"
+            android:textSize="@dimen/text_50" />
+
+        <TextClock
+            android:id="@+id/dateTextClock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="40px"
+            android:layout_marginStart="10px"
+            android:format12Hour="EEEE M月d日"
+            android:format24Hour="EEEE M月d日"
+            android:gravity="center"
+            android:textSize="@dimen/text_20" />
+
         <ImageView
             android:id="@+id/coverImageView"
             android:layout_width="100px"

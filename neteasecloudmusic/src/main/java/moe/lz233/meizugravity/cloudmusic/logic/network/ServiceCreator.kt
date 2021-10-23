@@ -1,13 +1,15 @@
 package moe.lz233.meizugravity.cloudmusic.logic.network
 
+import moe.lz233.meizugravity.cloudmusic.logic.network.interceptor.ExoPlayerInterceptor
+import moe.lz233.meizugravity.cloudmusic.logic.network.interceptor.RequestInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ServiceCreator {
-    val BASE_HOST = "music.163.com"
-    val BASE_URL = "https://$BASE_HOST"
+    const val BASE_HOST = "music.163.com"
+    const val BASE_URL = "https://$BASE_HOST"
 
     private val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(RequestInterceptor())
