@@ -14,3 +14,13 @@ data class SongLyricResponse(val code: Int,
 }
 
 data class SongLikeResponse(val code: Int, val playListId: Long)
+
+data class MvDetailResponse(val code: Int, val data: MvDetailData) {
+    data class MvDetailData(@SerializedName("id") val mvId: Long,
+                            val artistId: Long,
+                            @SerializedName("cover") val coverUrl: String)
+}
+
+data class MvUrlResponse(val code: Int, val data: MvUrlData) {
+    data class MvUrlData(val id: Long, val url: String)
+}
