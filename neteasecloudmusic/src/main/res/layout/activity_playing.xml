@@ -22,7 +22,6 @@
             android:layout_marginStart="10px"
             android:format12Hour="HH:mm"
             android:format24Hour="HH:mm"
-            android:gravity="center"
             android:textSize="@dimen/text_50" />
 
         <TextClock
@@ -35,7 +34,6 @@
             android:layout_marginStart="10px"
             android:format12Hour="M月d日\nEEEE"
             android:format24Hour="M月d日\nEEEE"
-            android:gravity="center"
             android:textSize="@dimen/text_20" />
 
         <ImageView
