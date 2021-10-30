@@ -267,6 +267,13 @@ object MediaManager : Player.EventListener {
     fun getCurrentPosition() = simpleExoPlayer.currentPosition
 
     /**
+     * 获取当前音频 MV ID
+     */
+    fun getCurrentMediaMvId(): Long {
+        return playlistItemList[simpleExoPlayer.currentWindowIndex].mvId
+    }
+
+    /**
      * 获取当前音频名称
      */
     fun getCurrentMediaName(): String {

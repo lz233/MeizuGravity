@@ -18,7 +18,10 @@ data class SongLikeResponse(val code: Int, val playListId: Long)
 data class MvDetailResponse(val code: Int, val data: MvDetailData) {
     data class MvDetailData(@SerializedName("id") val mvId: Long,
                             val artistId: Long,
-                            @SerializedName("cover") val coverUrl: String)
+                            @SerializedName("cover") val coverUrl: String,
+                            @SerializedName("brs") val resolutionData: List<MvResolutionData>) {
+        data class MvResolutionData(val size: Long, @SerializedName("br") val resolution: Int, val point: Int)
+    }
 }
 
 data class MvUrlResponse(val code: Int, val data: MvUrlData) {

@@ -24,6 +24,7 @@ import moe.lz233.meizugravity.cloudmusic.databinding.ActivityPlayingBinding
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork.like
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
+import moe.lz233.meizugravity.cloudmusic.ui.mv.MvActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
 import moe.lz233.meizugravity.cloudmusic.utils.AudioManager
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
@@ -31,11 +32,11 @@ import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 
 class PlayingActivity : BaseActivity() {
-    private val count = 9
     private val viewBuilding by lazy { ActivityPlayingBinding.inflate(layoutInflater) }
-    private var isShowMenu = false
     private val handler = Handler(Looper.getMainLooper())
     private val adapter = ViewPagerAdapter()
+    private var isShowMenu = false
+    private val menuCount = 10
 
     private val runnable2 = Runnable {
         runOnUiThread {
@@ -115,8 +116,8 @@ class PlayingActivity : BaseActivity() {
             KeyEvent.KEYCODE_DPAD_DOWN -> {
                 if (isShowMenu) {
                     reCreateCallback()
-                    if (viewBuilding.mainViewPager2.currentItem == count - 1)
-                        ViewPager2Util.setCurrentItem(viewBuilding.mainViewPager2, count - 1, 100, 50)
+                    if (viewBuilding.mainViewPager2.currentItem == menuCount - 1)
+                        ViewPager2Util.setCurrentItem(viewBuilding.mainViewPager2, menuCount - 1, 100, 50)
                     else
                         ViewPager2Util.setCurrentItem(viewBuilding.mainViewPager2, viewBuilding.mainViewPager2.currentItem + 1, 100, 50)
                 } else {
@@ -156,8 +157,11 @@ class PlayingActivity : BaseActivity() {
                             MediaPlayerExoPlayMode.MEDIA_ALONE_LOOP -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM)
                             MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM -> MediaManager.switchPlayMode(MediaPlayerExoPlayMode.MEDIA_LIST_LOOP)
                         }
-                        7 -> LogUtil.toast(MediaManager.getCurrentMediaArtistName())
-                        8 -> LogUtil.toast(MediaManager.getCurrentMediaAlbumName())
+                        7 -> if (MediaManager.getCurrentMediaMvId() == 0L)
+                            LogUtil.toast("暂无视频")
+                        else MvActivity.actionStart(this, MediaManager.getCurrentMediaMvId())
+                        8 -> LogUtil.toast(MediaManager.getCurrentMediaArtistName())
+                        9 -> LogUtil.toast(MediaManager.getCurrentMediaAlbumName())
                     }
                 } else {
                     showMenu()
@@ -225,7 +229,7 @@ class PlayingActivity : BaseActivity() {
                 0 -> MediaManager.getCurrentMediaName()
                 1 -> if (MediaManager.isPlaying()) "暂停" else "播放"
                 2 -> "喜欢"
-                3 -> "收藏到歌单"
+                3 -> "收藏"
                 4 -> "上一首"
                 5 -> "下一首"
                 6 -> when (MediaManager.getCurrentPlayMode()) {
@@ -234,12 +238,13 @@ class PlayingActivity : BaseActivity() {
                     MediaPlayerExoPlayMode.MEDIA_LSIT_RANDOM -> "列表随机"
                     else -> "未知"
                 }
-                7 -> "歌手：${MediaManager.getCurrentMediaArtistName()}"
-                8 -> "专辑：${MediaManager.getCurrentMediaAlbumName()}"
+                7 -> if (MediaManager.getCurrentMediaMvId() == 0L) "暂无视频" else "查看视频"
+                8 -> "歌手：${MediaManager.getCurrentMediaArtistName()}"
+                9 -> "专辑：${MediaManager.getCurrentMediaAlbumName()}"
                 else -> "not completed"
             }
         }
 
-        override fun getItemCount() = count
+        override fun getItemCount() = menuCount
     }
 }

@@ -41,6 +41,9 @@
             android:name=".ui.about.AboutActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.mv.MvActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.musicmenu.MusicMenuActivity"
             android:exported="false" />
     </application>

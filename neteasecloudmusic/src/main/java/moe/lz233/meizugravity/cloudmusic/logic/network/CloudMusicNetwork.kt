@@ -28,7 +28,7 @@ object CloudMusicNetwork {
 
     suspend fun getSongUrl(musicId: Long) = songService.getSongUrl(musicId).await()
     suspend fun getMvDetail(mvId: Long) = songService.getMvDetail(mvId).await()
-    suspend fun getMvUrl(mvId: Long, resolution: Int) = songService.getMvUrl(mvId, resolution).await()
+    suspend fun getMvUrl(mvId: Long, resolution: Int = 720) = songService.getMvUrl(mvId, resolution).await()
     suspend fun getSongLyric(musicId: Long) = songService.getSongLyric(musicId).await()
     suspend fun Long.like() = songService.likeMusic(this).await()
 }

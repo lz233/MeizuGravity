@@ -8,8 +8,9 @@ import moe.lz233.meizugravity.cloudmusic.logic.model.meta.Music
 fun List<Music>.toPlayListItem() = mutableListOf<PlaylistItem>().apply {
     this@toPlayListItem.forEach {
         add(PlayListItem(it.id,
+                it.mvId,
                 it.name,
-                it.artists.map { it.id },
+                it.artists.map { artist -> artist.id },
                 it.artists.toArtistName(),
                 it.album.id,
                 it.album.name,

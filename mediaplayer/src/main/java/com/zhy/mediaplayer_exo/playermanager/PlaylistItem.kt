@@ -6,6 +6,7 @@ package com.zhy.mediaplayer_exo.playermanager
  */
 interface PlaylistItem {
     val id: Long
+    val mvId: Long
     val name: String?
     val artistId: List<Long>?
     val artistName: String?
