@@ -1,0 +1,19 @@
+{
+  "name": "MeizuGravity",
+  "version": "0.0.1",
+  "description": "Let this screen do what it should do.",
+  "main": "index.js",
+  "authors": {
+    "name": "lz233",
+    "email": "ohayou@lz233.ac.cn"
+  },
+  "repository": "https://github.com/lz233/MeizuGravity/MeizuGravity",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.8.2"
+  }
+}

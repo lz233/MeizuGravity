@@ -18,10 +18,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="45px"
             android:layout_marginStart="10px"
+            android:layout_marginBottom="45px"
             android:format12Hour="HH:mm"
             android:format24Hour="HH:mm"
+            android:gravity="center_vertical"
             android:textSize="@dimen/text_50" />
 
         <TextClock
@@ -30,10 +31,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="45px"
             android:layout_marginStart="10px"
+            android:layout_marginTop="45px"
             android:format12Hour="M月d日\nEEEE"
             android:format24Hour="M月d日\nEEEE"
+            android:gravity="center_vertical"
             android:textSize="@dimen/text_20" />
 
         <ImageView
