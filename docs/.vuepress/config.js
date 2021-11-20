@@ -1,7 +1,7 @@
 module.exports = {
   lang: 'zh-CN',
   title: 'Meizu Gravity',
-  head: [['link', { rel: 'icon', href: '/images/logo.png' }]],
+  head: [['link', { rel: 'icon', href: '/images/fav.png' }]],
   description: 'Let this screen do what it should do.',
 
   themeConfig: {
