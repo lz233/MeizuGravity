@@ -18,4 +18,9 @@
     "@vuepress/plugin-medium-zoom": "^1.8.2",
     "vuepress": "^1.8.2"
   }
+  "dependencies": {
+    "@vuepress/plugin-back-to-top": "^1.8.2",
+    "@vuepress/plugin-medium-zoom": "^1.8.2",
+    "vuepress": "^1.8.2"
+  }
 }
