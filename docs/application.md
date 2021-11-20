@@ -1,5 +1,5 @@
 ---
-lang: zh-CN title: "应用"
+lang: zh-CN title: 应用
 ---
 
 # Meizu Gravity +
