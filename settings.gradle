@@ -4,3 +4,4 @@ include ':app'
 rootProject.name = "Meizu Gravity"
 include ':neteasecloudmusic'
 include ':mediaplayer'
+include ':danmaku'
