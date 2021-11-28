@@ -26,3 +26,9 @@ fun List<Artist>.toArtistName() = StringBuilder().apply {
     }
     deleteCharAt(lastIndex)
 }.toString()
+
+fun <T> List<T>.safeSubList(fromIndex: Int, toIndex: Int) =
+        if (toIndex > size)
+            this.subList(fromIndex, size)
+        else
+            this.subList(fromIndex, toIndex)

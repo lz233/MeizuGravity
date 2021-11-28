@@ -4,6 +4,7 @@ import moe.lz233.meizugravity.cloudmusic.logic.dao.BaseDao
 import moe.lz233.meizugravity.cloudmusic.logic.model.response.*
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface SongService {
@@ -18,6 +19,9 @@ interface SongService {
 
     @GET("/eapi/song/lyric")
     fun getSongLyric(@Query("id") musicId: Long, @Query("lv") lv: Int = -1, @Query("kv") kv: Int = -1, @Query("tv") tv: Int = -1): Call<SongLyricResponse>
+
+    @GET("/api/v1/resource/comments/R_SO_4_{id}")
+    fun getSongComment(@Path("id") musicId: Long, @Query("rid") id: Long = musicId, @Query("limit") limit: Int = 20, @Query("offset") offset: Int = 0, @Query("beforeTime") beforeTime: Int = 0): Call<SongCommentResponse>
 
     @GET("/eapi/song/like")
     fun likeMusic(@Query("trackId") musicId: Long, @Query("like") operation: Boolean = true): Call<SongLikeResponse>

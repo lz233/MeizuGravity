@@ -12,32 +12,6 @@
         android:animateLayoutChanges="true"
         android:clipChildren="false">
 
-        <TextClock
-            android:id="@+id/timeTextClock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10px"
-            android:layout_marginBottom="45px"
-            android:format12Hour="HH:mm"
-            android:format24Hour="HH:mm"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/text_50" />
-
-        <TextClock
-            android:id="@+id/dateTextClock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="10px"
-            android:layout_marginTop="45px"
-            android:format12Hour="M月d日\nEEEE"
-            android:format24Hour="M月d日\nEEEE"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/text_20" />
-
         <ImageView
             android:id="@+id/coverImageView"
             android:layout_width="100px"
@@ -57,7 +31,7 @@
             app:lrcAnimationDuration="200"
             app:lrcCurrentTextColor="@color/colorAccent"
             app:lrcLabel="暂无歌词"
-            app:lrcNormalTextColor="#68FFFFFF"
+            app:lrcNormalTextColor="@color/colorAccent2"
             app:lrcNormalTextSize="@dimen/text_18"
             app:lrcTextSize="@dimen/text_20" />
 

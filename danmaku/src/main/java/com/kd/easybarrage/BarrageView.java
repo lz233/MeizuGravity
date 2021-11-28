@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -157,7 +156,7 @@ public class BarrageView extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Log.i("111111", "onAnimationEnd: ");
+                //Log.i("111111", "onAnimationEnd: ");
                 if (allow_repeat)
                     cache.remove(tb);
                 removeView(textView);

@@ -16,11 +16,12 @@ import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 class MvActivity : BaseActivity() {
     private val viewBuilding by lazy { ActivityMvBinding.inflate(layoutInflater) }
     private val player by lazy { SimpleExoPlayer.Builder(this).build() }
+    private val shouldPause by lazy { MediaManager.isPlaying() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        MediaManager.pause()
+        if (shouldPause) MediaManager.pause()
         viewBuilding.playerView.player = player
         val mvId = intent.getLongExtra("mvId", 0)
         launch {
@@ -46,7 +47,7 @@ class MvActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         player.release()
-        MediaManager.play()
+        if (shouldPause) MediaManager.play()
     }
 
     companion object {

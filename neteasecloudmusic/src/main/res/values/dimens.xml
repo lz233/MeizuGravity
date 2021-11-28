@@ -8,4 +8,9 @@
     <dimen name="text_21">21px</dimen>
     <dimen name="text_20">20px</dimen>
     <dimen name="text_18">18px</dimen>
+    <dimen name="common_margin_37">37px</dimen>
+    <dimen name="common_margin_125">125px</dimen>
+    <dimen name="common_margin_155">155px</dimen>
+    <dimen name="common_margin_240">240px</dimen>
+    <dimen name="common_margin_320">320px</dimen>
 </resources>

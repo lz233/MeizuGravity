@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/common_margin_320"
+    android:layout_height="@dimen/common_margin_240"
+    android:layout_gravity="center"
+    tools:context=".ui.time.TimeActivity">
+
+    <TextClock
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_margin_37"
+        android:format12Hour="HH:mm"
+        android:format24Hour="HH:mm"
+        android:gravity="center"
+        android:textSize="@dimen/text_86" />
+
+    <TextClock
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_margin_125"
+        android:format12Hour="EEEE M 月 d 日"
+        android:format24Hour="EEEE M 月 d 日"
+        android:gravity="center"
+        android:textSize="@dimen/text_21" />
+
+    <TextView
+        android:id="@+id/musicNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_margin_155"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="@dimen/text_18" />
+
+    <com.kd.easybarrage.BarrageView
+        android:id="@+id/danmakuView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:max_text_size="25"
+        app:min_text_size="21"
+        app:allow_repeat="true" />
+</RelativeLayout>

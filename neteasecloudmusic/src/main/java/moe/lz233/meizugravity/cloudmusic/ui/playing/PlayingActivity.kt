@@ -26,6 +26,7 @@ import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork.like
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.mv.MvActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
+import moe.lz233.meizugravity.cloudmusic.ui.time.TimeActivity
 import moe.lz233.meizugravity.cloudmusic.utils.AudioManager
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
@@ -70,7 +71,6 @@ class PlayingActivity : BaseActivity() {
             clipToPadding = false
         }
         if (MediaManager.playlistItemList.isNotEmpty()) onMediaChange()
-        refreshTextClock()
         MediaManager.addMediaSwitchChange(mediaTrackChangeListener)
         MediaManager.addProgressListener(mediaProgressListener)
     }
@@ -91,10 +91,16 @@ class PlayingActivity : BaseActivity() {
                 viewBuilding.lrcView.loadLrc("[00:00.000] ${MediaManager.getCurrentMediaName()}\n[00:00.000] 似乎是个纯音乐")
                 return@launch
             }
-            if (songLyricResponse.translatedLyric.lyric == "")
-                viewBuilding.lrcView.loadLrc(songLyricResponse.lyric.lyric)
-            else
-                viewBuilding.lrcView.loadLrc(songLyricResponse.lyric.lyric, songLyricResponse.translatedLyric.lyric)
+            songLyricResponse.translatedLyric?.let {
+                if (it.lyric != "") {
+                    viewBuilding.lrcView.loadLrc(songLyricResponse.lyric?.lyric, it.lyric)
+                    return@launch
+                }
+            }
+            songLyricResponse.lyric?.let {
+                viewBuilding.lrcView.loadLrc(it.lyric)
+                return@launch
+            }
         }
     }
 
@@ -132,19 +138,7 @@ class PlayingActivity : BaseActivity() {
                     when (viewBuilding.mainViewPager2.currentItem) {
                         0 -> {
                         }
-                        1 -> {
-                            when (MediaManager.isPlaying()) {
-                                true -> {
-                                    MediaManager.pause()
-                                    setScreenBrightnessValue(0.1f)
-                                }
-                                false -> {
-                                    MediaManager.play()
-                                    setScreenBrightnessValue(1.0f)
-                                }
-                            }
-                            refreshTextClock()
-                        }
+                        1 -> TimeActivity.actionStart(this)
                         2 -> launch {
                             val likeResponse = MediaManager.currentId()!!.toLong().like()
                             if (likeResponse.code == 200) LogUtil.toast("操作成功")
@@ -172,16 +166,6 @@ class PlayingActivity : BaseActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
-    private fun refreshTextClock() = if (MediaManager.isPlaying()) {
-        viewBuilding.timeTextClock.visibility = View.GONE
-        viewBuilding.dateTextClock.visibility = View.GONE
-        viewBuilding.coverImageView.visibility = View.VISIBLE
-    } else {
-        viewBuilding.timeTextClock.visibility = View.VISIBLE
-        viewBuilding.dateTextClock.visibility = View.VISIBLE
-        viewBuilding.coverImageView.visibility = View.GONE
-    }
-
     private fun showMenu() {
         adapter.notifyDataSetChanged()
         viewBuilding.lrcView.visibility = View.GONE
@@ -199,10 +183,6 @@ class PlayingActivity : BaseActivity() {
     private fun reCreateCallback() {
         handler.removeCallbacks(runnable2)
         handler.postDelayed(runnable2, 3000)
-    }
-
-    private fun setScreenBrightnessValue(brightnessValue: Float) {
-        window.attributes = window.attributes.apply { screenBrightness = brightnessValue }
     }
 
     override fun onDestroy() {

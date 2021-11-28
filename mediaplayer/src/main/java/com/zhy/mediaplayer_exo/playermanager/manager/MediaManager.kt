@@ -308,6 +308,11 @@ object MediaManager : Player.EventListener {
     }
 
     /**
+     * 获取当前音频ID
+     */
+    fun getCurrentMediaId() = playlistItemList[simpleExoPlayer.currentWindowIndex].id
+
+    /**
      * 获取当前音频专辑ID
      */
     fun getCurrentMediaAlbumId(): Long {
