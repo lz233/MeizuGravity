@@ -45,14 +45,16 @@ class TimeActivity : BaseActivity() {
             }
             KeyEvent.KEYCODE_DPAD_DOWN -> {
             }
-            KeyEvent.KEYCODE_ENTER -> finish()
+            KeyEvent.KEYCODE_ENTER -> {
+                MediaManager.play()
+                finish()
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        MediaManager.play()
     }
 
     private fun setScreenBrightnessValue(brightnessValue: Float) {

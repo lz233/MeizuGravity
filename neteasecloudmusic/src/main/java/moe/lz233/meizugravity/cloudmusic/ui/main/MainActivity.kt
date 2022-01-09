@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityMainBinding
@@ -27,10 +28,12 @@ import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
 import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
+import moe.lz233.meizugravity.cloudmusic.utils.ktx.toPlayListItem
 
 class MainActivity : BaseActivity() {
     private val mainMenuList by lazy { listOf("正在播放", "每日签到", "每日推荐", "我的歌单", "关于") }
     private val viewBuilding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    var cast = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,17 +82,52 @@ class MainActivity : BaseActivity() {
                 else
                     ViewPager2Util.setCurrentItem(viewBuilding.mainViewPager2, viewBuilding.mainViewPager2.currentItem + 1, 100, 50)
             }
-            KeyEvent.KEYCODE_ENTER -> {
-                when (viewBuilding.mainViewPager2.currentItem) {
-                    0 -> PlayingActivity.actionStart(this)
-                    1 -> checkIn()
-                    2 -> DailyActivity.actionStart(this)
-                    3 -> PlayListActivity.actionStart(this)
-                    4 -> AboutActivity.actionStart(this)
+            KeyEvent.KEYCODE_ENTER -> if (event?.action == KeyEvent.ACTION_DOWN) {
+                //event.startTracking()
+                if (event.repeatCount == 0) {
+                    cast = false
+                    return false
+                } else {
+                    cast = true
+                    return true
                 }
             }
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_ENTER -> {
+                if (cast) {
+                    when (viewBuilding.mainViewPager2.currentItem) {
+                        0 -> launch {
+                            LogUtil.toast("尝试进行魔法对接（")
+                            val userPlaylistResponse = CloudMusicNetwork.getUserPlaylist(UserDao.id)
+                            for (playList in userPlaylistResponse.playlists) {
+                                if (playList.creator.userId == UserDao.id && playList.name == "Cast to Gravity") {
+                                    val playlistDetailResponse = CloudMusicNetwork.getPlaylistDetail(playList.id)
+                                    MediaManager.playlist(playlistDetailResponse.playlist.tracks.toPlayListItem(), 0)
+                                    MediaManager.play()
+                                    PlayingActivity.actionStart(this@MainActivity)
+                                    break
+                                }
+                            }
+                        }
+                    }
+
+                } else {
+                    when (viewBuilding.mainViewPager2.currentItem) {
+                        0 -> PlayingActivity.actionStart(this)
+                        1 -> checkIn()
+                        2 -> DailyActivity.actionStart(this)
+                        3 -> PlayListActivity.actionStart(this)
+                        4 -> AboutActivity.actionStart(this)
+                    }
+                }
+            }
+        }
+        return super.onKeyUp(keyCode, event)
     }
 
     private fun checkIn() {
@@ -114,7 +152,8 @@ class MainActivity : BaseActivity() {
                 musicianTasksResponse.data.tasks.forEach {
                     it.status?.let { status ->
                         if ((status == 20) and (it.userMissionId != null)) {
-                            val obtainTasksResponse = CloudMusicNetwork.obtainMusicianTask(it.userMissionId!!, it.period)
+                            val obtainTasksResponse =
+                                    CloudMusicNetwork.obtainMusicianTask(it.userMissionId!!, it.period)
                             if (obtainTasksResponse.code == 200) LogUtil.toast("完成音乐人任务：${it.name}\n获得 ${it.rewardWorth} 云豆")
                         }
                     }
@@ -152,7 +191,8 @@ class MainActivity : BaseActivity() {
     }
 
     companion object {
-        fun actionStart(context: Context) = context.startActivity(Intent(context, MainActivity::class.java))
+        fun actionStart(context: Context) =
+                context.startActivity(Intent(context, MainActivity::class.java))
     }
 
     inner class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
@@ -161,7 +201,9 @@ class MainActivity : BaseActivity() {
             val textView: TextView = itemView.findViewById(R.id.mainItemTextView)
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false))
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+                LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false)
+        )
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.textView.text = mainMenuList[position]
