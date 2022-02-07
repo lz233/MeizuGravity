@@ -33,7 +33,7 @@ import moe.lz233.meizugravity.cloudmusic.utils.ktx.toPlayListItem
 class MainActivity : BaseActivity() {
     private val mainMenuList by lazy { listOf("正在播放", "每日签到", "每日推荐", "我的歌单", "关于") }
     private val viewBuilding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    var cast = false
+    private var cast = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,12 +84,12 @@ class MainActivity : BaseActivity() {
             }
             KeyEvent.KEYCODE_ENTER -> if (event?.action == KeyEvent.ACTION_DOWN) {
                 //event.startTracking()
-                if (event.repeatCount == 0) {
+                return if (event.repeatCount == 0) {
                     cast = false
-                    return false
+                    false
                 } else {
                     cast = true
-                    return true
+                    true
                 }
             }
         }
