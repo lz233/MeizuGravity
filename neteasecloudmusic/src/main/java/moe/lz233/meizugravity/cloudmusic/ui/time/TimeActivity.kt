@@ -7,7 +7,6 @@ import android.view.KeyEvent
 import com.kd.easybarrage.Barrage
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import kotlinx.coroutines.launch
-import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityTimeBinding
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
@@ -32,7 +31,7 @@ class TimeActivity : BaseActivity() {
                 if (content.length > 30)
                     offset++
                 else
-                    viewBuilding.danmakuView.addBarrage(Barrage(content, R.color.colorAccent2))
+                    viewBuilding.danmakuView.addBarrage(Barrage(content, false))
                 i++
             }
         }
