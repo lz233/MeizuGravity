@@ -23,6 +23,7 @@ import java.util.Random;
 import java.util.Set;
 
 import moe.lz233.meizugravity.design.R;
+import moe.lz233.meizugravity.design.view.ChanTextView;
 
 /**
  * Created by shiwei on 2017/8/2.
@@ -133,7 +134,7 @@ public class BarrageView extends RelativeLayout {
             return;
         if (getChildCount() >= maxBarrageSize)
             return;
-        final TextView textView = tb.isShowBorder() ? new BorderTextView(getContext(), borderColor) : new TextView(getContext());
+        final TextView textView = tb.isShowBorder() ? new BorderTextView(getContext(), borderColor) : new ChanTextView(getContext());
         textView.setPadding(textLeftPadding, textTopPadding, textRightPadding, textBottomPadding);
 
         textView.setTextSize((int) (minTextSize + (maxTextSize - minTextSize) * Math.random()));

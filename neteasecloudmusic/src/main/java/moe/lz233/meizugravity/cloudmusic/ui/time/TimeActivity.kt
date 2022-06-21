@@ -7,7 +7,9 @@ import android.view.KeyEvent
 import com.kd.easybarrage.Barrage
 import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import kotlinx.coroutines.launch
+import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityTimeBinding
+import moe.lz233.meizugravity.cloudmusic.logic.dao.BaseDao
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.design.activity.BaseActivity
 
@@ -17,7 +19,7 @@ class TimeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBuilding.root)
-        setScreenBrightnessValue(0.1f)
+        setScreenBrightnessValue(BaseDao.screenBrightness)
         MediaManager.pause()
         viewBuilding.musicNameTextView.text = "▶ ${MediaManager.getCurrentMediaName()}"
         launch {
@@ -31,7 +33,7 @@ class TimeActivity : BaseActivity() {
                 if (content.length > 30)
                     offset++
                 else
-                    viewBuilding.danmakuView.addBarrage(Barrage(content, false))
+                    viewBuilding.danmakuView.addBarrage(Barrage(content, R.color.colorAccent))
                 i++
             }
         }
@@ -41,8 +43,12 @@ class TimeActivity : BaseActivity() {
         when (keyCode) {
             KeyEvent.KEYCODE_MENU -> finish()
             KeyEvent.KEYCODE_DPAD_UP -> {
+                setScreenBrightnessValue(BaseDao.screenBrightness + 0.1f)
+                BaseDao.screenBrightness += 0.1f
             }
             KeyEvent.KEYCODE_DPAD_DOWN -> {
+                setScreenBrightnessValue(BaseDao.screenBrightness - 0.1f)
+                BaseDao.screenBrightness -= 0.1f
             }
             KeyEvent.KEYCODE_ENTER -> {
                 MediaManager.play()
