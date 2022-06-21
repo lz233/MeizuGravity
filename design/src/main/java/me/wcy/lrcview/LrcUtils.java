@@ -182,8 +182,9 @@ class LrcUtils {
         if (TextUtils.isEmpty(line)) {
             return null;
         }
-
         line = line.trim();
+        if (!line.startsWith("[")) line = "[00:00.000] " + line;
+        if (line.indexOf(']') == 6) line = line.substring(0, 6) + ".000] " + line.substring(7);
         // [00:17.65]让我掉下眼泪的
         Matcher lineMatcher = PATTERN_LINE.matcher(line);
         if (!lineMatcher.matches()) {
