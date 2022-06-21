@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import moe.lz233.meizugravity.cloudmusic.App
 import moe.lz233.meizugravity.cloudmusic.BuildConfig
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityAboutBinding
-import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
-import moe.lz233.meizugravity.cloudmusic.utils.QRCodeUtil
+import moe.lz233.meizugravity.design.App.Companion.editor
+import moe.lz233.meizugravity.design.activity.BaseActivity
+import moe.lz233.meizugravity.design.utils.QRCodeUtil
 import kotlin.system.exitProcess
 
 class AboutActivity : BaseActivity() {
@@ -20,7 +20,7 @@ class AboutActivity : BaseActivity() {
         viewBuilding.aboutImageView.setImageBitmap(QRCodeUtil.createQRCodeBitmap("https://github.com/lz233/MeizuGravity/blob/master/NETEASECLOUDMUSIC.md", 100, 100))
         viewBuilding.versionTextView.text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
         viewBuilding.logoutButton.setOnClickListener {
-            App.editor.remove("userLogin").commit()
+            editor.remove("userLogin").commit()
             exitProcess(0)
         }
     }

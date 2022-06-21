@@ -1,5 +1,8 @@
 package moe.lz233.meizugravity.activity;
 
+import static moe.lz233.meizugravity.App.editor;
+import static moe.lz233.meizugravity.App.sp;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -8,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,13 +23,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import moe.lz233.meizugravity.R;
+import moe.lz233.meizugravity.design.activity.BaseActivity;
+import moe.lz233.meizugravity.design.utils.LogUtil;
+import moe.lz233.meizugravity.design.utils.ViewPager2Util;
 import moe.lz233.meizugravity.utils.GetUtil;
-import moe.lz233.meizugravity.utils.ToastUtil;
-import moe.lz233.meizugravity.utils.ViewPager2Util;
 
 public class MainActivity extends BaseActivity {
-    private ArrayList<String> mainMenuTitleList = new ArrayList<>();
-    private ArrayList<Integer> mainMenuIconList = new ArrayList<>();
+    private final ArrayList<String> mainMenuTitleList = new ArrayList<>();
+    private final ArrayList<Integer> mainMenuIconList = new ArrayList<>();
 
     private ImageView mainImageView;
     private ViewPager2 mainViewPager2;
@@ -39,8 +44,8 @@ public class MainActivity extends BaseActivity {
         mainViewPager2 = findViewById(R.id.mainViewPager2);
         //
         //startService(new Intent(this, CommandService.class));
-        if (sharedPreferences.getBoolean("isFirstRun", true)) {
-            ToastUtil.showLong(this, getString(R.string.firstTips));
+        if (sp.getBoolean("isFirstRun", true)) {
+            LogUtil.toast(getString(R.string.firstTips), Toast.LENGTH_LONG);
             editor.putBoolean("isFirstRun", false);
             editor.apply();
         }

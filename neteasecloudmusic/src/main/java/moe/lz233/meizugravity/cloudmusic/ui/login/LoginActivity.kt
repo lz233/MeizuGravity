@@ -8,9 +8,9 @@ import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityLoginBinding
 import moe.lz233.meizugravity.cloudmusic.logic.dao.UserDao
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
-import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
-import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
-import moe.lz233.meizugravity.cloudmusic.utils.QRCodeUtil
+import moe.lz233.meizugravity.design.activity.BaseActivity
+import moe.lz233.meizugravity.design.utils.LogUtil
+import moe.lz233.meizugravity.design.utils.QRCodeUtil
 
 
 class LoginActivity : BaseActivity() {

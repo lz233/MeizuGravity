@@ -1,25 +1,26 @@
 package moe.lz233.meizugravity.cloudmusic.logic.dao
 
-import moe.lz233.meizugravity.cloudmusic.App
+import moe.lz233.meizugravity.design.App.Companion.editor
+import moe.lz233.meizugravity.design.App.Companion.sp
 
 object UserDao {
     var isLogin: Boolean
-        get() = App.sp.getBoolean("userLogin", false)
-        set(value) = App.editor.putBoolean("userLogin", value).apply()
+        get() = sp.getBoolean("userLogin", false)
+        set(value) = editor.putBoolean("userLogin", value).apply()
 
     var id: Long
-        get() = App.sp.getLong("userId", 0)
-        set(value) = App.editor.putLong("userId", value).apply()
+        get() = sp.getLong("userId", 0)
+        set(value) = editor.putLong("userId", value).apply()
 
     var cookie: String
-        get() = App.sp.getString("userCookie", "")!!
-        set(value) = App.editor.putString("userCookie", value).apply()
+        get() = sp.getString("userCookie", "")!!
+        set(value) = editor.putString("userCookie", value).apply()
 
     var name: String
-        get() = App.sp.getString("userName", "")!!
-        set(value) = App.editor.putString("userName", value).apply()
+        get() = sp.getString("userName", "")!!
+        set(value) = editor.putString("userName", value).apply()
 
     var type: Int
-        get() = App.sp.getInt("userType", 0)
-        set(value) = App.editor.putInt("userType", value).apply()
+        get() = sp.getInt("userType", 0)
+        set(value) = editor.putInt("userType", value).apply()
 }

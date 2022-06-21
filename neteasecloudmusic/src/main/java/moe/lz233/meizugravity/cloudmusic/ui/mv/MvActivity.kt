@@ -11,7 +11,7 @@ import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityMvBinding
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
-import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
+import moe.lz233.meizugravity.design.activity.BaseActivity
 
 class MvActivity : BaseActivity() {
     private val viewBuilding by lazy { ActivityMvBinding.inflate(layoutInflater) }

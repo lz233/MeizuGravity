@@ -13,12 +13,12 @@ import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityDailyBinding
 import moe.lz233.meizugravity.cloudmusic.logic.model.meta.Music
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
-import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.musicmenu.MusicMenuActivity
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.setOnItemSelectedListener
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.toArtistName
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.toPlayListItem
+import moe.lz233.meizugravity.design.activity.BaseActivity
 
 class DailyActivity : BaseActivity() {
     private val musicList = mutableListOf<Music>()

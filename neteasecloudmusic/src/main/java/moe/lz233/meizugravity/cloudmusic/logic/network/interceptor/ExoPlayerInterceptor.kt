@@ -1,7 +1,7 @@
 package moe.lz233.meizugravity.cloudmusic.logic.network.interceptor
 
-import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.processEapi
+import moe.lz233.meizugravity.design.utils.LogUtil
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.json.JSONObject

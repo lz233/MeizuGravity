@@ -23,14 +23,14 @@ import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityPlayingBinding
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork.like
-import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.mv.MvActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
 import moe.lz233.meizugravity.cloudmusic.ui.time.TimeActivity
 import moe.lz233.meizugravity.cloudmusic.utils.AudioManager
-import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
-import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
+import moe.lz233.meizugravity.design.activity.BaseActivity
+import moe.lz233.meizugravity.design.utils.LogUtil
+import moe.lz233.meizugravity.design.utils.ViewPager2Util
 
 class PlayingActivity : BaseActivity() {
     private val viewBuilding by lazy { ActivityPlayingBinding.inflate(layoutInflater) }

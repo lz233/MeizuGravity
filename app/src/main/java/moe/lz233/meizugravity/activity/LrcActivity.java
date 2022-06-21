@@ -16,6 +16,7 @@ import java.io.IOException;
 
 import me.wcy.lrcview.LrcView;
 import moe.lz233.meizugravity.R;
+import moe.lz233.meizugravity.design.activity.BaseActivity;
 import moe.lz233.meizugravity.utils.DownloadUtil;
 import moe.lz233.meizugravity.view.ChanTextView;
 import okhttp3.Call;
@@ -28,8 +29,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LrcActivity extends BaseActivity {
-    private Handler handler = new Handler();
-    private OkHttpClient client = new OkHttpClient();
+    private final Handler handler = new Handler();
+    private final OkHttpClient client = new OkHttpClient();
     private String trackTitle = "";
     private boolean isShowLrc = true;
     private LrcView lrcView;

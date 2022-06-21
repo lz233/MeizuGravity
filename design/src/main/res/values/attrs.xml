@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+
+    <declare-styleable name="BarrageView">
+        <attr name="size" format="integer" />
+        <attr name="text_left_padding" format="integer" />
+        <attr name="text_right_padding" format="integer" />
+        <attr name="text_top_padding" format="integer" />
+        <attr name="text_bottom_padding" format="integer" />
+        <attr name="max_text_size" format="integer" />
+        <attr name="min_text_size" format="integer" />
+        <attr name="line_height" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="random_color" format="boolean" />
+        <attr name="allow_repeat" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="LrcView">
+        <attr name="lrcTextSize" format="dimension" />
+        <attr name="lrcNormalTextSize" format="dimension" />
+        <attr name="lrcDividerHeight" format="dimension" />
+        <attr name="lrcNormalTextColor" format="reference|color" />
+        <attr name="lrcCurrentTextColor" format="reference|color" />
+        <attr name="lrcTimelineTextColor" format="reference|color" />
+        <attr name="lrcAnimationDuration" format="integer" />
+        <attr name="lrcLabel" format="string" />
+        <attr name="lrcPadding" format="dimension" />
+        <attr name="lrcTimelineColor" format="reference|color" />
+        <attr name="lrcTimelineHeight" format="dimension" />
+        <attr name="lrcPlayDrawable" format="reference" />
+        <attr name="lrcTimeTextColor" format="reference|color" />
+        <attr name="lrcTimeTextSize" format="dimension" />
+        <attr name="lrcTextGravity">
+            <enum name="center" value="0" />
+            <enum name="left" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="ChanSwitch">
+        <attr name="key" format="string" />
+        <attr name="valueIsBoolean" format="boolean" />
+        <attr name="valueString" format="string" />
+        <attr name="valueInteger" format="string" />
+        <attr name="valueDefault" format="integer" />
+        <attr name="valueDefaultBoolean" format="boolean" />
+        <attr name="baseText" format="string" />
+        <attr name="optionText" format="string" />
+    </declare-styleable>
+
+</resources>

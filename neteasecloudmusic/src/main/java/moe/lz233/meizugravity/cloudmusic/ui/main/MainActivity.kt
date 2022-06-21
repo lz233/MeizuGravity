@@ -19,16 +19,16 @@ import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityMainBinding
 import moe.lz233.meizugravity.cloudmusic.logic.dao.UserDao
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
-import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.about.AboutActivity
 import moe.lz233.meizugravity.cloudmusic.ui.daily.DailyActivity
 import moe.lz233.meizugravity.cloudmusic.ui.login.LoginActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playing.PlayingActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
-import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
-import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.adjustParam
 import moe.lz233.meizugravity.cloudmusic.utils.ktx.toPlayListItem
+import moe.lz233.meizugravity.design.activity.BaseActivity
+import moe.lz233.meizugravity.design.utils.LogUtil
+import moe.lz233.meizugravity.design.utils.ViewPager2Util
 
 class MainActivity : BaseActivity() {
     private val mainMenuList by lazy { listOf("正在播放", "每日签到", "每日推荐", "我的歌单", "关于") }

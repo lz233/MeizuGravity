@@ -59,7 +59,7 @@
                     android:text="@string/aboutSummary"
                     android:textSize="@dimen/text_20" />
 
-                <moe.lz233.meizugravity.cloudmusic.view.ChanSwitch
+                <moe.lz233.meizugravity.design.view.ChanSwitch
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"

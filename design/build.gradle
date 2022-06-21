@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 19
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+
+dependencies {
+    api 'androidx.appcompat:appcompat:1.4.2'
+    api 'androidx.viewpager2:viewpager2:1.0.0'
+    api "androidx.multidex:multidex:2.0.1"
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
+    api 'com.google.zxing:core:3.4.1'
+}

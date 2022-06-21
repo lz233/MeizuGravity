@@ -2,7 +2,7 @@ package moe.lz233.meizugravity.cloudmusic.utils.ktx
 
 import moe.lz233.meizugravity.cloudmusic.logic.dao.UserDao
 import moe.lz233.meizugravity.cloudmusic.utils.AESUtil
-import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
+import moe.lz233.meizugravity.design.utils.LogUtil
 import okhttp3.FormBody
 import okhttp3.Interceptor
 import okhttp3.Request

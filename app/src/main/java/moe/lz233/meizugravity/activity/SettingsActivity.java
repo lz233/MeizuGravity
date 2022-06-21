@@ -1,6 +1,7 @@
 package moe.lz233.meizugravity.activity;
 
-import android.content.Intent;
+import static moe.lz233.meizugravity.App.editor;
+
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -11,12 +12,10 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 import moe.lz233.meizugravity.R;
-import moe.lz233.meizugravity.utils.FileUtil;
-import moe.lz233.meizugravity.utils.ToastUtil;
-import moe.lz233.meizugravity.utils.ViewPager2Util;
+import moe.lz233.meizugravity.design.activity.BaseActivity;
+import moe.lz233.meizugravity.design.utils.LogUtil;
 
 public class SettingsActivity extends BaseActivity {
     @Override
@@ -93,7 +92,7 @@ public class SettingsActivity extends BaseActivity {
                                         break;
                                 }
                                 Looper.prepare();
-                                ToastUtil.showShort(SettingsActivity.this,flags);
+                                LogUtil.toast(flags);
                                 outputStream.write(addHeader("ok").getBytes());
                                 Log.d("CommandService", "----------------------------------------\n" + str + "\n----------------------------------------");
                                 inputStream.close();

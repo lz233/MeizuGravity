@@ -15,10 +15,10 @@ import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.R
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityMusicMenuBinding
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork.removeMusicFromPlaylist
-import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
 import moe.lz233.meizugravity.cloudmusic.ui.playlist.PlayListActivity
-import moe.lz233.meizugravity.cloudmusic.utils.LogUtil
-import moe.lz233.meizugravity.cloudmusic.utils.ViewPager2Util
+import moe.lz233.meizugravity.design.activity.BaseActivity
+import moe.lz233.meizugravity.design.utils.LogUtil
+import moe.lz233.meizugravity.design.utils.ViewPager2Util
 
 class MusicMenuActivity : BaseActivity() {
     private val count = 4

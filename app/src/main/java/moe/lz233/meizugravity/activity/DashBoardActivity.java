@@ -1,5 +1,8 @@
 package moe.lz233.meizugravity.activity;
 
+import static moe.lz233.meizugravity.App.editor;
+import static moe.lz233.meizugravity.App.sp;
+
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Window;
@@ -12,9 +15,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import moe.lz233.meizugravity.R;
+import moe.lz233.meizugravity.design.activity.BaseActivity;
+import moe.lz233.meizugravity.design.utils.ViewPager2Util;
 import moe.lz233.meizugravity.fragment.CoolapkFragment;
 import moe.lz233.meizugravity.fragment.WeatherFragment;
-import moe.lz233.meizugravity.utils.ViewPager2Util;
 
 public class DashBoardActivity extends BaseActivity {
     int itemCount = 2;
@@ -28,7 +32,7 @@ public class DashBoardActivity extends BaseActivity {
         //
         dashViewPager2 = findViewById(R.id.dashViewPager2);
         //
-        setScreenBrightnessValue(sharedPreferences.getFloat("brightness", 0.2f));
+        setScreenBrightnessValue(sp.getFloat("brightness", 0.2f));
         //brightThread = new Thread(new Run());
         //brightThread.start();
         editor.putBoolean("isInDashBoard", true);
@@ -124,9 +128,9 @@ public class DashBoardActivity extends BaseActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 default:
-                    return new WeatherFragment(sharedPreferences,editor);
+                    return new WeatherFragment(sp, editor);
                 case 1:
-                    return new CoolapkFragment(sharedPreferences,editor);
+                    return new CoolapkFragment(sp, editor);
             }
         }
 

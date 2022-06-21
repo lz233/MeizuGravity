@@ -9,7 +9,7 @@ import com.zhy.mediaplayer_exo.playermanager.manager.MediaManager
 import kotlinx.coroutines.launch
 import moe.lz233.meizugravity.cloudmusic.databinding.ActivityTimeBinding
 import moe.lz233.meizugravity.cloudmusic.logic.network.CloudMusicNetwork
-import moe.lz233.meizugravity.cloudmusic.ui.BaseActivity
+import moe.lz233.meizugravity.design.activity.BaseActivity
 
 class TimeActivity : BaseActivity() {
     private val viewBuilding by lazy { ActivityTimeBinding.inflate(layoutInflater) }
@@ -50,10 +50,6 @@ class TimeActivity : BaseActivity() {
             }
         }
         return super.onKeyDown(keyCode, event)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     private fun setScreenBrightnessValue(brightnessValue: Float) {

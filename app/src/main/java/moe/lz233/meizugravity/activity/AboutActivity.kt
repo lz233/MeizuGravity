@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.view.KeyEvent
 import moe.lz233.meizugravity.BuildConfig
 import moe.lz233.meizugravity.databinding.ActivityAboutBinding
-import moe.lz233.meizugravity.utils.QRCodeUtil
+import moe.lz233.meizugravity.design.activity.BaseActivity
+import moe.lz233.meizugravity.design.utils.QRCodeUtil
 
 class AboutActivity : BaseActivity() {
 

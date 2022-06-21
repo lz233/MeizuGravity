@@ -1,9 +1,10 @@
 package moe.lz233.meizugravity.cloudmusic.logic.dao
 
-import moe.lz233.meizugravity.cloudmusic.App
+import moe.lz233.meizugravity.design.App.Companion.editor
+import moe.lz233.meizugravity.design.App.Companion.sp
 
 object BaseDao {
     var soundQuality: Int
-        get() = App.sp.getInt("soundQuality", 999000)
-        set(value) = App.editor.putInt("soundQuality", value).apply()
+        get() = sp.getInt("soundQuality", 999000)
+        set(value) = editor.putInt("soundQuality", value).apply()
 }

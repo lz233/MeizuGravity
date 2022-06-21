@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import moe.lz233.meizugravity.R
 import moe.lz233.meizugravity.adapter.LauncherAdapter
 import moe.lz233.meizugravity.databinding.ActivityLauncherBinding
+import moe.lz233.meizugravity.design.activity.BaseActivity
 import moe.lz233.meizugravity.utils.AppsInfoUtil
 
 class LauncherActivity : BaseActivity() {
