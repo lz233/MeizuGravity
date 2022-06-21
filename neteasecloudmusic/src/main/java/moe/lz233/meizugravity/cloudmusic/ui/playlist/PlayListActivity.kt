@@ -36,14 +36,15 @@ class PlayListActivity : BaseActivity() {
             val userPlaylistResponse = CloudMusicNetwork.getUserPlaylist(UserDao.id)
             var pinnedPlaylistIndex = 0
             userPlaylistResponse.playlists.forEach {
-                if (it.creator.userId == UserDao.id)
+                if (it.creator.userId == UserDao.id) {
                     if (it.name != "Cast to Gravity")
                         playLists.add(pinnedPlaylistIndex++, it)
+                } else {
+                    if ((it.specialType == 100) && it.name.contains("雷达"))
+                        playLists.add(pinnedPlaylistIndex++, it)
                     else
-                        if ((it.specialType == 100) && it.name.contains("雷达"))
-                            playLists.add(pinnedPlaylistIndex++, it)
-                        else
-                            playLists.add(it)
+                        playLists.add(it)
+                }
             }
             viewBuilding.progressBar.visibility = View.GONE
             viewBuilding.playlistListView.adapter = playlistAdapter
